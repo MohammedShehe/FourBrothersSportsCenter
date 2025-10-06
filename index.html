@@ -23,6 +23,9 @@
             --footer-bg: #f8f9fa;
             --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             --radius: 10px;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
         }
 
         [data-theme="dark"] {
@@ -37,6 +40,9 @@
             --header-bg: #343a40;
             --footer-bg: #343a40;
             --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            --success-color: #20c997;
+            --warning-color: #fd7e14;
+            --danger-color: #e83e8c;
         }
         
         body {
@@ -737,6 +743,324 @@
             font-size: 0.9rem;
             color: var(--light-text);
         }
+
+        /* Enhanced Styling and Animations */
+        .btn-confirm-order {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            padding: 12px 24px;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .btn-confirm-order:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .btn-confirm-order:active {
+            transform: translateY(1px);
+        }
+
+        .btn-confirm-order .truck-icon {
+            position: absolute;
+            right: 15px;
+            transition: transform 0.5s ease;
+        }
+
+        .btn-confirm-order.animating .truck-icon {
+            animation: truckMove 1.5s ease-in-out;
+        }
+
+        @keyframes truckMove {
+            0% {
+                transform: translateX(0);
+            }
+            25% {
+                transform: translateX(-10px);
+            }
+            50% {
+                transform: translateX(-20px);
+            }
+            75% {
+                transform: translateX(-10px);
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        .order-success-animation {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .order-success-animation .success-icon {
+            font-size: 5rem;
+            color: var(--success-color);
+            margin-bottom: 20px;
+            animation: bounce 1s ease;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent-color);
+            opacity: 0;
+            z-index: 9999;
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7);
+            }
+            70% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 10px rgba(40, 167, 69, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .btn-loading {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .floating-action {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .progress-bar-animated {
+            animation: progress-bar-stripes 1s linear infinite;
+        }
+
+        @keyframes progress-bar-stripes {
+            0% { background-position: 1rem 0; }
+            100% { background-position: 0 0; }
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--danger-color);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse 1.5s infinite;
+        }
+
+        .cart-badge {
+            position: relative;
+        }
+
+        .product-highlight {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-highlight::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.1) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .discount-pulse {
+            animation: discountPulse 2s infinite;
+        }
+
+        @keyframes discountPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .checkout-progress {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .checkout-progress::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: var(--border-color);
+            z-index: 1;
+        }
+
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .progress-step .step-circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .progress-step.active .step-circle {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+
+        .progress-step.completed .step-circle {
+            background-color: var(--success-color);
+            border-color: var(--success-color);
+            color: white;
+        }
+
+        .progress-step.completed .step-circle::after {
+            content: "✓";
+            font-weight: bold;
+        }
+
+        .progress-step .step-label {
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        .delivery-estimation {
+            background: linear-gradient(135deg, var(--primary-color), #4dabf7);
+            color: white;
+            border-radius: var(--radius);
+            padding: 15px;
+            margin: 20px 0;
+            box-shadow: var(--shadow);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .delivery-estimation h5 {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .delivery-estimation h5 i {
+            margin-right: 10px;
+        }
+
+        .product-availability {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .in-stock {
+            background-color: rgba(40, 167, 69, 0.1);
+            color: var(--success-color);
+        }
+
+        .low-stock {
+            background-color: rgba(255, 193, 7, 0.1);
+            color: var(--warning-color);
+        }
+
+        .out-of-stock-badge {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: var(--danger-color);
+        }
     </style>
 </head>
 <body>
@@ -755,7 +1079,10 @@
                         <a class="nav-link active" href="#" data-section="home">Nyumbani</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" data-section="cart">Karatasi</a>
+                        <a class="nav-link cart-badge" href="#" data-section="cart">
+                            Karatasi
+                            <span id="cart-badge" class="notification-badge" style="display: none;">0</span>
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-section="account">Akaunti</a>
@@ -784,9 +1111,10 @@
             <i class="fas fa-home"></i>
             <span>Nyumbani</span>
         </a>
-        <a href="#" class="mobile-nav-item" data-section="cart">
+        <a href="#" class="mobile-nav-item cart-badge" data-section="cart">
             <i class="fas fa-shopping-cart"></i>
             <span>Karatasi</span>
+            <span id="mobile-cart-badge" class="notification-badge" style="display: none;">0</span>
         </a>
         <a href="#" class="mobile-nav-item" data-section="account">
             <i class="fas fa-user"></i>
@@ -867,7 +1195,7 @@
                     <div class="mb-3">
                         <span class="price-old" id="old-price"></span>
                         <span class="price-new" id="current-price">TZS 0</span>
-                        <span class="offer-badge" id="offer-badge" style="display: none;">0% OFF</span>
+                        <span class="offer-badge discount-pulse" id="offer-badge" style="display: none;">0% OFF</span>
                     </div>
                     
                     <p id="product-description">Maelezo ya bidhaa yataingizwa hapa.</p>
@@ -887,13 +1215,15 @@
                             <div class="quantity-btn" id="increase-qty">+</div>
                         </div>
                         <span class="ms-3 text-muted" id="stock-info"></span>
+                        <span id="stock-badge" class="product-availability in-stock"></span>
                     </div>
                     
-                    <div class="mb-4">
-                        <p><i class="fas fa-truck me-2"></i>Imewekwa kwenye kifurushi: <strong id="delivery-date">Jumamosi ijayo</strong></p>
+                    <div class="delivery-estimation">
+                        <h5><i class="fas fa-truck"></i> Makadirio ya Uwasilishaji</h5>
+                        <p class="mb-0">Utapokea Bidhaa Hii: <strong id="delivery-date">Jumamosi ijayo</strong></p>
                     </div>
                     
-                    <button class="btn btn-primary btn-lg w-100" id="add-to-cart">
+                    <button class="btn btn-primary btn-lg w-100 floating-action" id="add-to-cart">
                         <i class="fas fa-shopping-cart me-2"></i>Weka kwenye Karatasi
                     </button>
                 </div>
@@ -931,7 +1261,7 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card">
+                    <div class="card slide-in">
                         <div class="card-header bg-primary text-white">
                             <h5 class="mb-0">Muhtasari wa Agizo</h5>
                         </div>
@@ -957,7 +1287,7 @@
                                 <strong>Jumla:</strong>
                                 <strong id="cart-total">TZS 0</strong>
                             </div>
-                            <button class="btn btn-primary w-100" id="proceed-to-checkout">
+                            <button class="btn btn-primary w-100 pulse" id="proceed-to-checkout">
                                 Endelea kwa Malipo
                             </button>
                         </div>
@@ -970,35 +1300,26 @@
         <section id="checkout-section" class="hidden">
             <h2 class="section-title">Malipo</h2>
             
+            <!-- Enhanced Checkout Progress -->
+            <div class="checkout-progress">
+                <div class="progress-step active" id="step-address">
+                    <div class="step-circle">1</div>
+                    <div class="step-label">Anwani</div>
+                </div>
+                <div class="progress-step" id="step-summary">
+                    <div class="step-circle">2</div>
+                    <div class="step-label">Muhtasari</div>
+                </div>
+                <div class="progress-step" id="step-payment">
+                    <div class="step-circle">3</div>
+                    <div class="step-label">Malipo</div>
+                </div>
+            </div>
+            
             <div class="row">
                 <div class="col-md-8">
-                    <!-- Checkout Steps -->
-                    <div class="mb-4">
-                        <div class="order-step step-active">
-                            <div class="step-number">1</div>
-                            <div>
-                                <h5 class="mb-0">Chagua Anwani ya Mshipisho</h5>
-                                <p class="mb-0 text-muted">Chagua au ongeza anwani mpya ya mshipisho</p>
-                            </div>
-                        </div>
-                        <div class="order-step">
-                            <div class="step-number">2</div>
-                            <div>
-                                <h5 class="mb-0">Muhtasari wa Agizo</h5>
-                                <p class="mb-0 text-muted">Hakiki agizo lako</p>
-                            </div>
-                        </div>
-                        <div class="order-step">
-                            <div class="step-number">3</div>
-                            <div>
-                                <h5 class="mb-0">Malipo</h5>
-                                <p class="mb-0 text-muted">Lipa kwa pesa taslimu (COD)</p>
-                            </div>
-                        </div>
-                    </div>
-                    
                     <!-- Step 1: Address Selection -->
-                    <div id="checkout-step-1">
+                    <div id="checkout-step-1" class="fade-in">
                         <h4>Chagua Anwani ya Mshipisho</h4>
                         <div id="address-selection">
                             <!-- Saved addresses will be loaded here -->
@@ -1021,7 +1342,7 @@
                     <!-- Step 2: Order Summary -->
                     <div id="checkout-step-2" class="hidden">
                         <h4>Muhtasari wa Agizo</h4>
-                        <div class="card">
+                        <div class="card slide-in">
                             <div class="card-body">
                                 <div id="checkout-items">
                                     <!-- Order items will be loaded here -->
@@ -1050,13 +1371,13 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="btn btn-primary mt-3" id="proceed-to-payment">Endelea kwa Malipo</button>
+                        <button class="btn btn-primary mt-3 pulse" id="proceed-to-payment">Endelea kwa Malipo</button>
                     </div>
                     
                     <!-- Step 3: Payment -->
                     <div id="checkout-step-3" class="hidden">
                         <h4>Malipo</h4>
-                        <div class="card">
+                        <div class="card slide-in">
                             <div class="card-body">
                                 <p class="mb-3">Malipo yanafanyika kwa pesa taslimu (COD) unapopokea bidhaa.</p>
                                 
@@ -1073,7 +1394,11 @@
                                     <button class="btn btn-outline-secondary" id="resend-otp">Tuma tena OTP</button>
                                 </div>
                                 
-                                <button class="btn btn-success w-100" id="confirm-order">Thibitisha Agizo</button>
+                                <button class="btn btn-success w-100 btn-lg btn-confirm-order" id="confirm-order">
+                                    <span class="loading-spinner" style="display: none;"></span>
+                                    <span id="confirm-order-text">Thibitisha Agizo</span>
+                                    <i class="fas fa-truck truck-icon"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -1327,12 +1652,12 @@
             </div>
         </div>
 
-        <!-- Order Success Modal -->
+        <!-- Enhanced Order Success Modal -->
         <div class="modal fade" id="orderSuccessModal" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-body text-center py-5">
-                        <i class="fas fa-check-circle text-success display-1 mb-3"></i>
+                    <div class="modal-body text-center py-5 order-success-animation">
+                        <i class="fas fa-check-circle success-icon"></i>
                         <h3>Agizo Limefanikiwa!</h3>
                         <p class="mb-4">Ahsante kwa ununuzi wako. Tutawasiliana nawe kuhusu mshipisho.</p>
                         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Endelea na Ununuzi</button>
@@ -1638,6 +1963,8 @@
     const themeToggle = document.getElementById('theme-toggle');
     const searchInput = document.getElementById('search-input');
     const searchResults = document.getElementById('search-results');
+    const confirmOrderBtn = document.getElementById('confirm-order');
+    const confirmOrderText = document.getElementById('confirm-order-text');
     
     // Rating comments for different ratings
     const ratingComments = {
@@ -2058,9 +2385,19 @@
             const productRating = getProductRating(product.id);
             const ratingStars = generateStarRating(productRating.avg_rating);
             
+            // Determine stock badge
+            let stockBadge = '';
+            if (product.stock <= 0) {
+                stockBadge = '<span class="product-availability out-of-stock-badge">Hakuna Akiba</span>';
+            } else if (product.stock <= 5) {
+                stockBadge = `<span class="product-availability low-stock">Akiba kidogo (${product.stock})</span>`;
+            } else {
+                stockBadge = `<span class="product-availability in-stock">Akiba (${product.stock})</span>`;
+            }
+            
             productCard.innerHTML = `
                 <div class="card product-card h-100" data-product-id="${product.id}">
-                    ${product.discount_percent > 0 ? `<div class="offer-badge">${product.discount_percent}% OFF</div>` : ''}
+                    ${product.discount_percent > 0 ? `<div class="offer-badge discount-pulse">${product.discount_percent}% OFF</div>` : ''}
                     <img src="${product.images && product.images.length > 0 ? product.images[0] : 'https://via.placeholder.com/300x300?text=Bidhaa'}" 
                          class="card-img-top product-img" alt="${product.name}"
                          onerror="this.src='https://via.placeholder.com/300x300?text=Bidhaa'">
@@ -2090,11 +2427,7 @@
                                 </button>
                                 ` : ''}
                             </div>
-                            ${isOutOfStock ? `
-                            <div class="mt-2">
-                                <small class="text-danger"><i class="fas fa-exclamation-triangle"></i> Bidhaa Imekwisha</small>
-                            </div>
-                            ` : ''}
+                            ${stockBadge}
                         </div>
                     </div>
                 </div>
@@ -2138,23 +2471,23 @@
     }
 
     // Get product rating - FIXED for string to number conversion
-function getProductRating(productId) {
-    if (!productRatings || productRatings.length === 0) {
-        return { avg_rating: 0, total_ratings: 0 };
+    function getProductRating(productId) {
+        if (!productRatings || productRatings.length === 0) {
+            return { avg_rating: 0, total_ratings: 0 };
+        }
+        
+        const rating = productRatings.find(r => r.product_id == productId);
+        
+        if (!rating) {
+            return { avg_rating: 0, total_ratings: 0 };
+        }
+        
+        // Return the already parsed values
+        return { 
+            avg_rating: rating.avg_rating || 0, 
+            total_ratings: rating.total_ratings || 0 
+        };
     }
-    
-    const rating = productRatings.find(r => r.product_id == productId);
-    
-    if (!rating) {
-        return { avg_rating: 0, total_ratings: 0 };
-    }
-    
-    // Return the already parsed values
-    return { 
-        avg_rating: rating.avg_rating || 0, 
-        total_ratings: rating.total_ratings || 0 
-    };
-}
 
     // Generate star rating HTML
     function generateStarRating(rating) {
@@ -2550,9 +2883,8 @@ function getProductRating(productId) {
             document.getElementById('checkout-step-1').classList.add('hidden');
             document.getElementById('checkout-step-2').classList.remove('hidden');
             
-            // Update order steps UI
-            document.querySelectorAll('.order-step')[0].classList.remove('step-active');
-            document.querySelectorAll('.order-step')[1].classList.add('step-active');
+            // Update checkout progress UI
+            updateCheckoutProgress(2);
             
             updateCheckoutSummary();
         });
@@ -2585,9 +2917,8 @@ function getProductRating(productId) {
             document.getElementById('checkout-step-2').classList.add('hidden');
             document.getElementById('checkout-step-3').classList.remove('hidden');
             
-            // Update order steps UI
-            document.querySelectorAll('.order-step')[1].classList.remove('step-active');
-            document.querySelectorAll('.order-step')[2].classList.add('step-active');
+            // Update checkout progress UI
+            updateCheckoutProgress(3);
         });
 
         // Resend OTP for checkout
@@ -2613,8 +2944,10 @@ function getProductRating(productId) {
             }
         });
 
-        // Confirm order
-        document.getElementById('confirm-order').addEventListener('click', async function() {
+        // Enhanced Confirm order with animation
+        confirmOrderBtn.addEventListener('click', async function(e) {
+            e.preventDefault();
+            
             if (!selectedAddress) {
                 alert('Tafadhali chagua anwani ya mshipisho.');
                 return;
@@ -2634,6 +2967,11 @@ function getProductRating(productId) {
             } else {
                 console.log('Placing subsequent order without OTP');
             }
+            
+            // Show loading state
+            confirmOrderBtn.classList.add('btn-loading', 'animating');
+            confirmOrderText.textContent = 'Inaendesha...';
+            confirmOrderBtn.querySelector('.loading-spinner').style.display = 'inline-block';
             
             try {
                 const orderItems = cart.map(item => ({
@@ -2655,35 +2993,48 @@ function getProductRating(productId) {
                 const data = await response.json();
                 
                 if (response.ok) {
-                    orderSuccessModal.show();
+                    // Create confetti effect
+                    createConfetti();
                     
-                    // Add to orders
-                    const order = {
-                        id: data.order_id,
-                        items: [...cart],
-                        total: data.total_price,
-                        date: new Date().toLocaleDateString('sw-TZ'),
-                        status: data.status || 'Imewekwa'
-                    };
-                    
-                    orders.push(order);
-                    cart = [];
-                    updateCartDisplay();
-                    
-                    // Mark that user has made at least one order
-                    isFirstOrder = false;
-                    
-                    // Reset checkout
+                    // Show success modal after a short delay
                     setTimeout(() => {
-                        showSection('home');
-                        resetCheckout();
-                    }, 3000);
+                        orderSuccessModal.show();
+                        
+                        // Add to orders
+                        const order = {
+                            id: data.order_id,
+                            items: [...cart],
+                            total: data.total_price,
+                            date: new Date().toLocaleDateString('sw-TZ'),
+                            status: data.status || 'Imewekwa'
+                        };
+                        
+                        orders.push(order);
+                        cart = [];
+                        updateCartDisplay();
+                        
+                        // Mark that user has made at least one order
+                        isFirstOrder = false;
+                        
+                        // Reset checkout
+                        setTimeout(() => {
+                            showSection('home');
+                            resetCheckout();
+                        }, 3000);
+                    }, 1500);
                 } else {
                     alert(data.message || 'Hitilafu katika kuweka agizo. Tafadhali jaribu tena.');
                 }
             } catch (error) {
                 console.error('Order error:', error);
                 alert('Hitilafu ya mtandao. Tafadhali jaribu tena.');
+            } finally {
+                // Reset button state
+                setTimeout(() => {
+                    confirmOrderBtn.classList.remove('btn-loading', 'animating');
+                    confirmOrderText.textContent = 'Thibitisha Agizo';
+                    confirmOrderBtn.querySelector('.loading-spinner').style.display = 'none';
+                }, 2000);
             }
         });
 
@@ -3197,6 +3548,56 @@ function getProductRating(productId) {
         return rating > 0 ? rating : null;
     }
 
+    // Create confetti effect
+    function createConfetti() {
+        const colors = ['#ff6b35', '#1a73e8', '#28a745', '#ffc107', '#dc3545'];
+        const confettiCount = 100;
+        
+        for (let i = 0; i < confettiCount; i++) {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.width = Math.random() * 10 + 5 + 'px';
+            confetti.style.height = Math.random() * 10 + 5 + 'px';
+            confetti.style.opacity = '1';
+            confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+            
+            document.body.appendChild(confetti);
+            
+            // Animate confetti
+            const animation = confetti.animate([
+                { transform: 'translateY(-100vh) rotate(0deg)', opacity: 1 },
+                { transform: `translateY(${window.innerHeight}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+            ], {
+                duration: Math.random() * 3000 + 2000,
+                easing: 'cubic-bezier(0.215, 0.61, 0.355, 1)'
+            });
+            
+            // Remove confetti after animation
+            animation.onfinish = () => {
+                confetti.remove();
+            };
+        }
+    }
+
+    // Update checkout progress
+    function updateCheckoutProgress(step) {
+        // Reset all steps
+        document.querySelectorAll('.progress-step').forEach(stepEl => {
+            stepEl.classList.remove('active', 'completed');
+        });
+        
+        // Mark previous steps as completed and current step as active
+        for (let i = 1; i <= step; i++) {
+            const stepEl = document.getElementById(`step-${i === 1 ? 'address' : i === 2 ? 'summary' : 'payment'}`);
+            if (i < step) {
+                stepEl.classList.add('completed');
+            } else {
+                stepEl.classList.add('active');
+            }
+        }
+    }
 
     // Show specific section
     function showSection(sectionName) {
@@ -3231,6 +3632,7 @@ function getProductRating(productId) {
                 }
                 checkoutSection.classList.remove('hidden');
                 updateAddressSelection();
+                updateCheckoutProgress(1);
                 break;
         }
         
@@ -3426,8 +3828,18 @@ function getProductRating(productId) {
             document.getElementById('offer-badge').style.display = 'none';
         }
         
-        // Update stock info
+        // Update stock info and badge
         document.getElementById('stock-info').textContent = `(${product.stock} vitu vilivyobaki)`;
+        
+        let stockBadge = '';
+        if (product.stock <= 0) {
+            stockBadge = '<span class="product-availability out-of-stock-badge">Hakuna Akiba</span>';
+        } else if (product.stock <= 5) {
+            stockBadge = `<span class="product-availability low-stock">Akiba kidogo (${product.stock})</span>`;
+        } else {
+            stockBadge = `<span class="product-availability in-stock">Akiba (${product.stock})</span>`;
+        }
+        document.getElementById('stock-badge').innerHTML = stockBadge;
         
         // Update size options
         const sizeOptions = document.getElementById('size-options');
@@ -3517,6 +3929,10 @@ function getProductRating(productId) {
             document.getElementById('cart-subtotal').textContent = 'TZS 0';
             document.getElementById('cart-discount').textContent = 'TZS 0';
             document.getElementById('cart-total').textContent = 'TZS 0';
+            
+            // Update cart badges
+            document.getElementById('cart-badge').style.display = 'none';
+            document.getElementById('mobile-cart-badge').style.display = 'none';
             return;
         }
         
@@ -3607,6 +4023,12 @@ function getProductRating(productId) {
         document.getElementById('cart-subtotal').textContent = `TZS ${formatPrice(subtotal)}`;
         document.getElementById('cart-discount').textContent = `TZS ${formatPrice(discount)}`;
         document.getElementById('cart-total').textContent = `TZS ${formatPrice(total)}`;
+        
+        // Update cart badges
+        document.getElementById('cart-badge').textContent = totalItems;
+        document.getElementById('cart-badge').style.display = totalItems > 0 ? 'flex' : 'none';
+        document.getElementById('mobile-cart-badge').textContent = totalItems;
+        document.getElementById('mobile-cart-badge').style.display = totalItems > 0 ? 'flex' : 'none';
     }
 
     // Update checkout summary
@@ -3874,14 +4296,8 @@ function getProductRating(productId) {
         document.getElementById('checkout-step-2').classList.add('hidden');
         document.getElementById('checkout-step-3').classList.add('hidden');
         
-        // Reset order steps UI
-        document.querySelectorAll('.order-step').forEach((step, index) => {
-            if (index === 0) {
-                step.classList.add('step-active');
-            } else {
-                step.classList.remove('step-active');
-            }
-        });
+        // Reset checkout progress UI
+        updateCheckoutProgress(1);
         
         // Clear OTP inputs
         document.querySelectorAll('.otp-input').forEach(input => {
