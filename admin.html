@@ -1429,289 +1429,285 @@
       }
     }
 
-    // PRODUCTS MANAGEMENT
-    let products = [];
+    // ===============================
+// PRODUCTS MANAGEMENT
+// ===============================
+let products = [];
 
-    async function loadProducts() {
-      try {
-        console.log('⏳ Loading products from API...');
-        products = await apiCall('/products');
-        console.log('✅ Products loaded:', products);
-        renderProductsTable();
-        renderProductsMobileCards();
-      } catch (error) {
-        console.error('❌ Error loading products:', error);
-        products = [];
-        renderProductsTable();
-        renderProductsMobileCards();
-      }
+// Correct image path function (centralized fix)
+function fixImagePath(path) {
+  if (!path) return '';
+  return `http://localhost:5000/${path.replace(/^\//, '')}`;
+}
+
+// Load all products
+async function loadProducts() {
+  try {
+    console.log('⏳ Loading products from API...');
+    products = await apiCall('/products');
+    console.log('✅ Products loaded:', products);
+
+    renderProductsTable();
+    renderProductsMobileCards();
+  } catch (error) {
+    console.error('❌ Error loading products:', error);
+    products = [];
+    renderProductsTable();
+    renderProductsMobileCards();
+  }
+}
+
+// ===============================
+// ADD/EDIT PRODUCT FORM SUBMIT
+// ===============================
+document.getElementById('productForm').addEventListener('submit', async function (e) {
+  e.preventDefault();
+
+  const productId = document.getElementById('editingProductId').value;
+  const formData = new FormData();
+
+  // Product fields
+  formData.append('name', document.getElementById('prodTitle').value);
+  formData.append('company', document.getElementById('prodBrand').value);
+  formData.append('color', document.getElementById('prodColor').value);
+  formData.append('discount_percent', document.getElementById('prodOffer').value);
+  formData.append('type', document.getElementById('prodType').value);
+  formData.append('size_us', document.getElementById('prodSize').value);
+  formData.append('stock', document.getElementById('prodQuantity').value);
+  formData.append('price', document.getElementById('prodPrice').value);
+
+  // Images
+  const imageFiles = document.getElementById('prodImages').files;
+  for (let i = 0; i < imageFiles.length; i++) {
+    formData.append('images', imageFiles[i]);
+  }
+
+  // Button loading state
+  document.getElementById('productBtnText').style.display = 'none';
+  document.getElementById('productSpinner').style.display = 'inline-block';
+
+  try {
+    if (productId) {
+      await apiCallWithFormData(`/products/${productId}`, formData, 'PUT');
+      showAlert('Bidhaa imesasishwa kikamilifu');
+    } else {
+      await apiCallWithFormData('/products', formData);
+      showAlert('Bidhaa imeongezwa kikamilifu');
     }
 
-    document.getElementById('productForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
+    document.getElementById('productForm').reset();
+    document.getElementById('prodPreview').innerHTML = '';
+    document.getElementById('editingProductId').value = '';
+
+    bootstrap.Modal.getInstance(document.getElementById('modalAddProduct')).hide();
+
+    await loadProducts();
+
+  } catch (error) {
+    console.error('❌ Error saving product:', error);
+  } finally {
+    document.getElementById('productBtnText').style.display = 'inline-block';
+    document.getElementById('productSpinner').style.display = 'none';
+  }
+});
+
+// ===============================
+// TABLE RENDER
+// ===============================
+function renderProductsTable(filter = '') {
+  const tbody = document.getElementById('productsTableBody');
+  tbody.innerHTML = '';
+
+  const productList = Array.isArray(products) ? products : [];
+
+  const filteredProducts = productList.filter(p => {
+    if (!p) return false;
+    const search = (p.name + ' ' + (p.company || '') + ' ' + (p.color || '')).toLowerCase();
+    return search.includes(filter.toLowerCase());
+  });
+
+  if (filteredProducts.length === 0) {
+    tbody.innerHTML = `
+      <tr><td colspan="11" class="text-center py-4 text-muted">
+        ${productList.length === 0 ? 'Hakuna bidhaa zilizopatikana' : 'Hakuna bidhaa zilizoambatana na utafutaji'}
+      </td></tr>`;
+    return;
+  }
+
+  filteredProducts.forEach((product, index) => {
+    const tr = document.createElement('tr');
+
+    const imageUrl =
+      product.images?.length > 0 ? fixImagePath(product.images[0]) : '';
+
+    tr.innerHTML = `
+      <td>${index + 1}</td>
+      <td><img src="${imageUrl}" class="product-thumb" alt="${product.name}"
+          onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBmaWxsPSIjZjBmMGYwIi8+Cjx0ZXh0IHg9IjMwIiB5PSIzMCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEwIiBmaWxsPSIjOTk5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+RXJyb3I8L3RleHQ+Cjwvc3ZnPg=='"></td>
+      <td>${product.company || '-'}</td>
+      <td>${product.name || 'No Name'}</td>
+      <td>${product.color || '-'}</td>
+      <td>${product.discount_percent || 0}%</td>
+      <td>${product.type || '-'}</td>
+      <td>${product.size_us || '-'}</td>
+      <td>${product.stock || 0}</td>
+      <td>${formatPrice(product.price || 0)}</td>
+      <td>
+        <button class="btn btn-sm btn-outline-primary me-1" onclick="editProduct('${product.id}')">Hariri</button>
+        <button class="btn btn-sm btn-outline-danger" onclick="deleteProduct('${product.id}')">Futa</button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+// ===============================
+// MOBILE CARDS RENDER
+// ===============================
+function renderProductsMobileCards(filter = '') {
+  const container = document.getElementById('productsMobileCards');
+  container.innerHTML = '';
+
+  const productList = Array.isArray(products) ? products : [];
+
+  const filteredProducts = productList.filter(p => {
+    if (!p) return false;
+    const search = (p.name + ' ' + (p.company || '') + ' ' + (p.color || '')).toLowerCase();
+    return search.includes(filter.toLowerCase());
+  });
+
+  if (filteredProducts.length === 0) {
+    container.innerHTML = `<div class="text-center py-4 text-muted">
+      ${productList.length === 0 ? 'Hakuna bidhaa zilizopatikana' : 'Hakuna bidhaa zilizoambatana na utafutaji'}
+    </div>`;
+    return;
+  }
+
+  filteredProducts.forEach(product => {
+    const imageUrl =
+      product.images?.length > 0 ? fixImagePath(product.images[0]) : '';
+
+    const card = document.createElement('div');
+    card.className = 'mobile-card';
+    card.innerHTML = `
+      <div class="mobile-card-row">
+        <div class="mobile-card-label">Picha</div>
+        <div class="mobile-card-value">
+          <img src="${imageUrl}" style="width:50px;height:50px;object-fit:cover;border-radius:5px;"
+               alt="${product.name}"
+               onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBmaWxsPSIjZjBmMGYwIi8+Cjx0ZXh0IHg9IjMwIiB5PSIzMCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEwIiBmaWxsPSIjOTk5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+RXJyb3I8L3RleHQ+Cjwvc3ZnPg=='">
+        </div>
+      </div>
       
-      const productId = document.getElementById('editingProductId').value;
-      const formData = new FormData();
-      
-      // Add product data
-      formData.append('name', document.getElementById('prodTitle').value);
-      formData.append('company', document.getElementById('prodBrand').value);
-      formData.append('color', document.getElementById('prodColor').value);
-      formData.append('discount_percent', document.getElementById('prodOffer').value);
-      formData.append('type', document.getElementById('prodType').value);
-      formData.append('size_us', document.getElementById('prodSize').value);
-      formData.append('stock', document.getElementById('prodQuantity').value);
-      formData.append('price', document.getElementById('prodPrice').value);
-      
-      // Add images
-      const imageFiles = document.getElementById('prodImages').files;
-      for (let i = 0; i < imageFiles.length; i++) {
-        formData.append('images', imageFiles[i]);
-      }
-      
-      // Show loading state
-      document.getElementById('productBtnText').style.display = 'none';
-      document.getElementById('productSpinner').style.display = 'inline-block';
-      
-      try {
-        if (productId) {
-          // Update existing product
-          await apiCallWithFormData(`/products/${productId}`, formData, 'PUT');
-          showAlert('Bidhaa imesasishwa kikamilifu');
-        } else {
-          // Add new product
-          await apiCallWithFormData('/products', formData);
-          showAlert('Bidhaa imeongezwa kikamilifu');
-        }
-        
-        // Reset form and close modal
-        document.getElementById('productForm').reset();
-        document.getElementById('prodPreview').innerHTML = '';
-        document.getElementById('editingProductId').value = '';
-        bootstrap.Modal.getInstance(document.getElementById('modalAddProduct')).hide();
-        
-        // Reload products
-        await loadProducts();
-        
-      } catch (error) {
-        console.error('Error saving product:', error);
-      } finally {
-        document.getElementById('productBtnText').style.display = 'inline-block';
-        document.getElementById('productSpinner').style.display = 'none';
-      }
+      <div class="mobile-card-row"><div class="mobile-card-label">Kampuni</div><div class="mobile-card-value">${product.company || '-'}</div></div>
+      <div class="mobile-card-row"><div class="mobile-card-label">Jina</div><div class="mobile-card-value">${product.name || '-'}</div></div>
+      <div class="mobile-card-row"><div class="mobile-card-label">Rangi</div><div class="mobile-card-value">${product.color || '-'}</div></div>
+      <div class="mobile-card-row"><div class="mobile-card-label">Punguzo</div><div class="mobile-card-value">${product.discount_percent || 0}%</div></div>
+      <div class="mobile-card-row"><div class="mobile-card-label">Aina</div><div class="mobile-card-value">${product.type || '-'}</div></div>
+      <div class="mobile-card-row"><div class="mobile-card-label">Ukubwa (EU)</div><div class="mobile-card-value">${product.size_us || '-'}</div></div>
+      <div class="mobile-card-row"><div class="mobile-card-label">Idadi</div><div class="mobile-card-value">${product.stock || 0}</div></div>
+      <div class="mobile-card-row"><div class="mobile-card-label">Bei</div><div class="mobile-card-value">${formatPrice(product.price || 0)}</div></div>
+
+      <div class="mobile-card-row">
+        <div class="mobile-card-label">Vitendo</div>
+        <div class="mobile-card-value">
+          <button class="btn btn-sm btn-outline-primary me-1" onclick="editProduct('${product.id}')">Hariri</button>
+          <button class="btn btn-sm btn-outline-danger" onclick="deleteProduct('${product.id}')">Futa</button>
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// ===============================
+// EDIT PRODUCT
+// ===============================
+async function editProduct(id) {
+  const product = products.find(p => p.id == id);
+  if (!product) return;
+
+  document.getElementById('editingProductId').value = product.id;
+  document.getElementById('prodTitle').value = product.name;
+  document.getElementById('prodBrand').value = product.company;
+  document.getElementById('prodColor').value = product.color;
+  document.getElementById('prodOffer').value = product.discount_percent;
+  document.getElementById('prodType').value = product.type;
+  document.getElementById('prodSize').value = product.size_us;
+  document.getElementById('prodQuantity').value = product.stock;
+  document.getElementById('prodPrice').value = product.price;
+
+  // Existing images preview
+  const preview = document.getElementById('prodPreview');
+  preview.innerHTML = '';
+
+  if (product.images?.length > 0) {
+    product.images.forEach(imgPath => {
+      const img = document.createElement('img');
+      img.src = fixImagePath(imgPath);
+      img.onerror = function () {
+        this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjZjBmMGYwIi8+Cjx0ZXh0IHg9IjQwIiB5PSI0MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSIjOTk5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+RXJyb3I8L3RleHQ+Cjwvc3ZnPg==';
+      };
+      preview.appendChild(img);
     });
+  }
 
-    function renderProductsTable(filter = '') {
-      const tbody = document.getElementById('productsTableBody');
-      tbody.innerHTML = '';
-      
-      // Ensure products is always an array
-      const productList = Array.isArray(products) ? products : [];
-      
-      const filteredProducts = productList.filter(p => {
-        if (!p) return false;
-        const searchText = (p.name + ' ' + (p.company || '') + ' ' + (p.color || '')).toLowerCase();
-        return searchText.includes(filter.toLowerCase());
-      });
-      
-      if (filteredProducts.length === 0) {
-        const message = productList.length === 0 ? 'Hakuna bidhaa zilizopatikana' : 'Hakuna bidhaa zilizoambatana na utafutaji';
-        tbody.innerHTML = `<tr><td colspan="11" class="text-center py-4 text-muted">${message}</td></tr>`;
-        return;
-      }
-      
-      filteredProducts.forEach((product, index) => {
-        const tr = document.createElement('tr');
-        
-        // Get the first image URL - images are array of strings
-        let imageUrl = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBmaWxsPSIjZjBmMGYwIi8+Cjx0ZXh0IHg9IjMwIiB5PSIzMCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEwIiBmaWxsPSIjOTk5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+QmlkaGE8L3RleHQ+Cjwvc3ZnPg==';
-        if (product.images && product.images.length > 0 && product.images[0]) {
-          imageUrl = `http://localhost:5000${product.images[0]}`;
-        }
-        
-        tr.innerHTML = `
-          <td>${index + 1}</td>
-          <td><img src="${imageUrl}" class="product-thumb" alt="${product.name}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBmaWxsPSIjZjBmMGYwIi8+Cjx0ZXh0IHg9IjMwIiB5PSIzMCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEwIiBmaWxsPSIjOTk5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+RXJyb3I8L3RleHQ+Cjwvc3ZnPg=='"></td>
-          <td>${product.company || '-'}</td>
-          <td>${product.name || 'No Name'}</td>
-          <td>${product.color || '-'}</td>
-          <td>${product.discount_percent || 0}%</td>
-          <td>${product.type || '-'}</td>
-          <td>${product.size_us || '-'}</td>
-          <td>${product.stock || 0}</td>
-          <td>${formatPrice(product.price || 0)}</td>
-          <td>
-            <button class="btn btn-sm btn-outline-primary me-1" onclick="editProduct('${product.id}')">Hariri</button>
-            <button class="btn btn-sm btn-outline-danger" onclick="deleteProduct('${product.id}')">Futa</button>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
+  new bootstrap.Modal(document.getElementById('modalAddProduct')).show();
+}
 
-    // Render mobile cards for products
-    function renderProductsMobileCards(filter = '') {
-      const container = document.getElementById('productsMobileCards');
-      container.innerHTML = '';
-      
-      // Ensure products is always an array
-      const productList = Array.isArray(products) ? products : [];
-      
-      const filteredProducts = productList.filter(p => {
-        if (!p) return false;
-        const searchText = (p.name + ' ' + (p.company || '') + ' ' + (p.color || '')).toLowerCase();
-        return searchText.includes(filter.toLowerCase());
-      });
-      
-      if (filteredProducts.length === 0) {
-        const message = productList.length === 0 ? 'Hakuna bidhaa zilizopatikana' : 'Hakuna bidhaa zilizoambatana na utafutaji';
-        container.innerHTML = `<div class="text-center py-4 text-muted">${message}</div>`;
-        return;
-      }
-      
-      filteredProducts.forEach((product, index) => {
-        // Get the first image URL - images are array of strings
-        let imageUrl = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBmaWxsPSIjZjBmMGYwIi8+Cjx0ZXh0IHg9IjMwIiB5PSIzMCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEwIiBmaWxsPSIjOTk5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+QmlkaGE8L3RleHQ+Cjwvc3ZnPg==';
-        if (product.images && product.images.length > 0 && product.images[0]) {
-          imageUrl = `http://localhost:5000${product.images[0]}`;
-        }
-        
-        const card = document.createElement('div');
-        card.className = 'mobile-card';
-        card.innerHTML = `
-          <div class="mobile-card-row">
-            <div class="mobile-card-label">Picha</div>
-            <div class="mobile-card-value">
-              <img src="${imageUrl}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;" 
-                   alt="${product.name}" 
-                   onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBmaWxsPSIjZjBmMGYwIi8+Cjx0ZXh0IHg9IjMwIiB5PSIzMCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEwIiBmaWxsPSIjOTk5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+RXJyb3I8L3RleHQ+Cjwvc3ZnPg=='">
-            </div>
-          </div>
-          <div class="mobile-card-row">
-            <div class="mobile-card-label">Kampuni</div>
-            <div class="mobile-card-value">${product.company || '-'}</div>
-          </div>
-          <div class="mobile-card-row">
-            <div class="mobile-card-label">Jina</div>
-            <div class="mobile-card-value">${product.name || 'No Name'}</div>
-          </div>
-          <div class="mobile-card-row">
-            <div class="mobile-card-label">Rangi</div>
-            <div class="mobile-card-value">${product.color || '-'}</div>
-          </div>
-          <div class="mobile-card-row">
-            <div class="mobile-card-label">Punguzo</div>
-            <div class="mobile-card-value">${product.discount_percent || 0}%</div>
-          </div>
-          <div class="mobile-card-row">
-            <div class="mobile-card-label">Aina</div>
-            <div class="mobile-card-value">${product.type || '-'}</div>
-          </div>
-          <div class="mobile-card-row">
-            <div class="mobile-card-label">Ukubwa (EU)</div>
-            <div class="mobile-card-value">${product.size_us || '-'}</div>
-          </div>
-          <div class="mobile-card-row">
-            <div class="mobile-card-label">Idadi</div>
-            <div class="mobile-card-value">${product.stock || 0}</div>
-          </div>
-          <div class="mobile-card-row">
-            <div class="mobile-card-label">Bei</div>
-            <div class="mobile-card-value">${formatPrice(product.price || 0)}</div>
-          </div>
-          <div class="mobile-card-row">
-            <div class="mobile-card-label">Vitendo</div>
-            <div class="mobile-card-value">
-              <button class="btn btn-sm btn-outline-primary me-1" onclick="editProduct('${product.id}')">Hariri</button>
-              <button class="btn btn-sm btn-outline-danger" onclick="deleteProduct('${product.id}')">Futa</button>
-            </div>
-          </div>
-        `;
-        container.appendChild(card);
-      });
-    }
+// ===============================
+// DELETE PRODUCT
+// ===============================
+async function deleteProduct(id) {
+  if (!confirm('Una uhakika unataka kufuta bidhaa hii?')) return;
 
-    async function editProduct(id) {
-      const product = products.find(p => p.id == id);
-      if (!product) return;
-      
-      document.getElementById('editingProductId').value = product.id;
-      document.getElementById('prodTitle').value = product.name;
-      document.getElementById('prodBrand').value = product.company;
-      document.getElementById('prodColor').value = product.color;
-      document.getElementById('prodOffer').value = product.discount_percent;
-      document.getElementById('prodType').value = product.type;
-      document.getElementById('prodSize').value = product.size_us;
-      document.getElementById('prodQuantity').value = product.stock;
-      document.getElementById('prodPrice').value = product.price;
-      
-      // Show existing images - images are array of strings
-      const preview = document.getElementById('prodPreview');
-      preview.innerHTML = '';
-      if (product.images && product.images.length > 0) {
-        product.images.forEach(imgPath => {
-          const img = document.createElement('img');
-          img.src = `http://localhost:5000${imgPath}`;
-          img.onerror = function() {
-            this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjZjBmMGYwIi8+Cjx0ZXh0IHg9IjQwIiB5PSI0MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSIjOTk5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+RXJyb3I8L3RleHQ+Cjwvc3ZnPg==';
-          };
-          preview.appendChild(img);
-        });
-      }
-      
-      const modal = new bootstrap.Modal(document.getElementById('modalAddProduct'));
-      modal.show();
-    }
+  try {
+    await apiCall(`/products/${id}`, { method: 'DELETE' });
+    showAlert('Bidhaa imefutwa kikamilifu');
+    await loadProducts();
+  } catch (error) {
+    console.error('❌ Error deleting product:', error);
+  }
+}
 
-    async function deleteProduct(id) {
-      if (!confirm('Una uhakika unataka kufuta bidhaa hii?')) return;
-      
-      try {
-        await apiCall(`/products/${id}`, { method: 'DELETE' });
-        showAlert('Bidhaa imefutwa kikamilifu');
-        await loadProducts();
-      } catch (error) {
-        console.error('Error deleting product:', error);
-      }
-    }
+// ===============================
+// IMAGE PREVIEW
+// =======================
+document.getElementById('prodImages').addEventListener('change', function () {
+  const preview = document.getElementById('prodPreview');
 
-    // Image preview for product form
-    document.getElementById('prodImages').addEventListener('change', function() {
-      const preview = document.getElementById('prodPreview');
-      
-      // Only clear preview if we're adding a new product (not editing)
-      if (!document.getElementById('editingProductId').value) {
-        preview.innerHTML = '';
-      }
-      
-      const files = this.files;
-      if (files.length > 5) {
-        alert('Ruhusiwa picha 5 pekee');
-        this.value = '';
-        return;
-      }
-      
-      Array.from(files).forEach(file => {
-        const fr = new FileReader();
-        fr.onload = () => {
-          const img = document.createElement('img');
-          img.src = fr.result;
-          preview.appendChild(img);
-        };
-        fr.readAsDataURL(file);
-      });
-    });
+  if (!document.getElementById('editingProductId').value) {
+    preview.innerHTML = '';
+  }
 
-    // Quantity controls
-    document.getElementById('qtyMinus').addEventListener('click', () => {
-      const qtyInput = document.getElementById('prodQuantity');
-      qtyInput.value = Math.max(0, Number(qtyInput.value) - 1);
-    });
-    
-    document.getElementById('qtyPlus').addEventListener('click', () => {
-      const qtyInput = document.getElementById('prodQuantity');
-      qtyInput.value = Number(qtyInput.value) + 1;
-    });
+  const files = this.files;
+  if (files.length > 5) {
+    alert('Ruhusiwa picha 5 pekee');
+    this.value = '';
+    return;
+  }
+
+  Array.from(files).forEach(file => {
+    const fr = new FileReader();
+    fr.onload = () => {
+      const img = document.createElement('img');
+      img.src = fr.result;
+      preview.appendChild(img);
+    };
+    fr.readAsDataURL(file);
+  });
+});
+
+// Quantity buttons
+document.getElementById('qtyMinus').addEventListener('click', () => {
+  const qty = document.getElementById('prodQuantity');
+  qty.value = Math.max(0, Number(qty.value) - 1);
+});
+
+document.getElementById('qtyPlus').addEventListener('click', () => {
+  const qty = document.getElementById('prodQuantity');
+  qty.value = Number(qty.value) + 1;
+});
 
     // CUSTOMERS MANAGEMENT
     let customers = [];
@@ -1903,6 +1899,7 @@
     // ADS MANAGEMENT
     let ads = [];
 
+    // Load Ads
     async function loadAds() {
       try {
         ads = await apiCall('/ads');
@@ -1914,38 +1911,34 @@
       }
     }
 
-    document.getElementById('adForm').addEventListener('submit', async function(e) {
+    // Submit Ad Form
+    document.getElementById('adForm').addEventListener('submit', async function (e) {
       e.preventDefault();
-      
+
       const formData = new FormData();
       const imageFile = document.getElementById('adImage').files[0];
       const link = document.getElementById('adLink').value;
-      
+
       if (!imageFile) {
         showAlert('Tafadhali chagua picha ya tangazo');
         return;
       }
-      
+
       formData.append('image', imageFile);
-      if (link) {
-        formData.append('link', link);
-      }
-      
-      // Show loading state
+      if (link) formData.append('link', link);
+
+      // Show loading
       document.getElementById('adBtnText').style.display = 'none';
       document.getElementById('adSpinner').style.display = 'inline-block';
-      
+
       try {
         await apiCallWithFormData('/ads', formData);
         showAlert('Tangazo limechapishwa kikamilifu');
-        
-        // Reset form and close modal
+
         document.getElementById('adForm').reset();
         bootstrap.Modal.getInstance(document.getElementById('modalAddAd')).hide();
-        
-        // Reload ads
+
         await loadAds();
-        
       } catch (error) {
         console.error('Error posting ad:', error);
         showAlert('Hitilafu katika kuchapisha tangazo', 'danger');
@@ -1955,39 +1948,49 @@
       }
     });
 
+    // Render Ads
     function renderAds() {
       const container = document.getElementById('adsContainer');
       container.innerHTML = '';
-      
+
       if (ads.length === 0) {
-        container.innerHTML = '<div class="col-12 text-center py-4 text-muted">Hakuna matangazo yaliyopo</div>';
+        container.innerHTML = `
+          <div class="col-12 text-center py-4 text-muted">
+            Hakuna matangazo yaliyopo
+          </div>`;
         return;
       }
-      
+
       ads.forEach(ad => {
         const col = document.createElement('div');
         col.className = 'col-md-6 col-lg-4 mb-3';
+
         col.innerHTML = `
           <div class="card shadow-sm h-100">
             <div class="card-img-top-container" style="height: 200px; overflow: hidden;">
-              <img src="http://localhost:5000${ad.image_url}" 
-                   class="card-img-top h-100 w-100" 
-                   style="object-fit: cover;" 
-                   alt="Tangazo"
-                   onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDQwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjZjBmMGYwIi8+Cjx0ZXh0IHg9IjIwMCIgeT0iMTAwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5QaWNzYSB5YSBUYW5nYXpvIEltZXpidiA8L3RleHQ+Cjwvc3ZnPg=='">
+              <img src="${ad.image_url}"
+                  class="card-img-top h-100 w-100"
+                  style="object-fit: cover;"
+                  alt="Tangazo"
+                  onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDQwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjZjBmMGYwIi8+Cjx0ZXh0IHg9IjIwMCIgeT0iMTAwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5FcnJvcjwvdGV4dD4KPC9zdmc+'">
             </div>
+
             <div class="card-body d-flex flex-column">
               <div class="mt-auto">
                 <div class="d-flex justify-content-between align-items-center">
-                  ${ad.link ? `
-                    <a href="${ad.link}" target="_blank" class="btn btn-sm btn-outline-primary">
-                      <i class="fa fa-external-link-alt me-1"></i>Tembelea
-                    </a>
-                  ` : '<span class="text-muted small">Hakuna kiungo</span>'}
+
+                  ${ad.link
+                    ? `<a href="${ad.link}" target="_blank"
+                        class="btn btn-sm btn-outline-primary">
+                        <i class="fa fa-external-link-alt me-1"></i>Tembelea
+                      </a>`
+                    : `<span class="text-muted small">Hakuna kiungo</span>`}
+
                   <button class="btn btn-sm btn-danger" onclick="deleteAd('${ad.id}')">
                     <i class="fa fa-trash me-1"></i>Futa
                   </button>
                 </div>
+
                 <small class="text-muted d-block mt-2">
                   Imeundwa: ${new Date(ad.created_at).toLocaleDateString('sw-TZ')}
                 </small>
@@ -1995,13 +1998,15 @@
             </div>
           </div>
         `;
+
         container.appendChild(col);
       });
     }
 
+    // Delete Ad
     async function deleteAd(id) {
       if (!confirm('Una uhakika unataka kufuta tangazo hili?')) return;
-      
+
       try {
         await apiCall(`/ads/${id}`, { method: 'DELETE' });
         showAlert('Tangazo limefutwa kikamilifu');
@@ -2011,6 +2016,7 @@
         showAlert('Hitilafu katika kufuta tangazo', 'danger');
       }
     }
+
 
     // ANNOUNCEMENTS
     document.getElementById('announcementForm').addEventListener('submit', async function(e) {
