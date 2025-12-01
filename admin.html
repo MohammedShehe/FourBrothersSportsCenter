@@ -32,91 +32,93 @@
       background-color: #f8f9fa;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       color: #333;
+      overflow-x: hidden;
     }
     
+    /* Login Styles */
+    .login-container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--primary), var(--info));
+      padding: 1rem;
+    }
+
+    .login-card {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      padding: 2rem;
+      width: 100%;
+      max-width: 400px;
+      transition: transform 0.3s ease;
+    }
+
+    .login-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .login-card h4 {
+      margin-bottom: 0.5rem;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .login-card p {
+      margin-bottom: 1.5rem;
+      color: var(--secondary);
+      font-size: 0.95rem;
+    }
+
+    .login-card input[type="text"],
+    .login-card input[type="password"] {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ddd;
+      border-radius: var(--border-radius);
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .login-card input:focus {
+      border-color: var(--primary);
+      outline: none;
+    }
+
+    .login-card button {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: var(--border-radius);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .login-card button:hover {
+      background-color: #0056b3;
+    }
+
+    .logo-container {
+      width: 120px;
+      height: 48px;
+      margin: 0 auto 1rem;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .logo-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
     
-.login-container {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, var(--primary), var(--info));
-  padding: 1rem;
-}
-
-.login-card {
-  background: white;
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow);
-  padding: 2rem;
-  width: 100%;
-  max-width: 400px;
-  transition: transform 0.3s ease;
-}
-
-.login-card:hover {
-  transform: translateY(-2px);
-}
-
-.login-card h4 {
-  margin-bottom: 0.5rem;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--primary);
-}
-
-.login-card p {
-  margin-bottom: 1.5rem;
-  color: var(--muted-color);
-  font-size: 0.95rem;
-}
-
-.login-card input[type="text"],
-.login-card input[type="password"] {
-  width: 100%;
-  padding: 0.75rem;
-  margin-bottom: 1rem;
-  border: 1px solid #ddd;
-  border-radius: var(--border-radius);
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
-}
-
-.login-card input:focus {
-  border-color: var(--primary);
-  outline: none;
-}
-
-.login-card button {
-  width: 100%;
-  padding: 0.75rem;
-  background-color: var(--primary);
-  color: white;
-  border: none;
-  border-radius: var(--border-radius);
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.login-card button:hover {
-  background-color: #0056b3;
-}
-
-.logo-container {
-  width: 120px;
-  height: 48px;
-  margin: 0 auto 1rem;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.logo-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-    
+    /* Admin Panel Styles */
     .sidebar {
       min-width: 260px;
       max-width: 260px;
@@ -124,6 +126,7 @@
       border-right: 1px solid #e6e6e6;
       min-height: 100vh;
       transition: var(--transition);
+      z-index: 1000;
     }
     
     .nav-link {
@@ -132,6 +135,8 @@
       border-radius: var(--border-radius);
       margin-bottom: 5px;
       transition: var(--transition);
+      display: flex;
+      align-items: center;
     }
     
     .nav-link:hover {
@@ -324,14 +329,14 @@
       border: 1px solid #ddd;
     }
     
-    /* small responsive adjustments */
+    /* Mobile-first responsive adjustments */
     @media (max-width: 991px) {
       .sidebar {
         position: fixed;
-        z-index: 1030;
         left: -300px;
         height: 100vh;
         overflow-y: auto;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.1);
       }
       
       .sidebar.show {
@@ -349,6 +354,18 @@
       .status-control-group .btn {
         min-width: 100%;
       }
+      
+      .modal-dialog {
+        margin: 1rem;
+      }
+      
+      .table-responsive {
+        font-size: 0.875rem;
+      }
+      
+      .nav-link {
+        padding: 10px 12px;
+      }
     }
     
     @media (max-width: 768px) {
@@ -360,20 +377,149 @@
       .section-title:after {
         width: 30px;
       }
-    }
-    
-    @media (max-width: 576px) {
+      
       .card-small {
         padding: 12px;
-      }
-      
-      .table-responsive {
-        font-size: 0.875rem;
       }
       
       .btn {
         padding: 6px 12px;
         font-size: 0.875rem;
+      }
+      
+      .modal-dialog-scrollable .modal-body {
+        max-height: 60vh;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .d-flex.justify-content-between.align-items-center {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 10px;
+      }
+      
+      .d-flex.justify-content-between.align-items-center > div {
+        width: 100%;
+      }
+      
+      .d-flex.justify-content-between.align-items-center .btn {
+        width: 100%;
+        margin-bottom: 5px;
+      }
+      
+      .table th, .table td {
+        padding: 0.5rem;
+      }
+      
+      .modal-dialog {
+        margin: 0.5rem;
+      }
+      
+      .modal-content {
+        border-radius: 0;
+      }
+      
+      .modal-header, .modal-footer {
+        padding: 0.75rem 1rem;
+      }
+      
+      .section-title {
+        font-size: 1.25rem;
+      }
+      
+      .card-small h4 {
+        font-size: 1.25rem;
+      }
+      
+      .card-small .fa-2x {
+        font-size: 1.5rem;
+      }
+    }
+    
+    /* Mobile overlay for sidebar */
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+      display: none;
+    }
+    
+    .sidebar-overlay.show {
+      display: block;
+    }
+    
+    /* Improved mobile form controls */
+    .form-control, .form-select {
+      padding: 0.75rem;
+    }
+    
+    /* Better mobile table experience */
+    .table-mobile-card {
+      display: none;
+    }
+    
+    @media (max-width: 768px) {
+      .table-responsive table {
+        display: none;
+      }
+      
+      .table-mobile-card {
+        display: block;
+      }
+      
+      .mobile-card {
+        background: white;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      }
+      
+      .mobile-card-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #f0f0f0;
+      }
+      
+      .mobile-card-row:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+      
+      .mobile-card-label {
+        font-weight: 600;
+        color: #666;
+      }
+      
+      .mobile-card-value {
+        text-align: right;
+      }
+    }
+    
+    /* Improved mobile navigation */
+    .mobile-header {
+      display: none;
+      background: white;
+      padding: 15px;
+      border-bottom: 1px solid #e6e6e6;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    @media (max-width: 991px) {
+      .mobile-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
       }
     }
   </style>
@@ -383,9 +529,9 @@
   <div id="loginPage" class="login-container">
     <div class="login-card">
       <div class="text-center mb-4">
-        <div class="mb-3" style="width: 120px; height: 48px; margin: 0 auto; border-radius: 4px; overflow: hidden;">
-        <img src="images/FBSC.png" alt="Four Brothers Logo" style="width: 100%; height: 100%; object-fit: contain;">
-      </div>
+        <div class="logo-container">
+          <img src="images/FBSC.png" alt="Four Brothers Logo">
+        </div>
         <h4>Admin Ingia</h4>
         <p class="text-muted">Weka maelezo yako ya kuingia</p>
       </div>
@@ -430,6 +576,25 @@
 
   <!-- Admin Panel (hidden initially) -->
   <div id="adminPanel" style="display: none;">
+    <!-- Mobile Header -->
+    <div class="mobile-header">
+      <div class="d-flex align-items-center">
+        <button class="btn btn-outline-secondary me-3" id="toggleSidebarMobile">
+          <i class="fa fa-bars"></i>
+        </button>
+        <div>
+          <h5 class="mb-0" id="mobileSectionTitle">Dashibodi</h5>
+          <small class="text-muted">Four Brothers Admin</small>
+        </div>
+      </div>
+      <button class="btn btn-outline-danger" id="btnLogoutMobile">
+        <i class="fa fa-sign-out-alt me-1"></i>Toka
+      </button>
+    </div>
+    
+    <!-- Sidebar Overlay (for mobile) -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    
     <div class="d-flex">
       <!-- Sidebar -->
       <aside class="sidebar p-3 shadow-sm" id="sidebar">
@@ -470,8 +635,8 @@
       </aside>
 
       <!-- Main Content -->
-      <main class="flex-grow-1 p-4 main-content">
-        <div class="d-flex justify-content-between align-items-center mb-4">
+      <main class="flex-grow-1 p-3 p-md-4 main-content">
+        <div class="d-none d-lg-flex justify-content-between align-items-center mb-4">
           <h3 class="m-0 section-title" id="sectionTitle">Dashibodi ya Msimamizi</h3>
           <div class="d-flex align-items-center gap-2">
             <button class="btn btn-outline-secondary d-lg-none" id="toggleSidebar">
@@ -491,50 +656,50 @@
           <!-- DASHBOARD -->
           <div id="dashboard" class="section">
             <div class="row g-3 mb-4">
-              <div class="col-md-3">
+              <div class="col-6 col-md-3">
                 <div class="card card-small">
                   <div class="d-flex justify-content-between align-items-center">
                     <div>
                       <small class="text-muted">Wateja Wote</small>
                       <h4 id="totalUsers">0</h4>
                     </div>
-                    <i class="fa fa-users fa-2x text-muted"></i>
+                    <i class="fa fa-users text-muted"></i>
                   </div>
                 </div>
               </div>
               
-              <div class="col-md-3">
+              <div class="col-6 col-md-3">
                 <div class="card card-small">
                   <div class="d-flex justify-content-between align-items-center">
                     <div>
                       <small class="text-muted">Bidhaa Zote</small>
                       <h4 id="totalProducts">0</h4>
                     </div>
-                    <i class="fa fa-box fa-2x text-muted"></i>
+                    <i class="fa fa-box text-muted"></i>
                   </div>
                 </div>
               </div>
               
-              <div class="col-md-3">
+              <div class="col-6 col-md-3">
                 <div class="card card-small">
                   <div class="d-flex justify-content-between align-items-center">
                     <div>
                       <small class="text-muted">Mapato (mwaka huu)</small>
                       <h4 id="totalIncome">TSh 0</h4>
                     </div>
-                    <i class="fa fa-money-bill-wave fa-2x text-muted"></i>
+                    <i class="fa fa-money-bill-wave text-muted"></i>
                   </div>
                 </div>
               </div>
               
-              <div class="col-md-3">
+              <div class="col-6 col-md-3">
                 <div class="card card-small">
                   <div class="d-flex justify-content-between align-items-center">
                     <div>
                       <small class="text-muted">Bidhaa Zilizonunuliwa</small>
                       <h4 id="totalOrders">0</h4>
                     </div>
-                    <i class="fa fa-shopping-cart fa-2x text-muted"></i>
+                    <i class="fa fa-shopping-cart text-muted"></i>
                   </div>
                 </div>
               </div>
@@ -542,7 +707,9 @@
 
             <div class="card shadow-sm p-3 mb-4">
               <h6 class="section-title">Maendeleo ya Mapato (kila mwezi)</h6>
-              <canvas id="incomeChart" height="100"></canvas>
+              <div style="position: relative; height: 300px;">
+                <canvas id="incomeChart"></canvas>
+              </div>
             </div>
             
             <div class="row g-3">
@@ -576,10 +743,10 @@
 
           <!-- PRODUCTS -->
           <div id="products" class="section d-none">
-            <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-3 flex-column flex-md-row gap-2">
               <h5 class="section-title">Usimamizi wa Bidhaa</h5>
-              <div class="d-flex gap-2">
-                <input type="text" id="productSearch" placeholder="Tafuta bidhaa..." class="form-control" style="width:230px">
+              <div class="d-flex flex-column flex-md-row gap-2 w-100 w-md-auto">
+                <input type="text" id="productSearch" placeholder="Tafuta bidhaa..." class="form-control" style="min-width: 200px;">
                 <button class="btn btn-outline-info" onclick="loadProducts()">
                   <i class="fa fa-refresh me-1"></i>Pakia Upya
                 </button>
@@ -589,7 +756,7 @@
               </div>
             </div>
 
-            <div class="table-responsive">
+            <div class="table-responsive d-none d-md-block">
               <table class="table table-hover align-middle">
                 <thead class="table-light">
                   <tr>
@@ -609,21 +776,24 @@
                 <tbody id="productsTableBody"></tbody>
               </table>
             </div>
+            
+            <!-- Mobile Cards View -->
+            <div class="table-mobile-card" id="productsMobileCards"></div>
           </div>
 
           <!-- CUSTOMERS -->
           <div id="customers" class="section d-none">
-            <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-3 flex-column flex-md-row gap-2">
               <h5 class="section-title">Usimamizi wa Wateja</h5>
-              <div class="d-flex gap-2">
-                <input type="text" id="customerSearch" placeholder="Tafuta wateja..." class="form-control" style="width:230px">
+              <div class="d-flex flex-column flex-md-row gap-2 w-100 w-md-auto">
+                <input type="text" id="customerSearch" placeholder="Tafuta wateja..." class="form-control" style="min-width: 200px;">
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAddCustomer">
                   <i class="fa fa-plus me-1"></i>Ongeza Mteja
                 </button>
               </div>
             </div>
 
-            <div class="table-responsive">
+            <div class="table-responsive d-none d-md-block">
               <table class="table table-striped align-middle">
                 <thead class="table-light">
                   <tr>
@@ -639,13 +809,16 @@
                 <tbody id="customersTableBody"></tbody>
               </table>
             </div>
+            
+            <!-- Mobile Cards View -->
+            <div class="table-mobile-card" id="customersMobileCards"></div>
           </div>
 
           <!-- ADS -->
           <div id="ads" class="section d-none">
-            <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-3 flex-column flex-md-row gap-2">
               <h5 class="section-title">Matangazo & Arifa</h5>
-              <div class="d-flex gap-2">
+              <div class="d-flex flex-column flex-md-row gap-2">
                 <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#modalAddAd">
                   <i class="fa fa-plus me-1"></i>Tangazo Jipya
                 </button>
@@ -660,7 +833,7 @@
 
           <!-- NOTIFICATIONS -->
           <div id="notifications" class="section d-none">
-            <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-3 flex-column flex-md-row gap-2">
               <h5 class="section-title">Arifa & Ujumbe</h5>
               <div>
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalSendMessage">
@@ -677,7 +850,7 @@
 
           <!-- ORDERS -->
           <div id="orders" class="section d-none">
-            <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-3 flex-column flex-md-row gap-2">
               <h5 class="section-title">Maagizo Yaliyowekwa</h5>
               <div>
                 <button class="btn btn-outline-primary" id="refreshOrdersBtn">
@@ -686,7 +859,7 @@
               </div>
             </div>
 
-            <div class="table-responsive">
+            <div class="table-responsive d-none d-md-block">
               <table class="table table-hover align-middle">
                 <thead class="table-light">
                   <tr>
@@ -701,6 +874,9 @@
                 <tbody id="ordersTableBody"></tbody>
               </table>
             </div>
+            
+            <!-- Mobile Cards View -->
+            <div class="table-mobile-card" id="ordersMobileCards"></div>
           </div>
         </section>
       </main>
@@ -1226,6 +1402,7 @@
           },
           options: {
             responsive: true,
+            maintainAspectRatio: false,
             plugins: {
               legend: { display: false }
             },
@@ -1261,10 +1438,12 @@
         products = await apiCall('/products');
         console.log('✅ Products loaded:', products);
         renderProductsTable();
+        renderProductsMobileCards();
       } catch (error) {
         console.error('❌ Error loading products:', error);
         products = [];
         renderProductsTable();
+        renderProductsMobileCards();
       }
     }
 
@@ -1370,6 +1549,88 @@
       });
     }
 
+    // Render mobile cards for products
+    function renderProductsMobileCards(filter = '') {
+      const container = document.getElementById('productsMobileCards');
+      container.innerHTML = '';
+      
+      // Ensure products is always an array
+      const productList = Array.isArray(products) ? products : [];
+      
+      const filteredProducts = productList.filter(p => {
+        if (!p) return false;
+        const searchText = (p.name + ' ' + (p.company || '') + ' ' + (p.color || '')).toLowerCase();
+        return searchText.includes(filter.toLowerCase());
+      });
+      
+      if (filteredProducts.length === 0) {
+        const message = productList.length === 0 ? 'Hakuna bidhaa zilizopatikana' : 'Hakuna bidhaa zilizoambatana na utafutaji';
+        container.innerHTML = `<div class="text-center py-4 text-muted">${message}</div>`;
+        return;
+      }
+      
+      filteredProducts.forEach((product, index) => {
+        // Get the first image URL - images are array of strings
+        let imageUrl = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBmaWxsPSIjZjBmMGYwIi8+Cjx0ZXh0IHg9IjMwIiB5PSIzMCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEwIiBmaWxsPSIjOTk5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+QmlkaGE8L3RleHQ+Cjwvc3ZnPg==';
+        if (product.images && product.images.length > 0 && product.images[0]) {
+          imageUrl = `http://localhost:5000${product.images[0]}`;
+        }
+        
+        const card = document.createElement('div');
+        card.className = 'mobile-card';
+        card.innerHTML = `
+          <div class="mobile-card-row">
+            <div class="mobile-card-label">Picha</div>
+            <div class="mobile-card-value">
+              <img src="${imageUrl}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;" 
+                   alt="${product.name}" 
+                   onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBmaWxsPSIjZjBmMGYwIi8+Cjx0ZXh0IHg9IjMwIiB5PSIzMCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEwIiBmaWxsPSIjOTk5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+RXJyb3I8L3RleHQ+Cjwvc3ZnPg=='">
+            </div>
+          </div>
+          <div class="mobile-card-row">
+            <div class="mobile-card-label">Kampuni</div>
+            <div class="mobile-card-value">${product.company || '-'}</div>
+          </div>
+          <div class="mobile-card-row">
+            <div class="mobile-card-label">Jina</div>
+            <div class="mobile-card-value">${product.name || 'No Name'}</div>
+          </div>
+          <div class="mobile-card-row">
+            <div class="mobile-card-label">Rangi</div>
+            <div class="mobile-card-value">${product.color || '-'}</div>
+          </div>
+          <div class="mobile-card-row">
+            <div class="mobile-card-label">Punguzo</div>
+            <div class="mobile-card-value">${product.discount_percent || 0}%</div>
+          </div>
+          <div class="mobile-card-row">
+            <div class="mobile-card-label">Aina</div>
+            <div class="mobile-card-value">${product.type || '-'}</div>
+          </div>
+          <div class="mobile-card-row">
+            <div class="mobile-card-label">Ukubwa (EU)</div>
+            <div class="mobile-card-value">${product.size_us || '-'}</div>
+          </div>
+          <div class="mobile-card-row">
+            <div class="mobile-card-label">Idadi</div>
+            <div class="mobile-card-value">${product.stock || 0}</div>
+          </div>
+          <div class="mobile-card-row">
+            <div class="mobile-card-label">Bei</div>
+            <div class="mobile-card-value">${formatPrice(product.price || 0)}</div>
+          </div>
+          <div class="mobile-card-row">
+            <div class="mobile-card-label">Vitendo</div>
+            <div class="mobile-card-value">
+              <button class="btn btn-sm btn-outline-primary me-1" onclick="editProduct('${product.id}')">Hariri</button>
+              <button class="btn btn-sm btn-outline-danger" onclick="deleteProduct('${product.id}')">Futa</button>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
     async function editProduct(id) {
       const product = products.find(p => p.id == id);
       if (!product) return;
@@ -1459,6 +1720,7 @@
       try {
         customers = await apiCall('/customers');
         renderCustomersTable();
+        renderCustomersMobileCards();
         populateCustomerSelects();
       } catch (error) {
         console.error('Error loading customers:', error);
@@ -1542,6 +1804,60 @@
           </td>
         `;
         tbody.appendChild(tr);
+      });
+    }
+
+    // Render mobile cards for customers
+    function renderCustomersMobileCards(filter = '') {
+      const container = document.getElementById('customersMobileCards');
+      container.innerHTML = '';
+      
+      const filteredCustomers = customers.filter(c => 
+        (c.first_name + c.last_name + c.phone + (c.email || '')).toLowerCase().includes(filter.toLowerCase())
+      );
+      
+      if (filteredCustomers.length === 0) {
+        container.innerHTML = '<div class="text-center py-4 text-muted">Hakuna wateja waliopatikana</div>';
+        return;
+      }
+      
+      filteredCustomers.forEach((customer, index) => {
+        const card = document.createElement('div');
+        card.className = 'mobile-card';
+        card.innerHTML = `
+          <div class="mobile-card-row">
+            <div class="mobile-card-label">#</div>
+            <div class="mobile-card-value">${index + 1}</div>
+          </div>
+          <div class="mobile-card-row">
+            <div class="mobile-card-label">Jina la Kwanza</div>
+            <div class="mobile-card-value">${customer.first_name}</div>
+          </div>
+          <div class="mobile-card-row">
+            <div class="mobile-card-label">Jina la Mwisho</div>
+            <div class="mobile-card-value">${customer.last_name}</div>
+          </div>
+          <div class="mobile-card-row">
+            <div class="mobile-card-label">Simu</div>
+            <div class="mobile-card-value">${customer.phone}</div>
+          </div>
+          <div class="mobile-card-row">
+            <div class="mobile-card-label">Barua Pepe</div>
+            <div class="mobile-card-value">${customer.email || '-'}</div>
+          </div>
+          <div class="mobile-card-row">
+            <div class="mobile-card-label">Jinsia</div>
+            <div class="mobile-card-value">${customer.gender}</div>
+          </div>
+          <div class="mobile-card-row">
+            <div class="mobile-card-label">Vitendo</div>
+            <div class="mobile-card-value">
+              <button class="btn btn-sm btn-outline-primary me-1" onclick="editCustomer('${customer.id}')">Hariri</button>
+              <button class="btn btn-sm btn-outline-danger" onclick="deleteCustomer('${customer.id}')">Futa</button>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
       });
     }
 
@@ -1819,169 +2135,228 @@
     }
 
     // ---------------- ORDERS MANAGEMENT ----------------
-let orders = [];
+    let orders = [];
 
-// Load all orders
-async function loadOrders() {
-  try {
-    orders = await apiCall('/orders');
-    renderOrders();
-    renderRecentOrders();
-  } catch (error) {
-    console.error('Error loading orders:', error);
-  }
-}
-
-// Render orders table
-function renderOrders() {
-  const tbody = document.getElementById('ordersTableBody');
-  tbody.innerHTML = '';
-
-  if (orders.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="6" class="text-center py-4 text-muted">Hakuna maagizo yaliyopatikana</td></tr>';
-    return;
-  }
-
-  orders.forEach(order => {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${order.order_id}</td>
-      <td>${order.first_name} ${order.last_name}</td>
-      <td>${order.product_name}</td>
-      <td>${formatPrice(order.total_price)}</td>
-      <td id="status_${order.order_id}">
-        <span class="status-badge status-${order.status}">${order.status}</span>
-      </td>
-      <td>
-        <div class="status-control-group">
-          <button class="btn btn-sm btn-outline-secondary" onclick="updateOrderStatus('${order.order_id}','Imewekwa')">Imewekwa</button>
-          <button class="btn btn-sm btn-outline-warning" onclick="updateOrderStatus('${order.order_id}','Inasafirishwa')">Inasafirishwa</button>
-          <button class="btn btn-sm btn-outline-danger" onclick="updateOrderStatus('${order.order_id}','Ghairishwa')">Imeghairishwa</button>
-          <button class="btn btn-sm btn-info" onclick="updateOrderStatus('${order.order_id}','Kurudishwa')">Kurudishwa</button>
-          <button class="btn btn-sm btn-success" onclick="markAsReceived('${order.order_id}')">Imepokelewa</button>
-        </div>
-      </td>
-    `;
-    tbody.appendChild(tr);
-  });
-}
-
-// Render recent orders sidebar
-function renderRecentOrders() {
-  const container = document.getElementById('recentOrders');
-  const recent = orders.slice(0, 3);
-
-  if (recent.length === 0) {
-    container.innerHTML = '<div class="text-center py-3 text-muted">Hakuna maagizo ya hivi karibuni</div>';
-    return;
-  }
-
-  container.innerHTML = '';
-  recent.forEach(order => {
-    const div = document.createElement('div');
-    div.className = 'd-flex justify-content-between align-items-center border-bottom py-2';
-    div.innerHTML = `
-      <div>
-        <div class="fw-bold small">${order.order_id}</div>
-        <div class="text-muted small">${order.first_name} ${order.last_name}</div>
-      </div>
-      <div class="text-end">
-        <div class="fw-bold">${formatPrice(order.total_price)}</div>
-        <span class="status-badge status-${order.status}">${order.status}</span>
-      </div>
-    `;
-    container.appendChild(div);
-  });
-}
-
-// Update normal statuses
-async function updateOrderStatus(orderId, status) {
-  try {
-    const response = await apiCall(`/orders/${orderId}/status`, {
-      method: 'PUT',
-      body: JSON.stringify({ status })
-    });
-
-    showAlert(`Hali ya agizo imesasishwa kuwa: ${status}`);
-
-    const statusElement = document.getElementById(`status_${orderId}`);
-    if (statusElement) {
-      statusElement.innerHTML = `<span class="status-badge status-${status}">${status}</span>`;
+    // Load all orders
+    async function loadOrders() {
+      try {
+        orders = await apiCall('/orders');
+        renderOrders();
+        renderOrdersMobileCards();
+        renderRecentOrders();
+      } catch (error) {
+        console.error('Error loading orders:', error);
+      }
     }
 
-    await loadOrders();
-    return response;
-  } catch (error) {
-    console.error('Error updating order status:', error);
-    showAlert(error?.message || 'Tatizo kuthibitisha hali ya agizo');
-    throw error;
-  }
-}
+    // Render orders table
+    function renderOrders() {
+      const tbody = document.getElementById('ordersTableBody');
+      tbody.innerHTML = '';
 
-// Generate OTP and open modal (Imepokelewa flow)
-async function markAsReceived(orderId) {
-  try {
-    const data = await apiCall(`/orders/${orderId}/generate-otp`, { method: 'POST' });
+      if (orders.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" class="text-center py-4 text-muted">Hakuna maagizo yaliyopatikana</td></tr>';
+        return;
+      }
 
-    console.log(`OTP for order ${orderId}:`, data.otp); // optional debug
-
-    openOtpModal(orderId);
-  } catch (err) {
-    console.error('Error generating OTP:', err);
-    showAlert(err?.message || 'Tatizo kuunda OTP, jaribu tena');
-  }
-}
-
-// Open OTP modal
-function openOtpModal(orderId) {
-  document.getElementById('otpOrderId').value = orderId;
-  document.getElementById('otpInput').value = '';
-  new bootstrap.Modal(document.getElementById('modalConfirmOTP')).show();
-}
-
-// Confirm OTP
-document.getElementById('confirmOtpBtn').addEventListener('click', async function() {
-  const orderId = document.getElementById('otpOrderId').value;
-  const otp = document.getElementById('otpInput').value.trim();
-
-  if (!otp) {
-    showAlert('Tafadhali ingiza OTP');
-    return;
-  }
-
-  document.getElementById('otpBtnText').style.display = 'none';
-  document.getElementById('otpSpinner').style.display = 'inline-block';
-
-  try {
-    await apiCall(`/orders/${orderId}/confirm`, {
-      method: 'POST',
-      body: JSON.stringify({ otp })
-    });
-
-    showAlert('Umepokea agizo kikamilifu');
-
-    bootstrap.Modal.getInstance(document.getElementById('modalConfirmOTP')).hide();
-
-    const statusElement = document.getElementById(`status_${orderId}`);
-    if (statusElement) {
-      statusElement.innerHTML = `<span class="status-badge status-Imepokelewa">Imepokelewa</span>`;
+      orders.forEach(order => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${order.order_id}</td>
+          <td>${order.first_name} ${order.last_name}</td>
+          <td>${order.product_name}</td>
+          <td>${formatPrice(order.total_price)}</td>
+          <td id="status_${order.order_id}">
+            <span class="status-badge status-${order.status}">${order.status}</span>
+          </td>
+          <td>
+            <div class="status-control-group">
+              <button class="btn btn-sm btn-outline-secondary" onclick="updateOrderStatus('${order.order_id}','Imewekwa')">Imewekwa</button>
+              <button class="btn btn-sm btn-outline-warning" onclick="updateOrderStatus('${order.order_id}','Inasafirishwa')">Inasafirishwa</button>
+              <button class="btn btn-sm btn-outline-danger" onclick="updateOrderStatus('${order.order_id}','Ghairishwa')">Imeghairishwa</button>
+              <button class="btn btn-sm btn-info" onclick="updateOrderStatus('${order.order_id}','Kurudishwa')">Kurudishwa</button>
+              <button class="btn btn-sm btn-success" onclick="markAsReceived('${order.order_id}')">Imepokelewa</button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
     }
 
-    await loadOrders();
-  } catch (error) {
-    console.error('Error confirming order:', error);
-    showAlert(error?.message || 'OTP si sahihi, jaribu tena');
-  } finally {
-    document.getElementById('otpBtnText').style.display = 'inline-block';
-    document.getElementById('otpSpinner').style.display = 'none';
-  }
-});
+    // Render mobile cards for orders
+    function renderOrdersMobileCards() {
+      const container = document.getElementById('ordersMobileCards');
+      container.innerHTML = '';
 
+      if (orders.length === 0) {
+        container.innerHTML = '<div class="text-center py-4 text-muted">Hakuna maagizo yaliyopatikana</div>';
+        return;
+      }
 
+      orders.forEach(order => {
+        const card = document.createElement('div');
+        card.className = 'mobile-card';
+        card.innerHTML = `
+          <div class="mobile-card-row">
+            <div class="mobile-card-label">Namba ya Agizo</div>
+            <div class="mobile-card-value">${order.order_id}</div>
+          </div>
+          <div class="mobile-card-row">
+            <div class="mobile-card-label">Mteja</div>
+            <div class="mobile-card-value">${order.first_name} ${order.last_name}</div>
+          </div>
+          <div class="mobile-card-row">
+            <div class="mobile-card-label">Bidhaa</div>
+            <div class="mobile-card-value">${order.product_name}</div>
+          </div>
+          <div class="mobile-card-row">
+            <div class="mobile-card-label">Jumla</div>
+            <div class="mobile-card-value">${formatPrice(order.total_price)}</div>
+          </div>
+          <div class="mobile-card-row">
+            <div class="mobile-card-label">Hali</div>
+            <div class="mobile-card-value">
+              <span class="status-badge status-${order.status}">${order.status}</span>
+            </div>
+          </div>
+          <div class="mobile-card-row">
+            <div class="mobile-card-label">Kitendo</div>
+            <div class="mobile-card-value">
+              <div class="status-control-group">
+                <button class="btn btn-sm btn-outline-secondary" onclick="updateOrderStatus('${order.order_id}','Imewekwa')">Imewekwa</button>
+                <button class="btn btn-sm btn-outline-warning" onclick="updateOrderStatus('${order.order_id}','Inasafirishwa')">Inasafirishwa</button>
+                <button class="btn btn-sm btn-outline-danger" onclick="updateOrderStatus('${order.order_id}','Ghairishwa')">Imeghairishwa</button>
+                <button class="btn btn-sm btn-info" onclick="updateOrderStatus('${order.order_id}','Kurudishwa')">Kurudishwa</button>
+                <button class="btn btn-sm btn-success" onclick="markAsReceived('${order.order_id}')">Imepokelewa</button>
+              </div>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Render recent orders sidebar
+    function renderRecentOrders() {
+      const container = document.getElementById('recentOrders');
+      const recent = orders.slice(0, 3);
+
+      if (recent.length === 0) {
+        container.innerHTML = '<div class="text-center py-3 text-muted">Hakuna maagizo ya hivi karibuni</div>';
+        return;
+      }
+
+      container.innerHTML = '';
+      recent.forEach(order => {
+        const div = document.createElement('div');
+        div.className = 'd-flex justify-content-between align-items-center border-bottom py-2';
+        div.innerHTML = `
+          <div>
+            <div class="fw-bold small">${order.order_id}</div>
+            <div class="text-muted small">${order.first_name} ${order.last_name}</div>
+          </div>
+          <div class="text-end">
+            <div class="fw-bold">${formatPrice(order.total_price)}</div>
+            <span class="status-badge status-${order.status}">${order.status}</span>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    // Update normal statuses
+    async function updateOrderStatus(orderId, status) {
+      try {
+        const response = await apiCall(`/orders/${orderId}/status`, {
+          method: 'PUT',
+          body: JSON.stringify({ status })
+        });
+
+        showAlert(`Hali ya agizo imesasishwa kuwa: ${status}`);
+
+        const statusElement = document.getElementById(`status_${orderId}`);
+        if (statusElement) {
+          statusElement.innerHTML = `<span class="status-badge status-${status}">${status}</span>`;
+        }
+
+        await loadOrders();
+        return response;
+      } catch (error) {
+        console.error('Error updating order status:', error);
+        showAlert(error?.message || 'Tatizo kuthibitisha hali ya agizo');
+        throw error;
+      }
+    }
+
+    // Generate OTP and open modal (Imepokelewa flow)
+    async function markAsReceived(orderId) {
+      try {
+        const data = await apiCall(`/orders/${orderId}/generate-otp`, { method: 'POST' });
+
+        console.log(`OTP for order ${orderId}:`, data.otp); // optional debug
+
+        openOtpModal(orderId);
+      } catch (err) {
+        console.error('Error generating OTP:', err);
+        showAlert(err?.message || 'Tatizo kuunda OTP, jaribu tena');
+      }
+    }
+
+    // Open OTP modal
+    function openOtpModal(orderId) {
+      document.getElementById('otpOrderId').value = orderId;
+      document.getElementById('otpInput').value = '';
+      new bootstrap.Modal(document.getElementById('modalConfirmOTP')).show();
+    }
+
+    // Confirm OTP
+    document.getElementById('confirmOtpBtn').addEventListener('click', async function() {
+      const orderId = document.getElementById('otpOrderId').value;
+      const otp = document.getElementById('otpInput').value.trim();
+
+      if (!otp) {
+        showAlert('Tafadhali ingiza OTP');
+        return;
+      }
+
+      document.getElementById('otpBtnText').style.display = 'none';
+      document.getElementById('otpSpinner').style.display = 'inline-block';
+
+      try {
+        await apiCall(`/orders/${orderId}/confirm`, {
+          method: 'POST',
+          body: JSON.stringify({ otp })
+        });
+
+        showAlert('Umepokea agizo kikamilifu');
+
+        bootstrap.Modal.getInstance(document.getElementById('modalConfirmOTP')).hide();
+
+        const statusElement = document.getElementById(`status_${orderId}`);
+        if (statusElement) {
+          statusElement.innerHTML = `<span class="status-badge status-Imepokelewa">Imepokelewa</span>`;
+        }
+
+        await loadOrders();
+      } catch (error) {
+        console.error('Error confirming order:', error);
+        showAlert(error?.message || 'OTP si sahihi, jaribu tena');
+      } finally {
+        document.getElementById('otpBtnText').style.display = 'inline-block';
+        document.getElementById('otpSpinner').style.display = 'none';
+      }
+    });
 
     // SEARCH FUNCTIONALITY
-    document.getElementById('productSearch').addEventListener('input', (e) => renderProductsTable(e.target.value));
-    document.getElementById('customerSearch').addEventListener('input', (e) => renderCustomersTable(e.target.value));
+    document.getElementById('productSearch').addEventListener('input', (e) => {
+      renderProductsTable(e.target.value);
+      renderProductsMobileCards(e.target.value);
+    });
+    
+    document.getElementById('customerSearch').addEventListener('input', (e) => {
+      renderCustomersTable(e.target.value);
+      renderCustomersMobileCards(e.target.value);
+    });
 
     // SIDEBAR NAVIGATION
     document.querySelectorAll('.nav-link').forEach(link => {
@@ -2012,6 +2387,7 @@ document.getElementById('confirmOtpBtn').addEventListener('click', async functio
           orders: 'Maagizo Yaliyowekwa'
         };
         document.getElementById('sectionTitle').textContent = titleMap[sectionId] || 'Dashibodi ya Msimamizi';
+        document.getElementById('mobileSectionTitle').textContent = titleMap[sectionId] || 'Dashibodi';
         
         // Load data when switching to specific sections
         if (sectionId === 'products') {
@@ -2025,6 +2401,12 @@ document.getElementById('confirmOtpBtn').addEventListener('click', async functio
           loadAds();
         } else if (sectionId === 'notifications') {
           loadNotifications();
+        }
+        
+        // Close sidebar on mobile after navigation
+        if (window.innerWidth < 992) {
+          document.getElementById('sidebar').classList.remove('show');
+          document.getElementById('sidebarOverlay').classList.remove('show');
         }
         
         window.scrollTo(0, 0);
@@ -2053,12 +2435,23 @@ document.getElementById('confirmOtpBtn').addEventListener('click', async functio
     document.getElementById('toggleSidebar').addEventListener('click', () => {
       document.getElementById('sidebar').classList.toggle('show');
     });
+    
+    document.getElementById('toggleSidebarMobile').addEventListener('click', () => {
+      document.getElementById('sidebar').classList.add('show');
+      document.getElementById('sidebarOverlay').classList.add('show');
+    });
+    
+    document.getElementById('sidebarOverlay').addEventListener('click', () => {
+      document.getElementById('sidebar').classList.remove('show');
+      document.getElementById('sidebarOverlay').classList.remove('show');
+    });
 
     // Close sidebar when clicking on a link in mobile view
     document.querySelectorAll('.nav-link').forEach(link => {
       link.addEventListener('click', () => {
         if (window.innerWidth < 992) {
           document.getElementById('sidebar').classList.remove('show');
+          document.getElementById('sidebarOverlay').classList.remove('show');
         }
       });
     });
@@ -2071,6 +2464,20 @@ document.getElementById('confirmOtpBtn').addEventListener('click', async functio
 
     // LOGOUT
     document.getElementById('btnLogout').addEventListener('click', () => {
+      if (confirm('Una uhakika unataka kutoka?')) {
+        authToken = '';
+        localStorage.removeItem('adminToken');
+        
+        document.getElementById('adminPanel').style.display = 'none';
+        document.getElementById('loginPage').style.display = 'flex';
+        document.getElementById('adminLoginForm').reset();
+        document.getElementById('adminLoginForm').style.display = 'block';
+        document.getElementById('otpSection').style.display = 'none';
+        hideLoginAlert();
+      }
+    });
+    
+    document.getElementById('btnLogoutMobile').addEventListener('click', () => {
       if (confirm('Una uhakika unataka kutoka?')) {
         authToken = '';
         localStorage.removeItem('adminToken');

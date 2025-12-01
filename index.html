@@ -20,7 +20,7 @@
             --card-bg: #ffffff;
             --body-bg: #f5f5f5;
             --header-bg: #ffffff;
-            --footer-bg: #f8f9fa;
+            --footer-bg: #2c3e50;
             --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             --radius: 10px;
             --success-color: #28a745;
@@ -39,7 +39,7 @@
             --card-bg: #343a40;
             --body-bg: #212529;
             --header-bg: #343a40;
-            --footer-bg: #343a40;
+            --footer-bg: #1a252f;
             --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
             --success-color: #20c997;
             --warning-color: #fd7e14;
@@ -52,6 +52,13 @@
             color: var(--text-color);
             background-color: var(--body-bg);
             transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .main-content {
+            flex: 1;
         }
         
         .navbar {
@@ -349,10 +356,97 @@
         
         footer {
             background-color: var(--footer-bg);
-            padding: 30px 0;
+            padding: 40px 0 20px;
             margin-top: 50px;
             box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
+            color: #ecf0f1;
+        }
+        
+        footer h5 {
+            color: #ffffff;
+            font-weight: 600;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        footer h5::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+        
+        footer p, footer a {
+            color: #bdc3c7;
+            transition: color 0.3s ease;
+        }
+        
+        footer a:hover {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            display: flex;
+            align-items: center;
+            color: #bdc3c7;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+            transform: translateX(5px);
+        }
+        
+        .footer-links i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #ecf0f1;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            margin-top: 30px;
+            text-align: center;
+            color: #95a5a6;
+            font-size: 0.9rem;
         }
         
         .card {
@@ -551,6 +645,13 @@
             }
             .mobile-nav {
                 display: flex;
+            }
+            .footer-content {
+                text-align: center;
+            }
+            footer h5::after {
+                left: 50%;
+                transform: translateX(-50%);
             }
         }
 
@@ -1190,7 +1291,7 @@
     </div>
 
     <!-- Main Content -->
-    <div class="container mt-4 mb-5">
+    <div class="container mt-4 mb-5 main-content">
         <!-- Home Section -->
         <section id="home-section">
             <!-- Ads Container -->
@@ -1961,28 +2062,60 @@
     </div>
 
     <!-- Footer -->
-    <footer class="mt-5">
+    <footer>
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-4 footer-content">
                     <h5>Four Brothers Sports Center</h5>
-                    <p>Wauzaji na wasambazaji wa viatu bora vya michezo nchini Tanzania.</p>
-                </div>
-                <div class="col-md-4">
-                    <h5>Mawasiliano</h5>
-                    <p>Simu: +255 777 730 606</p>
-                    <p>Barua pepe: fourbrothers10112627@gmail.com</p>
-                </div>
-                <div class="col-md-4">
-                    <h5>Follow Us</h5>
-                    <div class="d-flex gap-3">
-                        <a href="https://chat.whatsapp.com/I8qaaMkm8EU2V77eJBkZ8g" class="text-dark"><i class="fab fa-whatsapp fa-2x"></i></a>
-                        <a href="https://www.instagram.com/four_brothers_sports_center?igsh=d20xYno3dmlwcnJ4" class="text-dark"><i class="fab fa-instagram fa-2x"></i></a>
+                    <p>Wauzaji na wasambazaji wa viatu bora vya michezo nchini Tanzania. Tunatoa huduma bora kwa wateja wetu kwa bei nafuu.</p>
+                    <div class="social-links">
+                        <a href="https://chat.whatsapp.com/I8qaaMkm8EU2V77eJBkZ8g" target="_blank">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="https://www.instagram.com/four_brothers_sports_center?igsh=d20xYno3dmlwcnJ4" target="_blank">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="mailto:fourbrothers10112627@gmail.com">
+                            <i class="fas fa-envelope"></i>
+                        </a>
                     </div>
                 </div>
+                <div class="col-md-4 footer-content">
+                    <h5>Mawasiliano</h5>
+                    <ul class="footer-links">
+                        <li>
+                            <a href="https://wa.me/255777730606" target="_blank">
+                                <i class="fab fa-whatsapp"></i>WhatsApp: +255 777 730 606
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.instagram.com/four_brothers_sports_center?igsh=d20xYno3dmlwcnJ4" target="_blank">
+                                <i class="fab fa-instagram"></i>Instagram: @four_brothers_sports_center
+                            </a>
+                        </li>
+                        <li>
+                            <a href="mailto:fourbrothers10112627@gmail.com">
+                                <i class="fas fa-envelope"></i>Email: fourbrothers10112627@gmail.com
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#messageModal">
+                                <i class="fas fa-comment"></i>Tuma Ujumbe Ndani ya Programu
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4 footer-content">
+                    <h5>Huduma</h5>
+                    <ul class="footer-links">
+                        <li><a href="#" data-section="home"><i class="fas fa-home"></i>Nyumbani</a></li>
+                        <li><a href="#" data-section="cart"><i class="fas fa-shopping-cart"></i>Karatasi</a></li>
+                        <li><a href="#" data-section="account"><i class="fas fa-user"></i>Akaunti Yangu</a></li>
+                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#loginModal"><i class="fas fa-sign-in-alt"></i>Ingia</a></li>
+                    </ul>
+                </div>
             </div>
-            <hr>
-            <div class="text-center">
+            <div class="footer-bottom">
                 <p>&copy; 2025 Four Brothers Sports Center. Haki zote zimehifadhiwa.</p>
             </div>
         </div>
