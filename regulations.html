@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/FBSC-32.png" sizes="32x32" type="image/png">
+    <title>Masharti ya Huduma - Four Brothers Sports Center</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a73e8;
+            --secondary-color: #f8f9fa;
+            --accent-color: #ff6b35;
+            --text-color: #333;
+            --light-text: #6c757d;
+            --border-color: #dee2e6;
+            --card-bg: #ffffff;
+            --body-bg: #f5f5f5;
+            --header-bg: #ffffff;
+            --footer-bg: #2c3e50;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --radius: 10px;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #4dabf7;
+            --secondary-color: #343a40;
+            --accent-color: #ff922b;
+            --text-color: #f8f9fa;
+            --light-text: #adb5bd;
+            --border-color: #495057;
+            --card-bg: #343a40;
+            --body-bg: #212529;
+            --header-bg: #343a40;
+            --footer-bg: #1a252f;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            --success-color: #20c997;
+            --warning-color: #fd7e14;
+            --danger-color: #e83e8c;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-color);
+            background-color: var(--body-bg);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .main-content {
+            flex: 1;
+            padding-top: 20px;
+        }
+        
+        .navbar {
+            background-color: var(--header-bg) !important;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-brand img {
+            height: 40px;
+        }
+        
+        .terms-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        
+        .terms-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .terms-header h1 {
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .terms-header p {
+            color: var(--light-text);
+            font-size: 1.1rem;
+        }
+        
+        .terms-section {
+            margin-bottom: 40px;
+            padding: 25px;
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+        
+        .terms-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+        }
+        
+        .terms-section h3 i {
+            margin-right: 10px;
+        }
+        
+        .terms-section ul {
+            padding-left: 20px;
+        }
+        
+        .terms-section li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        .highlight-box {
+            background-color: rgba(26, 115, 232, 0.1);
+            border-left: 4px solid var(--primary-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .warning-box {
+            background-color: rgba(255, 193, 7, 0.1);
+            border-left: 4px solid var(--warning-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .danger-box {
+            background-color: rgba(220, 53, 69, 0.1);
+            border-left: 4px solid var(--danger-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .update-date {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: var(--light-text);
+            font-style: italic;
+        }
+        
+        .agreement-check {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .theme-toggle {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--text-color);
+            cursor: pointer;
+            margin-left: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle:hover {
+            color: var(--primary-color);
+        }
+        
+        footer {
+            background-color: var(--footer-bg);
+            padding: 40px 0 20px;
+            margin-top: 50px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            color: #ecf0f1;
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            margin-top: 30px;
+            text-align: center;
+            color: #95a5a6;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .terms-container {
+                padding: 15px;
+            }
+            
+            .terms-section {
+                padding: 20px;
+            }
+            
+            .terms-header h1 {
+                font-size: 1.8rem;
+            }
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            color: var(--primary-color);
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .back-button:hover {
+            color: var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="images/FBSC.png" alt="Four Brothers Sports Center Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html"><i class="fas fa-home me-1"></i>Nyumbani</a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="theme-toggle" id="theme-toggle">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container main-content">
+        <div class="terms-container">
+            <a href="index.html" class="back-button">
+                <i class="fas fa-arrow-left me-2"></i>Rudi Nyumbani
+            </a>
+            
+            <div class="terms-header">
+                <h1><i class="fas fa-file-contract me-2"></i>Masharti ya Huduma</h1>
+                <p>Four Brothers Sports Center</p>
+            </div>
+            
+            <div class="terms-section">
+                <h3><i class="fas fa-info-circle"></i> Utangulizi</h3>
+                <p>Karibu kwenye programu ya Four Brothers Sports Center. Kwa kutumia programu hii, unakubali kufuata masharti na kanuni zote zilizotajwa hapa chini. Tafadhali soma kwa makini.</p>
+                <p>Masharti haya yanatumika kwa wateja wote, wasambazaji, na wahusika wote wanaotumia programu ya Four Brothers Sports Center. Kila ununuzi, usajili, au matumizi ya huduma zetu kunakubaliana na masharti haya.</p>
+            </div>
+            
+            <div class="terms-section">
+                <h3><i class="fas fa-user-check"></i> Usajili na Akaunti ya Mteja</h3>
+                <ul>
+                    <li>Ushahidi wa utambulisho wa mteja unafanywa kupitia nambari ya simu.</li>
+                    <li>Mteja anahitaji kuthibitisha nambari ya simu kwa kutumia OTP (One-Time Password) iliyotumwa kwenye nambari yake.</li>
+                    <li>Mteja anachagua jina la mtumiaji na nenosiri (password) kwa ajili ya usajili.</li>
+                    <li>Barua pepe ni hiari kwa mteja kwa mawasiliano ya ziada.</li>
+                    <li>Mteja anaweza kujisajili au kuingia kwa kutumia nambari ya simu na OTP.</li>
+                    <li>Mteja anaweza kubadilisha nenosiri lake kwa kutumia OTP kwenye nambari ya simu.</li>
+                </ul>
+                
+                <div class="highlight-box">
+                    <strong><i class="fas fa-shield-alt me-2"></i>Usalama wa Akaunti:</strong>
+                    <p class="mb-0">Unawajibika kwa usalama wa akaunti yako na usitoe maelezo yako ya kuingia kwa mtu yeyote.</p>
+                </div>
+            </div>
+            
+            <div class="terms-section">
+                <h3><i class="fas fa-shopping-cart"></i> Maagizo na Ununuzi</h3>
+                <ul>
+                    <li>Mteja anaweza kuweka bidhaa kwenye karatasi ya ununuzi (cart) na kuagiza.</li>
+                    <li>Bei zinaonyeshwa kwa shilingi za Tanzania (TZS) na zinaweza kubadilika bila tangazo.</li>
+                    <li>Mteja hulipa pesa taslimu (COD - Cash on Delivery) anapopokea bidhaa.</li>
+                    <li>Mteja anaweza kufuta agizo ikiwa bado halijaanza kusafirishwa.</li>
+                    <li>Agizo linalofutwa linaweza kughairiwa tu ikiwa bado halijaanza kusafirishwa.</li>
+                </ul>
+                
+                <div class="warning-box">
+                    <strong><i class="fas fa-exclamation-triangle me-2"></i>Maelekezo Muhimu:</strong>
+                    <p class="mb-0">Hakikisha unakagua maelezo ya bidhaa, ukubwa, na bei kabla ya kufanya agizo.</p>
+                </div>
+            </div>
+            
+            <div class="terms-section">
+                <h3><i class="fas fa-undo"></i> Kurudisha Bidhaa</h3>
+                <ul>
+                    <li>Mteja anaweza kurudisha bidhaa ndani ya siku 3 baada ya kupokea agizo.</li>
+                    <li>Bidhaa lazima iwe katika hali yake ya awali, ikiwa na kifurushi chake asili.</li>
+                    <li>Lebo na vitambulisho vya bidhaa lazima viwe vimeachwa.</li>
+                    <li>Bidhaa haipaswi kuwa imetumiwa au kuwa na uharibifu wowote.</li>
+                    <li>Sababu za kurudisha bidhaa zinazokubalika ni:
+                        <ul>
+                            <li>Saizi haifai</li>
+                            <li>Rangi si sahihi</li>
+                            <li>Bidhaa imeharibika</li>
+                            <li>Bidhaa nyingine tofauti</li>
+                            <li>Sababu nyingine zinazokubalika</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="terms-section">
+                <h3><i class="fas fa-truck"></i> Usafirishaji na Uwasilishaji</h3>
+                <ul>
+                    <li>Muda wa kusafirisha hutegemea eneo la mteja na upatikanaji wa huduma za usafirishaji.</li>
+                    <li>Mteja hutoa anwani sahihi ya mshipisho wakati wa kuagiza.</li>
+                    <li>Makadirio ya muda wa kufika hutolewa wakati wa kuagiza.</li>
+                    <li>Gharama za usafirishaji zinaonyeshwa wazi kabla ya kudhibitisha agizo.</li>
+                </ul>
+            </div>
+            
+            <div class="terms-section">
+                <h3><i class="fas fa-star"></i> Tathmini na Maoni</h3>
+                <ul>
+                    <li>Mteja anaweza kutoa tathmini ya bidhaa, usafirishaji, na ujumla wa huduma baada ya kupokea agizo.</li>
+                    <li>Tathmini zinazochukuliwa ni: tathmini ya kifurushi, usafirishaji, na bidhaa yenyewe.</li>
+                    <li>Maoni ya wateja yanatumika kuboresha huduma zetu.</li>
+                    <li>Tathmini isiyo ya kimaadili au yenye lugha chafu itafutwa.</li>
+                </ul>
+            </div>
+            
+            <div class="terms-section">
+                <h3><i class="fas fa-ban"></i> Matumizi Mabaya na Vizuizi</h3>
+                <ul>
+                    <li>Haramu kutumia programu hii kwa madhumuni yasiyo ya kisheria.</li>
+                    <li>Kujaribu kuvunja usalama wa mfumo kunazuiliwa.</li>
+                    <li>Usitumie programu hii kwa kutuma ujumbe usio na maana, uchafu, au vitisho.</li>
+                    <li>Kukiuka masharti haya, tuna haki ya kusitisha huduma kwa mteja yeyote bila tangazo.</li>
+                </ul>
+                
+                <div class="danger-box">
+                    <strong><i class="fas fa-times-circle me-2"></i>Ongezeko la Bei:</strong>
+                    <p class="mb-0">Bei za bidhaa zinaweza kubadilika bila tangazo. Bei inayotumika ni ile iliyoonyeshwa wakati wa kufanya agizo.</p>
+                </div>
+            </div>
+            
+            <div class="terms-section">
+                <h3><i class="fas fa-handshake"></i> Mkataba wa Mteja</h3>
+                <p>Kwa kutumia programu ya Four Brothers Sports Center, unakubali:</p>
+                <ul>
+                    <li>Kufuata masharti haya ya huduma</li>
+                    <li>Kulipa pesa taslimu anapopokea bidhaa</li>
+                    <li>Kutoa maelezo sahihi ya mawasiliano</li>
+                    <li>Kuthibitisha nambari ya simu kwa OTP</li>
+                    <li>Kubeba jukumu la usalama wa akaunti yako</li>
+                </ul>
+            </div>
+            
+            <div class="terms-section">
+                <h3><i class="fas fa-building"></i> Msimamizi</h3>
+                <p>Msimamizi ana nafasi ya:</p>
+                <ul>
+                    <li>Kubadilisha bei za bidhaa</li>
+                    <li>Kuweka matangazo</li>
+                    <li>Kusasisha hali ya maagizo</li>
+                    <li>Kutuma arifa kwa wateja</li>
+                    <li>Kushughulikia tathmini na maoni</li>
+                    <li>Kutoa punguzo maalum</li>
+                </ul>
+            </div>
+            
+            <div class="terms-section">
+                <h3><i class="fas fa-envelope"></i> Mawasiliano</h3>
+                <p>Kwa mawasiliano, unaweza kutumia:</p>
+                <ul>
+                    <li><i class="fab fa-whatsapp me-2"></i>WhatsApp: +255 777 730 606</li>
+                    <li><i class="fab fa-instagram me-2"></i>Instagram: @four_brothers_sports_center</li>
+                    <li><i class="fas fa-envelope me-2"></i>Email: fourbrothers10112627@gmail.com</li>
+                    <li>Ujumbe ndani ya programu kupitia sehemu ya Mawasiliano</li>
+                </ul>
+            </div>
+            
+            <div class="update-date">
+                <p><i class="fas fa-calendar-alt me-2"></i>Masharti haya yamesasishwa mwisho: Novemba 30, 2025</p>
+            </div>
+            
+            <div class="agreement-check">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="agreeTerms">
+                    <label class="form-check-label" for="agreeTerms">
+                        Nimesoma na nakubaliana na Masharti ya Huduma ya Four Brothers Sports Center
+                    </label>
+                </div>
+                <div class="mt-3">
+                    <a href="index.html" class="btn btn-primary">
+                        <i class="fas fa-check-circle me-2"></i>Nimekubaliana na Masharti
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 text-center text-md-start">
+                    <h5>Four Brothers Sports Center</h5>
+                    <p>Wauzaji na wasambazaji wa viatu bora vya michezo nchini Tanzania.</p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <h5>Mawasiliano</h5>
+                    <p><i class="fab fa-whatsapp me-2"></i>+255 777 730 606</p>
+                    <p><i class="fas fa-envelope me-2"></i>fourbrothers10112627@gmail.com</p>
+                </div>
+                <div class="col-md-4 text-center text-md-end">
+                    <h5>Haraka</h5>
+                    <p><a href="index.html" class="text-light"><i class="fas fa-home me-2"></i>Nyumbani</a></p>
+                    <p><a href="masharti.html" class="text-light"><i class="fas fa-file-contract me-2"></i>Masharti</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Four Brothers Sports Center. Haki zote zimehifadhiwa.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Theme Management
+        let currentTheme = localStorage.getItem('theme') || 'light';
+        
+        function applyTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            const icon = document.getElementById('theme-toggle').querySelector('i');
+            if (theme === 'dark') {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+            localStorage.setItem('theme', theme);
+        }
+        
+        function toggleTheme() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            applyTheme(currentTheme);
+        }
+        
+        // Initialize theme
+        applyTheme(currentTheme);
+        
+        // Event Listeners
+        document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+        
+        // Terms agreement
+        document.getElementById('agreeTerms').addEventListener('change', function() {
+            const button = document.querySelector('.agreement-check .btn');
+            if (this.checked) {
+                button.classList.remove('disabled');
+                button.style.pointerEvents = 'auto';
+                button.style.opacity = '1';
+            } else {
+                button.classList.add('disabled');
+                button.style.pointerEvents = 'none';
+                button.style.opacity = '0.5';
+            }
+        });
+        
+        // Initialize button state
+        document.querySelector('.agreement-check .btn').classList.add('disabled');
+        document.querySelector('.agreement-check .btn').style.pointerEvents = 'none';
+        document.querySelector('.agreement-check .btn').style.opacity = '0.5';
+    </script>
+</body>
+</html>
