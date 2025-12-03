@@ -1,26 +1,22 @@
 # Four Brothers Sports Center - E-Commerce Platform
 
-A complete full-stack e-commerce platform for a Tanzanian sports shoe store, featuring customer and admin interfaces with SMS OTP authentication, real-time order tracking, and comprehensive product management.
+A complete full-stack e-commerce platform for a Tanzanian sports shoe store, featuring customer and admin interfaces with **password-based authentication**, real-time order tracking, and comprehensive product management.
 
 ## 🚀 Live Applications
-Platform	URL
 
-Customer Portal	https://fourbrothers.online
-
-Admin Panel	https://fourbrothers.online/admin.html
-
-Backend API	https://api.fourbrothers.online
-
-Frontend Repository	https://github.com/MohammedShehe/FourBrothersSportsCenter
-
-Backend Repository	https://github.com/MohammedShehe/FourBrothersSportsCenter-Backend
-
+| Platform | URL |
+|----------|-----|
+| **Customer Portal** | [https://fourbrothers.online](https://fourbrothers.online) |
+| **Admin Panel** | [https://fourbrothers.online/admin.html](https://fourbrothers.online/admin.html) |
+| **Backend API** | [https://api.fourbrothers.online](https://api.fourbrothers.online) |
+| **Frontend Repository** | [https://github.com/MohammedShehe/FourBrothersSportsCenter](https://github.com/MohammedShehe/FourBrothersSportsCenter) |
+| **Backend Repository** | [https://github.com/MohammedShehe/FourBrothersSportsCenter-Backend](https://github.com/MohammedShehe/FourBrothersSportsCenter-Backend) |
 
 ## ✨ Features
 
 ### 🛍️ Customer Features
-- **📱 Phone Authentication** - OTP verification via Twilio SMS
-- **🛒 Smart Shopping Cart** - Real-time quantity management
+- **🔐 Password Authentication** - Secure registration and login with password verification
+- **🛒 Smart Shopping Cart** - Real-time quantity management with 10% discount for 3+ items
 - **💰 Cash on Delivery** - COD payment system optimized for Tanzania
 - **📊 Order Tracking** - Real-time status updates (Imewekwa → Imepokelewa)
 - **⭐ Product Ratings** - 5-star rating system with detailed feedback
@@ -28,16 +24,20 @@ Backend Repository	https://github.com/MohammedShehe/FourBrothersSportsCenter-Bac
 - **📢 Live Announcements** - In-app notifications from admin
 - **🌓 Dark/Light Mode** - Theme toggle for better UX
 - **🔍 Product Search** - Instant search with filtering
+- **🔐 Password Verification** - Required for first order confirmation
+- **🔄 Password Reset** - Secure password and mobile number recovery
 
 ### 👨‍💼 Admin Features
-- **🔐 Secure Admin Login** - Multi-admin system with OTP verification
+- **🔐 Secure Admin Login** - Multi-admin system with password authentication
 - **📈 Analytics Dashboard** - Sales charts, revenue tracking, customer insights
 - **📦 Product Management** - Full CRUD with Cloudinary image upload
 - **👥 Customer Management** - View, add, and manage customers
-- **📊 Order Management** - Update statuses, generate OTPs for delivery
+- **📊 Order Management** - Update statuses, track shipments
 - **📢 Ad Management** - Upload promotional banners with clickable links
 - **📱 Bulk Messaging** - Send announcements to all/specific customers
-- **⚙️ Status Control** - Manage order lifecycle with visual indicators
+- **👑 Admin Management** - Add/edit/delete admins (main admin only)
+- **📧 Email Notifications** - Send bulk emails to customers
+- **💬 Customer Support** - View and respond to customer messages
 
 ## 🛠️ Tech Stack
 
@@ -51,13 +51,14 @@ Backend Repository	https://github.com/MohammedShehe/FourBrothersSportsCenter-Bac
 ### Backend (Render)
 - **Node.js** - Runtime environment
 - **Express.js** - REST API framework
-- **JWT** - Secure authentication
+- **JWT** - Secure authentication with refresh tokens
 - **Multer** - File upload middleware
-- **Twilio API** - SMS OTP delivery
+- **Bcrypt** - Password hashing and verification
 - **Nodemailer** - Email notifications
+- **MySQL/PostgreSQL** - Database support
 
 ### Database (Railway)
-- **PostgreSQL** - Production database
+- **PostgreSQL** - Production database (Railway)
 - **MySQL** - Local development option
 
 ### Cloud Services
@@ -80,8 +81,8 @@ Backend Repository	https://github.com/MohammedShehe/FourBrothersSportsCenter-Bac
          ▼                        ▼                        ▼
 ┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
 │                 │     │                 │     │                 │
-│    Customer     │     │  Cloudinary     │     │    Twilio       │
-│     Browser     │────▶│  (Images)       │     │    (SMS)        │
+│    Customer     │     │  Cloudinary     │     │     Nodemailer  │
+│     Browser     │────▶│  (Images)       │     │     (Email)     │
 │                 │     │                 │     │                 │
 └─────────────────┘     └─────────────────┘     └─────────────────┘
 ```
@@ -108,40 +109,37 @@ FourBrothersSportsCenter-Backend/
 │   └── cloudinary.js             # Cloudinary setup
 ├── controllers/
 │   ├── adminController.js        # Admin logic
-│   ├── customerController.js     # Customer logic
+│   ├── customerFunctionalities.js # Customer logic
 │   ├── dashboardController.js    # Dashboard stats
 │   ├── productController.js      # Product CRUD
 │   └── notificationController.js # Ads & notifications
 ├── middlewares/
 │   ├── adminAuth.js              # Admin JWT auth
-│   └── customerAuth.js           # Customer JWT auth
+│   └── customerAuth.js           # Customer JWT auth (access + refresh tokens)
 ├── routes/
 │   ├── adminRoutes.js            # Admin API endpoints
 │   └── customerRoutes.js         # Customer API endpoints
 ├── utils/
-│   ├── helpers.js                # OTP, SMS, Email helpers
-│   ├── otp.js                    # OTP generation logic
-│   └── otpCleaner.js            # Cron job for cleanup
+│   └── helpers.js                # Email, phone normalization helpers
 ├── .env                          # Environment variables
 ├── package.json                  # Dependencies
 ├── server.js                     # Express server
-└── four_brothers.sql             # MySQL schema (for reference)
+├── four_brothers.sql             # MySQL schema (for reference)
+└── railway_schema.sql           # PostgreSQL schema for production
 ```
 
 ## 🚀 Quick Start
 
 ### For Customers
 1. Visit **https://fourbrothers.online**
-2. Register with your phone number
-3. Verify OTP sent via SMS
+2. Register with your phone number and password
+3. Login with phone and password
 4. Start shopping!
 
 ### For Admins
 1. Visit **https://fourbrothers.online/admin.html**
-**
-2. Login with First Name + Last Name
-3. Check SMS for OTP verification
-4. Access dashboard
+2. Login with phone number and password
+3. Access dashboard
 
 ## 💻 Local Development Setup
 
@@ -149,8 +147,8 @@ FourBrothersSportsCenter-Backend/
 - Node.js (v16 or higher)
 - Git
 - MySQL or PostgreSQL (for local development)
-- Twilio Account (for SMS functionality)
 - Cloudinary Account (for image storage)
+- Gmail account (for email notifications - optional)
 
 ### Step 1: Clone Repositories
 ```bash
@@ -190,33 +188,43 @@ Create a `.env` file in the backend directory with the following variables:
 PORT=5000
 NODE_ENV=development
 
-# Database Configuration
-DATABASE_URL=your_database_connection_string
+# Database Configuration (Railway PostgreSQL example)
+DB_HOST=containers-us-west-XXX.railway.app
+DB_USER=postgres
+DB_PASSWORD=your_password
+DB_NAME=railway
+DB_PORT=XXXXX
 
 # JWT Configuration
-JWT_SECRET=your_jwt_secret
-JWT_REFRESH_SECRET=your_refresh_secret
-JWT_EXPIRES_IN=1h
+JWT_SECRET=your_jwt_secret_key_here
+JWT_EXPIRES_IN=7d
+JWT_REFRESH_SECRET=your_refresh_secret_key_here
 
-# OTP Configuration
-OTP_LENGTH=6
-OTP_EXPIRES_MINUTES=5
-
-# Service Credentials (obtain from respective providers)
-TWILIO_ACCOUNT_SID=your_twilio_sid
-TWILIO_AUTH_TOKEN=your_twilio_token
-TWILIO_PHONE_NUMBER=your_twilio_number
-
+# Cloudinary Configuration
 CLOUDINARY_CLOUD_NAME=your_cloudinary_name
-CLOUDINARY_API_KEY=your_cloudinary_key
-CLOUDINARY_API_SECRET=your_cloudinary_secret
+CLOUDINARY_API_KEY=your_cloudinary_api_key
+CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 
-# Email Configuration (Optional)
-EMAIL_USER=your_email
-EMAIL_PASS=your_email_password
+# Email Configuration (Optional - for admin announcements)
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASS=your_app_specific_password
+
+# Admin Default Credentials (first admin)
+DEFAULT_ADMIN_MOBILE=+255777730606
+DEFAULT_ADMIN_PASSWORD=admin123
 ```
 
-### Step 5: Frontend Configuration
+### Step 5: Initialize Admin User
+After setting up the database, create the initial admin user:
+
+```bash
+# The first admin (ID: 1) will be created with can_manage_admins=1
+# You can also insert manually using SQL:
+INSERT INTO users (first_name, last_name, mobile, password, is_admin, can_manage_admins) 
+VALUES ('Mohammed', 'Shehe', '+255777730606', '$2b$10$YourHashedPassword', 1, 1);
+```
+
+### Step 6: Frontend Configuration
 Update the API URL in the frontend files to point to your local backend:
 
 In both `index.html` and `admin.html`, find and update:
@@ -224,7 +232,7 @@ In both `index.html` and `admin.html`, find and update:
 const API_BASE_URL = 'http://localhost:5000/api';
 ```
 
-### Step 6: Run Development Servers
+### Step 7: Run Development Servers
 ```bash
 # Start backend server
 cd FourBrothersSportsCenter-Backend
@@ -249,7 +257,7 @@ Now access:
 
 ### Core Tables Structure
 ```sql
--- Customers table
+-- Customers table (with password authentication)
 CREATE TABLE customers (
     id SERIAL PRIMARY KEY,
     first_name VARCHAR(100) NOT NULL,
@@ -258,6 +266,21 @@ CREATE TABLE customers (
     email VARCHAR(150),
     gender VARCHAR(20),
     address TEXT,
+    password VARCHAR(255) NOT NULL,
+    reset_token VARCHAR(100),
+    reset_token_expires TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Users table (for admins)
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    mobile VARCHAR(20) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    is_admin BOOLEAN DEFAULT FALSE,
+    can_manage_admins BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -275,17 +298,17 @@ CREATE TABLE products (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Orders table
+-- Orders table (NO OTP column - using password verification)
 CREATE TABLE orders (
     id SERIAL PRIMARY KEY,
     customer_id INTEGER REFERENCES customers(id),
     total_price DECIMAL(12,2) NOT NULL,
     status VARCHAR(50) DEFAULT 'Imewekwa',
-    otp VARCHAR(6),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Additional tables: product_images, order_items, order_ratings, ads, notifications
+-- Additional tables:
+-- product_images, order_items, order_ratings, ads, admin_notifications, customer_notifications
 ```
 
 ### Order Status Flow
@@ -294,48 +317,57 @@ Imewekwa (Order Placed)
     ↓
 Inasafirishwa (Shipping in Progress) 
     ↓
-Imepokelewa_PENDING (Awaiting Customer Confirmation) 
-    ↓
-Imepokelewa (Order Received & Confirmed) 
+Imepokelewa (Order Received & Confirmed via Password) 
     ↓
 Ghairishwa (Cancelled) / Kurudishwa (Returned)
 ```
 
+**Important Change:** The `Imepokelewa_PENDING` status has been removed. Customers now verify order receipt by entering their password instead of an OTP.
+
 ## 📚 API Documentation
 
-### Base URL: `https://fourbrotherssportscenter-backend.onrender.com/api`
+### Base URL: `https://api.fourbrothers.online/api`
 
 ### Customer Endpoints (`/customers`)
 
 | Method | Endpoint | Description | Auth Required |
 |--------|----------|-------------|---------------|
-| POST | `/register` | Register new customer | No |
-| POST | `/send-otp` | Send login OTP to phone | No |
-| POST | `/verify-otp` | Verify OTP & get access tokens | No |
-| POST | `/refresh-token` | Refresh access token | Yes |
+| POST | `/register` | Register new customer with password | No |
+| POST | `/login` | Login with phone and password | No |
+| POST | `/refresh-token` | Refresh access token with refresh token | No |
+| POST | `/forgot-password` | Request password reset via name verification | No |
+| POST | `/reset-password` | Reset password with reset token | No |
+| POST | `/change-mobile` | Change phone number via name verification | No |
 | GET | `/me` | Get customer profile | Yes |
 | PUT | `/me/update` | Update customer profile | Yes |
+| POST | `/me/change-email` | Change email (requires current password) | Yes |
+| POST | `/me/change-phone` | Change phone (requires current password) | Yes |
+| POST | `/me/change-password` | Change password (requires current password) | Yes |
 | GET | `/products` | Get all products | No |
 | GET | `/products/:id` | Get specific product | No |
 | POST | `/orders` | Place new order | Yes |
 | GET | `/orders` | Get customer's orders | Yes |
-| POST | `/orders/:id/cancel` | Cancel order | Yes |
-| POST | `/orders/:id/return` | Request return | Yes |
+| POST | `/orders/:id/cancel` | Cancel order with reason | Yes |
+| POST | `/orders/:id/return` | Request return (within 3 days) | Yes |
 | POST | `/orders/:id/rate` | Rate completed order | Yes |
 | GET | `/ratings` | Get product ratings | Yes |
 | GET | `/ads` | Get active ads | No |
 | GET | `/announcements` | Get announcements | Yes |
 | POST | `/send-message` | Send message to admin | Yes |
+| POST | `/verify-password` | Verify password for order confirmation | Yes |
+| POST | `/orders/:id/confirm` | Confirm order reception with password | Yes |
 
 ### Admin Endpoints (`/admin`)
 
 | Method | Endpoint | Description | Auth Required |
 |--------|----------|-------------|---------------|
-| POST | `/login` | Request admin OTP | No |
-| POST | `/verify-otp` | Verify admin OTP | No |
+| POST | `/login` | Admin login with phone and password | No |
+| POST | `/forgot-password` | Request admin password reset | No |
+| POST | `/reset-password` | Reset admin password | No |
+| POST | `/change-mobile` | Change admin phone number | No |
 | GET | `/dashboard/stats` | Dashboard statistics | Yes |
 | GET | `/products` | Get all products | Yes |
-| POST | `/products` | Add new product | Yes |
+| POST | `/products` | Add new product with images | Yes |
 | PUT | `/products/:id` | Update product | Yes |
 | DELETE | `/products/:id` | Delete product | Yes |
 | GET | `/customers` | Get all customers | Yes |
@@ -347,11 +379,13 @@ Ghairishwa (Cancelled) / Kurudishwa (Returned)
 | DELETE | `/ads/:id` | Delete ad | Yes |
 | GET | `/orders` | Get all orders | Yes |
 | PUT | `/orders/:order_id/status` | Update order status | Yes |
-| POST | `/orders/:order_id/generate-otp` | Generate delivery OTP | Yes |
-| POST | `/orders/:order_id/confirm` | Confirm order reception | Yes |
 | GET | `/notifications/customer` | View customer messages | Yes |
-| POST | `/notifications/send` | Send announcements | Yes |
+| POST | `/notifications/send` | Send announcements via email | Yes |
 | POST | `/messages` | Post in-app announcements | Yes |
+| GET | `/admins` | Get all admins (main admin only) | Yes |
+| POST | `/admins` | Add new admin (main admin only) | Yes |
+| PUT | `/admins/:id` | Update admin (main admin only) | Yes |
+| DELETE | `/admins/:id` | Delete admin (main admin only) | Yes |
 
 ## 🚀 Deployment Guide
 
@@ -368,7 +402,7 @@ Ghairishwa (Cancelled) / Kurudishwa (Returned)
    - **Start Command:** `node server.js`
    - **Plan:** Free
 6. **Add Environment Variables** in Render dashboard (copy from your `.env` file)
-7. **Deploy** and note the generated URL
+7. **Deploy** and note the generated URL (e.g., `https://four-brothers-backend.onrender.com`)
 
 ### 2. Database Deployment (Railway)
 
@@ -376,19 +410,23 @@ Ghairishwa (Cancelled) / Kurudishwa (Returned)
 2. **Create new project**
 3. **Add PostgreSQL database**
 4. **Get connection string** from Overview tab
-5. **Update backend** `DATABASE_URL` environment variable with Railway connection string
-6. **Initialize database** by running the SQL schema
+5. **Initialize database** using the provided SQL schema
+6. **Update backend** environment variables with Railway connection details
 
 ### 3. Frontend Deployment (GitHub Pages)
 
-1. **Ensure frontend files** are in the root of `FourBrothersSportsCenter` repository
-2. **Go to repository Settings → Pages**
-3. **Configure GitHub Pages:**
+1. **Update API URLs** in frontend files:
+   - In `index.html` and `admin.html`, change:
+   ```javascript
+   const API_BASE_URL = 'https://your-render-backend.onrender.com/api';
+   ```
+2. **Commit and push** changes to GitHub
+3. **Go to repository Settings → Pages**
+4. **Configure GitHub Pages:**
    - **Source:** `Deploy from a branch`
    - **Branch:** `main` (or your default branch)
    - **Folder:** `/` (root directory)
-4. **Save** - Your site will be available at `https://[username].github.io/FourBrothersSportsCenter/`
-5. **Update API URL** in frontend files to point to your Render backend
+5. **Save** - Your site will be available at `https://[username].github.io/FourBrothersSportsCenter/`
 
 ### 4. Service Configuration
 
@@ -400,34 +438,38 @@ Ghairishwa (Cancelled) / Kurudishwa (Returned)
    - `CLOUDINARY_API_KEY`
    - `CLOUDINARY_API_SECRET`
 
-#### Twilio Setup
-1. **Create account at [twilio.com](https://twilio.com)**
-2. **Purchase Tanzanian phone number**
-3. **Get credentials:**
-   - `TWILIO_ACCOUNT_SID`
-   - `TWILIO_AUTH_TOKEN`
-   - `TWILIO_PHONE_NUMBER`
+#### Gmail Setup (for email notifications)
+1. **Use Gmail account**
+2. **Enable 2-factor authentication**
+3. **Generate app-specific password**
+4. **Add to backend environment variables:**
+   - `EMAIL_USER` (your Gmail address)
+   - `EMAIL_PASS` (app-specific password)
 
 ### 5. Final Configuration
 
-1. **Update frontend API URL** in both `index.html` and `admin.html`:
+1. **Configure CORS** in backend to allow your frontend domain:
 ```javascript
-const API_BASE_URL = 'https://[your-render-backend].onrender.com/api';
-```
-
-2. **Configure CORS** in backend to allow your GitHub Pages domain:
-```javascript
+// In server.js
 app.use(cors({
-  origin: ['https://mohammedshehe.github.io'],
+  origin: [
+    'https://your-username.github.io',
+    'https://fourbrothers.online' // Your custom domain if applicable
+  ],
   credentials: true
 }));
 ```
 
+2. **Custom Domain (Optional):**
+   - Purchase domain from registrar (e.g., Namecheap, GoDaddy)
+   - Add CNAME record pointing to `your-username.github.io`
+   - Configure in GitHub Pages settings
+
 3. **Test all connections:**
-   - Test customer registration (SMS OTP)
-   - Test admin login (SMS OTP)
-   - Test image upload (Cloudinary)
-   - Test order placement (Database)
+   - Test customer registration and login
+   - Test admin login
+   - Test image upload
+   - Test order placement
 
 ## 📱 Usage Guide
 
@@ -435,59 +477,72 @@ app.use(cors({
 
 1. **Access Admin Panel**
    - Visit: `https://fourbrothers.online/admin.html`
-   - Login with First Name + Last Name of registered admin
+   - Login with registered admin phone and password
 
-2. **Manage Products**
-   - Add new sports shoes with images
-   - Set prices, sizes, and stock levels
-   - Apply discounts and categorize products
+2. **Main Admin vs Regular Admin**
+   - **Main Admin (ID: 1):** Can manage other admins (add/edit/delete)
+   - **Regular Admin:** Can manage products, customers, orders, but not other admins
 
-3. **Track Orders**
+3. **Password Recovery Options**
+   - Forgot password: Enter first and last name → Get reset options
+   - Reset password or change phone number
+
+4. **Manage Products**
+   - Add new sports shoes with up to 5 images
+   - Set prices, sizes, stock levels
+   - Apply discounts
+   - Categorize by type (Njumu, Trainer, Njumu na Trainer)
+
+5. **Track Orders**
    - View all customer orders
-   - Update order status as they progress
-   - Generate OTPs for delivery confirmation
+   - Update order status (except "Imepokelewa" which requires customer password)
+   - Monitor order progress
 
-4. **Customer Management**
+6. **Customer Management**
    - View registered customers
    - Add new customers manually
-   - Send announcements to specific customers
+   - Send announcements via email or in-app messages
 
-5. **Analytics & Dashboard**
-   - Monitor sales revenue
-   - Track product performance
-   - View customer growth
+7. **Analytics & Dashboard**
+   - Monitor sales revenue (current year)
+   - Track total customers and products
+   - View monthly income charts
 
 ### For Customers
 
-1. **Browse Products**
-   - Visit: `https://fourbrothers.online`
-   - Filter by size, brand, or type
-   - View product details and images
+1. **Account Creation**
+   - Register with phone number and password
+   - Provide name, address, gender
+   - Email optional
 
-2. **Account Creation**
-   - Register with phone number
-   - Verify OTP sent via SMS
-   - Complete profile with address
+2. **Password Security Features**
+   - First order requires password verification for security
+   - Can change password, email, or phone (requires current password)
+   - Password reset via name verification
 
 3. **Shopping Experience**
-   - Add products to cart
-   - Select sizes and quantities
-   - Apply cart discounts (10% for 3+ items)
+   - Browse products with images
+   - Filter by type, brand, color
+   - View stock availability
+   - See product ratings
 
-4. **Checkout Process**
-   - Provide delivery address
-   - Confirm order details
-   - Choose Cash on Delivery
+4. **Order Process**
+   - Add to cart, select quantity and size
+   - 10% discount automatically applied for 3+ items
+   - Checkout with delivery address
+   - First order: Password verification required
+   - COD payment upon delivery
 
-5. **Order Tracking**
-   - View order history in account
-   - Track current order status
-   - Rate products after delivery
+5. **Order Management**
+   - View order history
+   - Cancel orders (status: "Imewekwa" only)
+   - Return orders within 3 days of receipt
+   - Rate products after receiving
 
-6. **Returns & Support**
-   - Request returns within 3 days
-   - Contact support via in-app messaging
+6. **Communication**
    - View announcements from store
+   - Send messages to admin via app
+   - Receive order updates
 
 ### Order Status Meanings
 
@@ -495,29 +550,30 @@ app.use(cors({
 |--------|---------|--------------------------|
 | **Imewekwa** | Order placed | None - waiting for processing |
 | **Inasafirishwa** | Order shipped | Prepare for delivery |
-| **Imepokelewa_PENDING** | Delivery pending | Enter OTP to confirm receipt |
-| **Imepokelewa** | Order received | Rate products (optional) |
+| **Imepokelewa** | Order received | Enter password to confirm receipt |
 | **Ghairishwa** | Order cancelled | None |
 | **Kurudishwa** | Product returned | None |
+
+**Important:** Customers confirm order receipt by entering their password, not an OTP.
 
 ## 🔍 Troubleshooting
 
 ### Common Issues & Solutions
 
-#### 1. SMS OTP Not Sending
-**Symptoms:** Customer doesn't receive OTP for registration/login
+#### 1. Login Issues
+**Symptoms:** Cannot login with correct credentials
 **Solutions:**
-- Verify Twilio credentials are correct in environment variables
-- Ensure phone number is in correct format: `+255XXXXXXXXX`
-- Check Twilio account balance and phone number capability
-- Test with Tanzanian phone numbers (some carriers may have delays)
+- Verify password is correct
+- Check if account exists (customer or admin)
+- Try password reset if forgotten
+- Clear browser cache and cookies
 
 #### 2. Database Connection Issues
 **Symptoms:** "Cannot connect to database" errors
 **Solutions:**
-- Verify `DATABASE_URL` is correct in environment variables
+- Verify database credentials in `.env`
 - Check if Railway PostgreSQL instance is running
-- Ensure database tables are initialized with SQL schema
+- Ensure database tables are initialized
 - Test connection locally before deploying
 
 #### 3. Image Upload Failing
@@ -531,26 +587,18 @@ app.use(cors({
 #### 4. CORS Errors in Browser Console
 **Symptoms:** Frontend cannot connect to backend API
 **Solutions:**
-- Ensure CORS is configured in backend to allow GitHub Pages domain
+- Ensure CORS is configured in backend to allow frontend domain
 - Update `API_BASE_URL` in frontend to correct backend URL
 - Check if backend is running and accessible
 - Verify no typos in API endpoint URLs
 
-#### 5. GitHub Pages Showing 404
-**Symptoms:** Customer portal not loading
+#### 5. Email Not Sending
+**Symptoms:** Admin announcements not reaching customers
 **Solutions:**
-- Ensure `index.html` is in root of repository
-- Check GitHub Pages configuration in repository settings
-- Wait 1-2 minutes after changes for GitHub Pages to update
-- Clear browser cache and try again
-
-#### 6. Admin Login Issues
-**Symptoms:** Admin cannot login or OTP not received
-**Solutions:**
-- Verify admin account exists in `users` table with `is_admin=1`
-- Check Twilio phone number can send to admin's number
-- Ensure admin's mobile number in database matches login attempt
-- Try resending OTP after 2 minutes
+- Verify Gmail credentials are correct
+- Ensure 2FA is enabled and app-specific password is used
+- Check if customer has email address in their profile
+- Test email functionality in development first
 
 ### Development Debugging Tips
 
@@ -569,9 +617,9 @@ npm run dev
 ```bash
 # Using curl to test endpoints
 curl -X GET https://your-backend.onrender.com/api/customers/products
-curl -X POST https://your-backend.onrender.com/api/customers/send-otp \
+curl -X POST https://your-backend.onrender.com/api/customers/login \
   -H "Content-Type: application/json" \
-  -d '{"phone": "+255777730606"}'
+  -d '{"phone": "+255777730606", "password": "test123"}'
 ```
 
 3. **Database Inspection:**
@@ -588,92 +636,35 @@ SELECT * FROM products WHERE stock > 0;
 SELECT status, COUNT(*) FROM orders GROUP BY status;
 ```
 
-## 🤝 Contributing
+## 🔐 Security Features
 
-We welcome contributions to improve the Four Brothers Sports Center platform!
+### Password Security
+- **Bcrypt hashing** for all passwords
+- **Password verification** for first order confirmation
+- **Password reset tokens** with expiration
+- **Current password required** for sensitive changes
 
-### How to Contribute
+### Authentication
+- **JWT tokens** for API authentication
+- **Refresh tokens** for extended sessions
+- **Admin role-based access control**
+- **Main admin protection** (ID: 1 cannot be deleted)
 
-1. **Fork the repositories:**
-   - Frontend: [FourBrothersSportsCenter](https://github.com/MohammedShehe/FourBrothersSportsCenter)
-   - Backend: [FourBrothersSportsCenter-Backend](https://github.com/MohammedShehe/FourBrothersSportsCenter-Backend)
+### Data Protection
+- **Environment variables** for sensitive data
+- **Input validation** on all endpoints
+- **SQL injection prevention** via parameterized queries
+- **File upload restrictions** (size, type)
 
-2. **Create a feature branch:**
-```bash
-git checkout -b feature/amazing-feature
-```
 
-3. **Make your changes** following the existing code style
 
-4. **Test thoroughly:**
-   - Test frontend changes in multiple browsers
-   - Test backend endpoints with Postman or curl
-   - Ensure database migrations (if any) work correctly
-
-5. **Commit with descriptive message:**
-```bash
-git commit -m "Add: Feature description"
-```
-
-6. **Push to your fork:**
-```bash
-git push origin feature/amazing-feature
-```
-
-7. **Open a Pull Request** with clear description of changes
-
-### Development Guidelines
-
-- **Code Style:** Follow existing patterns and indentation
-- **Comments:** Add comments for complex logic or business rules
-- **Documentation:** Update relevant documentation with changes
-- **Testing:** Test features thoroughly before submitting
-- **Security:** Never commit credentials or sensitive data
-- **Performance:** Consider efficiency for Tanzanian network conditions
-
-### Areas for Contribution
-
-1. **Frontend Improvements:**
-   - Better mobile responsiveness
-   - Additional filtering options
-   - Enhanced product search
-   - Improved user onboarding
-
-2. **Backend Features:**
-   - Additional analytics endpoints
-   - Bulk operations for admin
-   - Enhanced error handling
-   - Performance optimizations
-
-3. **Documentation:**
-   - API documentation improvements
-   - Deployment guides for other regions
-   - Translation to other languages
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-**MIT License Summary:**
-- ✅ Commercial use allowed
-- ✅ Modification allowed
-- ✅ Distribution allowed
-- ✅ Private use allowed
-- ❌ No liability
-- ❌ No warranty
 
 ## 👥 Team & Contact
 
 - **Store:** Four Brothers Sports Center
-- **Location:** Tanzania
+- **Location:** Zanzibar, Tanzania
 - **Industry:** Sports Footwear Retail
 - **Focus:** Quality sports shoes at affordable prices
-
-### Contact Information
-For business inquiries or technical support:
-- **Email:** Available upon request
-- **Phone:** Available upon request
-- **Location:** Tanzania
 
 ### Development Team
 This platform was developed to support local Tanzanian businesses in establishing their online presence and reaching more customers through digital channels.
@@ -686,7 +677,6 @@ We gratefully acknowledge the services and communities that made this project po
 - **Railway** for excellent PostgreSQL database service
 - **GitHub** for free static site hosting via GitHub Pages
 - **Cloudinary** for robust image storage and CDN
-- **Twilio** for reliable SMS delivery services
 - **Bootstrap** for responsive design framework
 - **Chart.js** for data visualization components
 - **Font Awesome** for comprehensive icon library
@@ -722,63 +712,80 @@ For technical support or questions about the platform:
 
 ## 🔄 Update Log
 
-### Version 1.0.0 (Current - November 2025)
-**Initial Release - Production Ready**
+### Version 2.0.0 (December 2025) - **PASSWORD-BASED AUTHENTICATION UPDATE**
+**Major Security Update - Replaced OTP with Password System**
 
-#### ✅ Completed Features
-- **Core E-commerce Platform**
-  - Complete customer portal with product browsing
-  - Full admin panel with dashboard
-  - Multi-admin system with OTP authentication
+#### ✅ Major Changes from Version 1.0.0
+- **🔐 Authentication Overhaul**
+  - **REMOVED:** Twilio SMS OTP system completely
+  - **ADDED:** Password-based registration and login for customers
+  - **ADDED:** Password-based admin authentication
+  - **ADDED:** Password verification for first order security
+  - **ADDED:** Secure password reset via name verification
 
-- **Customer Features**
-  - Phone-based registration with SMS OTP
-  - Shopping cart with quantity management
-  - Order tracking with real-time status
-  - Product ratings and reviews system
-  - 3-day return policy implementation
+- **🔄 Token System Enhancement**
+  - **ADDED:** JWT refresh token system for customers
+  - **IMPROVED:** Token expiration and renewal process
+  - **ENHANCED:** Security middleware for both customer and admin routes
 
-- **Admin Features**
-  - Product management with image upload
-  - Customer management system
-  - Order management with status control
-  - Ad and announcement system
-  - Sales analytics dashboard
+- **👑 Admin Management System**
+  - **ADDED:** Multi-admin support with role hierarchy
+  - **ADDED:** Main admin (can_manage_admins=1) with full privileges
+  - **ADDED:** Regular admin with limited privileges
+  - **ADDED:** Admin management interface (add/edit/delete)
 
-- **Technical Implementation**
-  - Full-stack architecture (Frontend + Backend + Database)
-  - Cloud deployment (GitHub Pages + Render + Railway)
-  - Image storage (Cloudinary)
-  - SMS integration (Twilio)
-  - Responsive design for all devices
+- **📱 Customer Experience Improvements**
+  - **ADDED:** Profile management with password-protected changes
+  - **ADDED:** Change email/phone with current password verification
+  - **ADDED:** Password strength indicator during registration
+  - **IMPROVED:** Password reset flow with name verification
+
+- **📧 Enhanced Communication**
+  - **ADDED:** Bulk email announcements from admin panel
+  - **ADDED:** In-app messaging system
+  - **ADDED:** Customer-to-admin message support
+  - **IMPROVED:** Announcement display system
+
+- **💾 Database Schema Updates**
+  - **REMOVED:** OTP-related columns from orders table
+  - **ADDED:** Password columns to customers and users tables
+  - **ADDED:** Reset token system for password recovery
+  - **ADDED:** Admin management columns in users table
 
 #### 🚀 Deployment Status
-- **Frontend:** ✅ Deployed to GitHub Pages
-- **Backend:** ✅ Deployed to Render
-- **Database:** ✅ Configured with Railway PostgreSQL
-- **Services:** ✅ Integrated with Cloudinary and Twilio
+- **Frontend:** ✅ Updated with new authentication flows
+- **Backend:** ✅ Completely rewritten authentication system
+- **Database:** ✅ Schema updated for password system
+- **Services:** ✅ Removed Twilio dependency, added email support
+
+### Version 1.0.0 (November 2025) - Initial Release
+- Complete e-commerce platform with OTP authentication
+- Admin panel with dashboard
+- Product management system
+- Order tracking with OTP delivery confirmation
 
 ### Planned Features (Future Releases)
 
-#### Version 1.1.0 (Q1 2026)
+#### Version 2.1.0 (Q1 2026)
 - [ ] Mobile application (React Native/Flutter)
 - [ ] Push notifications for order updates
 - [ ] Advanced product filtering and sorting
 - [ ] Wishlist functionality
+- [ ] Customer loyalty program
 
-#### Version 1.2.0 (Q2 2026)
+#### Version 2.2.0 (Q2 2026)
 - [ ] Payment gateway integration (M-Pesa, Airtel Money)
 - [ ] Inventory management with alerts
 - [ ] Sales analytics with advanced reports
-- [ ] Customer loyalty program
+- [ ] Multi-language support (Swahili, English)
 
-#### Version 1.3.0 (Q3 2026)
+#### Version 2.3.0 (Q3 2026)
 - [ ] Multi-vendor support
 - [ ] Advanced search with AI recommendations
-- [ ] Multi-language support (Swahili, English)
 - [ ] Social media integration
+- [ ] Customer referral program
 
-#### Version 2.0.0 (Q4 2026)
+#### Version 3.0.0 (Q4 2026)
 - [ ] Progressive Web App (PWA) features
 - [ ] Offline functionality
 - [ ] Advanced shipping and logistics integration
@@ -788,7 +795,8 @@ For technical support or questions about the platform:
 
 | Version | Date | Key Changes | Status |
 |---------|------|-------------|--------|
-| 1.0.0 | Nov 2025 | Initial production release | ✅ Current |
+| 2.0.0 | Dec 2025 | Password-based authentication | ✅ Current |
+| 1.0.0 | Nov 2025 | Initial production release with OTP | ✅ Completed |
 | 0.9.0 | Oct 2025 | Beta testing and bug fixes | ✅ Completed |
 | 0.8.0 | Sep 2025 | Admin panel development | ✅ Completed |
 | 0.7.0 | Aug 2025 | Customer portal development | ✅ Completed |
@@ -798,11 +806,13 @@ For technical support or questions about the platform:
 
 ---
 
-**Last Updated:** November 30, 2025  
-**Version:** 1.0.0  
+**Last Updated:** December 3, 2025  
+**Version:** 2.0.0  
 **Status:** Production Ready  
-**Next Release:** Version 1.1.0 (Q1 2026)
+**Next Release:** Version 2.1.0 (Q1 2026)
 
 ---
 
 *This platform represents a significant step forward in digitizing retail commerce in Tanzania, providing local businesses with tools previously available only to large corporations. By making e-commerce accessible and affordable, we're helping Tanzanian entrepreneurs compete in the digital economy.*
+
+**Key Security Note:** Version 2.0.0 replaces the SMS OTP system with a more secure and reliable password-based authentication system, reducing operational costs while improving user experience and security.

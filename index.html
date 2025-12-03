@@ -27,6 +27,10 @@
             --warning-color: #ffc107;
             --danger-color: #dc3545;
             --admin-color: #6f42c1;
+            --form-bg: #ffffff;
+            --form-border: #e0e0e0;
+            --form-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            --form-radius: 12px;
         }
 
         [data-theme="dark"] {
@@ -45,6 +49,9 @@
             --warning-color: #fd7e14;
             --danger-color: #e83e8c;
             --admin-color: #8c68cd;
+            --form-bg: #2c3e50;
+            --form-border: #34495e;
+            --form-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
         }
         
         body {
@@ -263,18 +270,6 @@
             border-color: var(--primary-color);
         }
         
-        .otp-input {
-            width: 40px;
-            height: 40px;
-            text-align: center;
-            margin: 0 5px;
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius);
-            background-color: var(--card-bg);
-            color: var(--text-color);
-            transition: all 0.3s ease;
-        }
-        
         .account-menu {
             list-style: none;
             padding: 0;
@@ -351,7 +346,7 @@
         }
         
         .hidden {
-            display: none;
+            display: none !important;
         }
         
         footer {
@@ -456,18 +451,39 @@
             transition: all 0.3s ease;
         }
         
+        /* Enhanced Form Styling */
         .form-control, .form-select {
-            background-color: var(--card-bg);
-            border-color: var(--border-color);
+            background-color: var(--form-bg);
+            border: 2px solid var(--form-border);
             color: var(--text-color);
             transition: all 0.3s ease;
+            border-radius: 8px;
+            padding: 12px 15px;
+            font-size: 15px;
         }
         
         .form-control:focus, .form-select:focus {
-            background-color: var(--card-bg);
+            background-color: var(--form-bg);
             border-color: var(--primary-color);
             color: var(--text-color);
-            box-shadow: 0 0 0 0.25rem rgba(26, 115, 232, 0.25);
+            box-shadow: 0 0 0 0.25rem rgba(26, 115, 232, 0.15);
+        }
+        
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text-color);
+        }
+        
+        .form-check-input {
+            width: 18px;
+            height: 18px;
+            margin-top: 0.2rem;
+        }
+        
+        .form-check-input:checked {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
         }
         
         .table {
@@ -475,9 +491,26 @@
         }
         
         .modal-content {
-            background-color: var(--card-bg);
+            background-color: var(--form-bg);
             color: var(--text-color);
             transition: all 0.3s ease;
+            border-radius: var(--form-radius);
+            border: 1px solid var(--form-border);
+            box-shadow: var(--form-shadow);
+        }
+        
+        .modal-header {
+            border-bottom: 1px solid var(--form-border);
+            padding: 20px 25px;
+        }
+        
+        .modal-title {
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        
+        .modal-body {
+            padding: 25px;
         }
         
         .btn-close {
@@ -531,21 +564,33 @@
         .btn-primary {
             background-color: var(--primary-color);
             border-color: var(--primary-color);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
         }
         
         .btn-primary:hover {
             background-color: #0d6efd;
             border-color: #0d6efd;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(26, 115, 232, 0.3);
         }
         
         .btn-outline-primary {
             color: var(--primary-color);
             border-color: var(--primary-color);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
         }
         
         .btn-outline-primary:hover {
             background-color: var(--primary-color);
             border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(26, 115, 232, 0.3);
         }
         
         .text-muted {
@@ -652,6 +697,14 @@
             footer h5::after {
                 left: 50%;
                 transform: translateX(-50%);
+            }
+            .product-detail-section {
+                position: relative;
+                background-color: var(--body-bg);
+                padding: 15px;
+            }
+            .modal-dialog {
+                margin: 10px;
             }
         }
 
@@ -847,6 +900,81 @@
             color: var(--light-text);
         }
 
+        /* Enhanced Form Styling */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-control-lg {
+            padding: 15px;
+            font-size: 16px;
+        }
+        
+        .form-text {
+            color: var(--light-text);
+            font-size: 0.875rem;
+            margin-top: 5px;
+        }
+        
+        .input-group-text {
+            background-color: var(--form-bg);
+            border: 2px solid var(--form-border);
+            color: var(--light-text);
+        }
+        
+        /* Modal Form Styling */
+        .modal-form .form-control {
+            margin-bottom: 15px;
+        }
+        
+        .modal-form .btn {
+            margin-top: 10px;
+            padding: 12px;
+        }
+        
+        .forgot-password-link {
+            color: var(--primary-color);
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .forgot-password-link:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+        
+        .auth-switch-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .auth-switch-link:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+        
+        .form-divider {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+            color: var(--light-text);
+        }
+        
+        .form-divider::before,
+        .form-divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .form-divider span {
+            padding: 0 15px;
+        }
+        
         /* Enhanced Styling and Animations */
         .btn-confirm-order {
             position: relative;
@@ -1220,6 +1348,220 @@
                 display: none;
             }
         }
+        
+        /* Password Verification Modal */
+        .password-verification {
+            padding: 20px;
+        }
+        
+        .password-verification .form-control {
+            margin-bottom: 15px;
+        }
+        
+        .reset-options {
+            margin-top: 20px;
+        }
+        
+        .reset-options button {
+            margin: 5px;
+            width: 100%;
+        }
+        
+        /* Additional Form Enhancements */
+        .form-check {
+            padding-left: 1.5rem;
+        }
+        
+        .form-check-label {
+            cursor: pointer;
+        }
+        
+        .input-group {
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .input-group .form-control:focus {
+            z-index: 3;
+        }
+        
+        .input-group-text {
+            transition: all 0.3s ease;
+        }
+        
+        .input-group:focus-within .input-group-text {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        /* Select dropdown styling */
+        .form-select {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%236c757d' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 16px 12px;
+        }
+        
+        .form-select:focus {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%231a73e8' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+        }
+        
+        /* Textarea styling */
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        /* Alert styling in forms */
+        .alert {
+            border-radius: var(--radius);
+            border: none;
+            box-shadow: var(--shadow);
+        }
+        
+        /* Form validation styling */
+        .form-control.is-valid {
+            border-color: var(--success-color);
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%2328a745' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right calc(0.375em + 0.1875rem) center;
+            background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+        }
+        
+        .form-control.is-invalid {
+            border-color: var(--danger-color);
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right calc(0.375em + 0.1875rem) center;
+            background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+        }
+        
+        .invalid-feedback {
+            color: var(--danger-color);
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+        
+        .valid-feedback {
+            color: var(--success-color);
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+        
+        /* Form heading styles */
+        .form-heading {
+            color: var(--text-color);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        /* Form section styling */
+        .form-section {
+            background: var(--form-bg);
+            border-radius: var(--form-radius);
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid var(--form-border);
+            box-shadow: var(--shadow);
+        }
+        
+        /* Placeholder styling */
+        ::placeholder {
+            color: var(--light-text);
+            opacity: 0.7;
+        }
+        
+        /* Form animation */
+        .form-animate {
+            animation: formSlideIn 0.5s ease-out;
+        }
+        
+        @keyframes formSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Improved modal backdrop */
+        .modal-backdrop {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Form button container */
+        .form-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        /* Enhanced radio button styling */
+        .form-check-input[type="radio"] {
+            border-radius: 50%;
+        }
+        
+        /* Checkbox styling */
+        .form-check-input[type="checkbox"]:checked {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        /* Form field with icon */
+        .form-field-with-icon {
+            position: relative;
+        }
+        
+        .form-field-with-icon .form-control {
+            padding-left: 40px;
+        }
+        
+        .form-field-with-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--light-text);
+            z-index: 3;
+        }
+        
+        /* Password strength indicator */
+        .password-strength {
+            height: 4px;
+            margin-top: 5px;
+            border-radius: 2px;
+            background: var(--border-color);
+            overflow: hidden;
+        }
+        
+        .password-strength-meter {
+            height: 100%;
+            width: 0;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        .strength-weak {
+            background: var(--danger-color);
+            width: 25%;
+        }
+        
+        .strength-medium {
+            background: var(--warning-color);
+            width: 50%;
+        }
+        
+        .strength-strong {
+            background: var(--success-color);
+            width: 75%;
+        }
+        
+        .strength-very-strong {
+            background: var(--success-color);
+            width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -1549,17 +1891,19 @@
                             <div class="card-body">
                                 <p class="mb-3">Malipo yanafanyika kwa pesa taslimu (COD) unapopokea bidhaa.</p>
                                 
-                                <div class="mb-3" id="otp-section" style="display: none;">
-                                    <label class="form-label">Ingiza OTP uliyopokea kwenye nambari yako ya simu</label>
-                                    <div class="d-flex justify-content-center mb-3" id="otp-inputs">
-                                        <input type="text" class="otp-input" maxlength="1" data-index="0">
-                                        <input type="text" class="otp-input" maxlength="1" data-index="1">
-                                        <input type="text" class="otp-input" maxlength="1" data-index="2">
-                                        <input type="text" class="otp-input" maxlength="1" data-index="3">
-                                        <input type="text" class="otp-input" maxlength="1" data-index="4">
-                                        <input type="text" class="otp-input" maxlength="1" data-index="5">
+                                <!-- Password Verification for First Order -->
+                                <div class="mb-3" id="password-verification-section" style="display: none;">
+                                    <div class="alert alert-info">
+                                        <i class="fas fa-info-circle me-2"></i>
+                                        Kwa ajili ya usalama, tafadhali ingiza nenosiri lako kuthibitisha agizo lako la kwanza.
                                     </div>
-                                    <button class="btn btn-outline-secondary" id="resend-otp">Tuma tena OTP</button>
+                                    <div class="mb-3">
+                                        <label for="password-verification" class="form-label">Nenosiri lako</label>
+                                        <input type="password" class="form-control" id="password-verification" placeholder="Ingiza nenosiri lako">
+                                        <div class="form-text">
+                                            <span class="forgot-password-link" id="forgot-password-checkout">Umesahau nenosiri?</span>
+                                        </div>
+                                    </div>
                                 </div>
                                 
                                 <button class="btn btn-success w-100 btn-lg btn-confirm-order" id="confirm-order">
@@ -1656,14 +2000,14 @@
                                 <label for="mobile" class="form-label">Nambari ya Simu</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="mobile" readonly>
-                                    <button class="btn btn-outline-secondary" type="button" id="change-mobile">Badilisha</button>
+                                    <button class="btn btn-outline-secondary" type="button" id="change-mobile-btn">Badilisha</button>
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Barua Pepe</label>
                                 <div class="input-group">
                                     <input type="email" class="form-control" id="email">
-                                    <button class="btn btn-outline-secondary" type="button" id="change-email">Badilisha</button>
+                                    <button class="btn btn-outline-secondary" type="button" id="change-email-btn">Badilisha</button>
                                 </div>
                             </div>
                             <div class="mb-3">
@@ -1689,131 +2033,367 @@
                             </div>
                             <button type="submit" class="btn btn-primary">Hifadhi Mabadiliko</button>
                         </form>
+                        
+                        <!-- Change Password Section -->
+                        <div class="mt-5">
+                            <h5>Badilisha Nenosiri</h5>
+                            <form id="change-password-form">
+                                <div class="mb-3">
+                                    <label for="current-password" class="form-label">Nenosiri la Sasa</label>
+                                    <input type="password" class="form-control" id="current-password" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="new-password" class="form-label">Nenosiri Jipya</label>
+                                    <input type="password" class="form-control" id="new-password" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="confirm-new-password" class="form-label">Rudia Nenosiri Jipya</label>
+                                    <input type="password" class="form-control" id="confirm-new-password" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Badilisha Nenosiri</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Login Modal -->
+        <!-- Login Modal with Professional Styling -->
         <div class="modal fade" id="loginModal" tabindex="-1">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Ingia kwenye Akaunti Yako</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                        <form id="login-form">
-                            <div class="mb-3">
-                                <label for="login-mobile" class="form-label">Nambari ya Simu</label>
-                                <input type="text" class="form-control" id="login-mobile" required>
+                        <div class="text-center mb-4">
+                            <div class="profile-icon d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 1.5rem; background: var(--primary-color);">
+                                <i class="fas fa-user"></i>
                             </div>
-                            <button type="submit" class="btn btn-primary w-100">Pata OTP</button>
-                        </form>
-                        
-                        <div id="login-otp-section" class="hidden mt-3">
-                            <div class="mb-3">
-                                <label class="form-label">Ingiza OTP uliyopokea</label>
-                                <div class="d-flex justify-content-center mb-3" id="login-otp-inputs">
-                                    <input type="text" class="otp-input" maxlength="1" data-index="0">
-                                    <input type="text" class="otp-input" maxlength="1" data-index="1">
-                                    <input type="text" class="otp-input" maxlength="1" data-index="2">
-                                    <input type="text" class="otp-input" maxlength="1" data-index="3">
-                                    <input type="text" class="otp-input" maxlength="1" data-index="4">
-                                    <input type="text" class="otp-input" maxlength="1" data-index="5">
-                                </div>
-                                <button class="btn btn-outline-secondary" id="resend-login-otp">Tuma tena OTP</button>
-                            </div>
-                            <button class="btn btn-success w-100" id="confirm-login">Thibitisha na Ingia</button>
+                            <h4 class="mt-3">Karibu Tena</h4>
+                            <p class="text-muted">Ingia kwenye akaunti yako ili kuendelea</p>
                         </div>
                         
-                        <div class="mt-3 text-center">
-                            <p>Huna akaunti? <a href="#" id="show-register">Jiandikishe hapa</a></p>
+                        <form id="login-form" class="modal-form">
+                            <div class="mb-3">
+                                <label for="login-mobile" class="form-label">Nambari ya Simu</label>
+                                <div class="form-field-with-icon">
+                                    <i class="fas fa-phone"></i>
+                                    <input type="text" class="form-control form-control-lg" id="login-mobile" placeholder="07XX XXX XXX" required>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="login-password" class="form-label">Nenosiri</label>
+                                <div class="form-field-with-icon">
+                                    <i class="fas fa-lock"></i>
+                                    <input type="password" class="form-control form-control-lg" id="login-password" placeholder="Ingiza nenosiri lako" required>
+                                </div>
+                                <div class="form-text text-end">
+                                    <span class="forgot-password-link" id="forgot-password-login">Umesahau nenosiri?</span>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100 btn-lg mt-3">
+                                <i class="fas fa-sign-in-alt me-2"></i>Ingia
+                            </button>
+                        </form>
+                        
+                        <div class="form-divider">
+                            <span>Ama</span>
+                        </div>
+                        
+                        <div class="text-center mt-4">
+                            <p class="mb-0">Huna akaunti? 
+                                <a href="#" class="auth-switch-link" id="show-register">Jiandikishe hapa</a>
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Registration Modal -->
+        <!-- Registration Modal with Professional Styling -->
         <div class="modal fade" id="registerModal" tabindex="-1">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Jiandikishe</h5>
+                        <h5 class="modal-title">Jiandikishe Sasa</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                        <form id="register-form">
+                        <div class="text-center mb-4">
+                            <div class="profile-icon d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 1.5rem; background: var(--accent-color);">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
+                            <h4 class="mt-3">Uanze Safari Yako</h4>
+                            <p class="text-muted">Unda akaunti yako kwa dakika chache tu</p>
+                        </div>
+                        
+                        <form id="register-form" class="modal-form">
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="reg-first-name" class="form-label">Jina la Kwanza</label>
-                                    <input type="text" class="form-control" id="reg-first-name" required>
+                                    <div class="form-field-with-icon">
+                                        <i class="fas fa-user"></i>
+                                        <input type="text" class="form-control" id="reg-first-name" placeholder="MO" required>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="reg-last-name" class="form-label">Jina la Mwisho</label>
-                                    <input type="text" class="form-control" id="reg-last-name" required>
+                                    <div class="form-field-with-icon">
+                                        <i class="fas fa-user"></i>
+                                        <input type="text" class="form-control" id="reg-last-name" placeholder="Dogo" required>
+                                    </div>
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <label for="reg-mobile" class="form-label">Nambari ya Simu</label>
-                                <input type="text" class="form-control" id="reg-mobile" required>
+                                <div class="form-field-with-icon">
+                                    <i class="fas fa-phone"></i>
+                                    <input type="text" class="form-control" id="reg-mobile" placeholder="07XX XXX XXX" required>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="reg-password" class="form-label">Nenosiri</label>
+                                <div class="form-field-with-icon">
+                                    <i class="fas fa-lock"></i>
+                                    <input type="password" class="form-control" id="reg-password" placeholder="Chagua nenosiri lenye nguvu" required>
+                                </div>
+                                <div class="password-strength">
+                                    <div class="password-strength-meter" id="password-strength-meter"></div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="reg-confirm-password" class="form-label">Rudia Nenosiri</label>
+                                <div class="form-field-with-icon">
+                                    <i class="fas fa-lock"></i>
+                                    <input type="password" class="form-control" id="reg-confirm-password" placeholder="Rudia nenosiri lako" required>
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <label for="reg-email" class="form-label">Barua Pepe (Hiari)</label>
-                                <input type="email" class="form-control" id="reg-email">
+                                <div class="form-field-with-icon">
+                                    <i class="fas fa-envelope"></i>
+                                    <input type="email" class="form-control" id="reg-email" placeholder="jina@mfano.com">
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <label for="reg-address" class="form-label">Anwani Kamili</label>
-                                <textarea class="form-control" id="reg-address" rows="3" required></textarea>
+                                <div class="form-field-with-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <textarea class="form-control" id="reg-address" rows="2" placeholder="Andika anwani yako kamili" required></textarea>
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Jinsia</label>
-                                <div>
-                                    <div class="form-check form-check-inline">
+                                <div class="d-flex gap-3">
+                                    <div class="form-check">
                                         <input class="form-check-input" type="radio" name="reg-gender" id="reg-male" value="mwanaume" required>
-                                        <label class="form-check-label" for="reg-male">Mwanaume</label>
+                                        <label class="form-check-label" for="reg-male">
+                                            <i class="fas fa-male me-1"></i> Mwanaume
+                                        </label>
                                     </div>
-                                    <div class="form-check form-check-inline">
+                                    <div class="form-check">
                                         <input class="form-check-input" type="radio" name="reg-gender" id="reg-female" value="mwanamke">
-                                        <label class="form-check-label" for="reg-female">Mwanamke</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="reg-gender" id="reg-other" value="nyengine">
-                                        <label class="form-check-label" for="reg-other">Nyengine</label>
+                                        <label class="form-check-label" for="reg-female">
+                                            <i class="fas fa-female me-1"></i> Mwanamke
+                                        </label>
                                     </div>
                                 </div>
                             </div>
                             <div class="mb-3 form-check">
                                 <input type="checkbox" class="form-check-input" id="agree-terms" required>
-                                <label class="form-check-label" for="agree-terms">Nimekubaliana na <a href="regulations.html">Masharti ya Huduma</a></label>
+                                <label class="form-check-label" for="agree-terms">
+                                    Nimekubaliana na 
+                                    <a href="regulations.html" class="auth-switch-link">Masharti ya Huduma</a>
+                                </label>
                             </div>
-                            <button type="submit" class="btn btn-primary w-100">Jiandikishe</button>
+                            <button type="submit" class="btn btn-primary w-100 btn-lg">
+                                <i class="fas fa-user-plus me-2"></i>Jiandikishe
+                            </button>
                         </form>
                         
-                        <div class="mt-3 text-center">
-                            <p>Tayari una akaunti? <a href="#" id="show-login">Ingia hapa</a></p>
+                        <div class="text-center mt-4">
+                            <p class="mb-0">Tayari una akaunti? 
+                                <a href="#" class="auth-switch-link" id="show-login">Ingia hapa</a>
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Message Modal -->
+        <!-- Forgot Password Modal with Professional Styling -->
+        <div class="modal fade" id="forgotPasswordModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Umesahau Nenosiri?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="text-center mb-4">
+                            <div class="profile-icon d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 1.5rem; background: var(--warning-color);">
+                                <i class="fas fa-key"></i>
+                            </div>
+                            <h4 class="mt-3">Pata Upya Nenosiri Lako</h4>
+                            <p class="text-muted">Tutakusaidia kupata nenosiri lako upya kwa urahisi</p>
+                        </div>
+                        
+                        <div id="forgot-password-step-1">
+                            <form id="forgot-password-form">
+                                <div class="mb-4">
+                                    <p class="mb-3">Weka jina lako la kwanza na jina la mwisho kuthibitisha utambulisho wako.</p>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="forgot-first-name" class="form-label">Jina la Kwanza</label>
+                                        <div class="form-field-with-icon">
+                                            <i class="fas fa-user"></i>
+                                            <input type="text" class="form-control" id="forgot-first-name" placeholder="John" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="forgot-last-name" class="form-label">Jina la Mwisho</label>
+                                        <div class="form-field-with-icon">
+                                            <i class="fas fa-user"></i>
+                                            <input type="text" class="form-control" id="forgot-last-name" placeholder="Doe" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">
+                                    <i class="fas fa-arrow-right me-2"></i>Endelea
+                                </button>
+                            </form>
+                        </div>
+                        
+                        <div id="forgot-password-step-2" class="hidden">
+                            <div class="text-center mb-4">
+                                <p class="mb-3">Chagua kile unachotaka kubadilisha:</p>
+                            </div>
+                            <div class="reset-options">
+                                <button class="btn btn-outline-primary btn-lg mb-3" id="reset-password-btn">
+                                    <i class="fas fa-lock me-2"></i>Badilisha Nenosiri
+                                </button>
+                                <button class="btn btn-outline-secondary btn-lg" id="reset-mobile-btn">
+                                    <i class="fas fa-phone me-2"></i>Badilisha Nambari ya Simu
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Reset Password Form -->
+                        <div id="reset-password-form" class="hidden">
+                            <div class="text-center mb-4">
+                                <p class="mb-3">Weka nenosiri jipya lako:</p>
+                            </div>
+                            <form id="new-password-form">
+                                <div class="mb-3">
+                                    <label for="new-password-reset" class="form-label">Nenosiri Jipya</label>
+                                    <div class="form-field-with-icon">
+                                        <i class="fas fa-lock"></i>
+                                        <input type="password" class="form-control" id="new-password-reset" placeholder="Nenosiri jipya" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="confirm-new-password-reset" class="form-label">Rudia Nenosiri Jipya</label>
+                                    <div class="form-field-with-icon">
+                                        <i class="fas fa-lock"></i>
+                                        <input type="password" class="form-control" id="confirm-new-password-reset" placeholder="Rudia nenosiri jipya" required>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">
+                                    <i class="fas fa-check me-2"></i>Weka Nenosiri Jipya
+                                </button>
+                            </form>
+                        </div>
+                        
+                        <!-- Reset Mobile Form -->
+                        <div id="reset-mobile-form" class="hidden">
+                            <div class="text-center mb-4">
+                                <p class="mb-3">Weka nambari mpya ya simu:</p>
+                            </div>
+                            <form id="new-mobile-form">
+                                <div class="mb-3">
+                                    <label for="new-mobile" class="form-label">Nambari Mpya ya Simu</label>
+                                    <div class="form-field-with-icon">
+                                        <i class="fas fa-phone"></i>
+                                        <input type="text" class="form-control" id="new-mobile" placeholder="07XX XXX XXX" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="confirm-new-mobile" class="form-label">Rudia Nambari ya Simu</label>
+                                    <div class="form-field-with-icon">
+                                        <i class="fas fa-phone"></i>
+                                        <input type="text" class="form-control" id="confirm-new-mobile" placeholder="Rudia nambari ya simu" required>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">
+                                    <i class="fas fa-check me-2"></i>Weka Nambari Mpya
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Password Verification Modal for Order Confirmation -->
+        <div class="modal fade" id="passwordVerificationModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Thibitisha kwa Nenosiri</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body password-verification text-center">
+                        <div class="profile-icon d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; font-size: 1.5rem; background: var(--success-color);">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <p class="mb-3">Tafadhali ingiza nenosiri lako kuthibitisha agizo:</p>
+                        <form id="password-verification-form">
+                            <div class="mb-3">
+                                <label for="verification-password" class="form-label">Nenosiri lako</label>
+                                <div class="form-field-with-icon">
+                                    <i class="fas fa-lock"></i>
+                                    <input type="password" class="form-control form-control-lg" id="verification-password" placeholder="Ingiza nenosiri lako" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100 btn-lg">
+                                <i class="fas fa-check-circle me-2"></i>Thibitisha
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Message Modal with Professional Styling -->
         <div class="modal fade" id="messageModal" tabindex="-1">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Tuma Ujumbe</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
+                        <div class="text-center mb-4">
+                            <div class="profile-icon d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 1.5rem; background: var(--accent-color);">
+                                <i class="fas fa-comment-alt"></i>
+                            </div>
+                            <h4 class="mt-3">Wasiliana Nasi</h4>
+                            <p class="text-muted">Tuma ujumbe wako na tutakujibu kwa haraka</p>
+                        </div>
                         <form id="message-form">
                             <div class="mb-3">
                                 <label for="message-content" class="form-label">Ujumbe Wako</label>
-                                <textarea class="form-control" id="message-content" rows="4" placeholder="Andika ujumbe wako hapa..." required></textarea>
+                                <div class="form-field-with-icon">
+                                    <i class="fas fa-edit"></i>
+                                    <textarea class="form-control" id="message-content" rows="4" placeholder="Andika ujumbe wako hapa..." required></textarea>
+                                </div>
                             </div>
-                            <button type="submit" class="btn btn-primary w-100">Tuma Ujumbe</button>
+                            <button type="submit" class="btn btn-primary w-100 btn-lg">
+                                <i class="fas fa-paper-plane me-2"></i>Tuma Ujumbe
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -1822,7 +2402,7 @@
 
         <!-- Enhanced Order Success Modal -->
         <div class="modal fade" id="orderSuccessModal" tabindex="-1">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-body text-center py-5 order-success-animation">
                         <i class="fas fa-check-circle success-icon"></i>
@@ -1836,13 +2416,21 @@
 
         <!-- Enhanced Rating Modal -->
         <div class="modal fade" id="ratingModal" tabindex="-1">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Tathmini Agizo</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
+                        <div class="text-center mb-4">
+                            <div class="profile-icon d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 1.5rem; background: var(--warning-color);">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <h4 class="mt-3">Tathmini Uzoefu Wako</h4>
+                            <p class="text-muted">Shiriki maoni yako na tusaidie kuboresha huduma zetu</p>
+                        </div>
+                        
                         <form id="rating-form">
                             <input type="hidden" id="rating-order-id">
                             
@@ -1891,12 +2479,17 @@
                                 <div class="rating-comment" id="product-comment">Bonyeza nyota kuweka tathmini</div>
                             </div>
                             
-                            <div class="mb-3">
+                            <div class="mb-4">
                                 <label for="overall-comment" class="form-label">Maoni Yako (Hiari)</label>
-                                <textarea class="form-control" id="overall-comment" rows="3" placeholder="Andika maoni yako kuhusu agizo lako..."></textarea>
+                                <div class="form-field-with-icon">
+                                    <i class="fas fa-comment"></i>
+                                    <textarea class="form-control" id="overall-comment" rows="3" placeholder="Andika maoni yako kuhusu agizo lako..."></textarea>
+                                </div>
                             </div>
                             
-                            <button type="submit" class="btn btn-primary w-100 btn-lg">Wasilisha Tathmini Yako</button>
+                            <button type="submit" class="btn btn-primary w-100 btn-lg">
+                                <i class="fas fa-paper-plane me-2"></i>Wasilisha Tathmini Yako
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -1905,7 +2498,7 @@
 
         <!-- Enhanced Return Order Modal -->
         <div class="modal fade" id="returnOrderModal" tabindex="-1">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Omba Kurudisha Agizo</h5>
@@ -1920,56 +2513,77 @@
                         <form id="return-order-form">
                             <input type="hidden" id="return-order-id">
                             
-                            <div class="mb-3">
+                            <div class="mb-4">
                                 <label class="form-label">Chagua Sababu ya Kurudisha</label>
                                 <div class="mb-2">
-                                    <div class="form-check">
+                                    <div class="form-check mb-2">
                                         <input class="form-check-input" type="radio" name="return-reason-type" id="reason-size" value="Saizi haifai">
-                                        <label class="form-check-label" for="reason-size">Saizi haifai</label>
+                                        <label class="form-check-label" for="reason-size">
+                                            <i class="fas fa-ruler me-2"></i>Saizi haifai
+                                        </label>
                                     </div>
-                                    <div class="form-check">
+                                    <div class="form-check mb-2">
                                         <input class="form-check-input" type="radio" name="return-reason-type" id="reason-color" value="Rangi si sahihi">
-                                        <label class="form-check-label" for="reason-color">Rangi si sahihi</label>
+                                        <label class="form-check-label" for="reason-color">
+                                            <i class="fas fa-palette me-2"></i>Rangi si sahihi
+                                        </label>
                                     </div>
-                                    <div class="form-check">
+                                    <div class="form-check mb-2">
                                         <input class="form-check-input" type="radio" name="return-reason-type" id="reason-damaged" value="Bidhaa imeharibika">
-                                        <label class="form-check-label" for="reason-damaged">Bidhaa imeharibika</label>
+                                        <label class="form-check-label" for="reason-damaged">
+                                            <i class="fas fa-exclamation-triangle me-2"></i>Bidhaa imeharibika
+                                        </label>
                                     </div>
-                                    <div class="form-check">
+                                    <div class="form-check mb-2">
                                         <input class="form-check-input" type="radio" name="return-reason-type" id="reason-wrong" value="Bidhaa nyingine tofauti">
-                                        <label class="form-check-label" for="reason-wrong">Bidhaa nyingine tofauti</label>
+                                        <label class="form-check-label" for="reason-wrong">
+                                            <i class="fas fa-exchange-alt me-2"></i>Bidhaa nyingine tofauti
+                                        </label>
                                     </div>
-                                    <div class="form-check">
+                                    <div class="form-check mb-2">
                                         <input class="form-check-input" type="radio" name="return-reason-type" id="reason-other" value="Nyingine">
-                                        <label class="form-check-label" for="reason-other">Nyingine</label>
+                                        <label class="form-check-label" for="reason-other">
+                                            <i class="fas fa-ellipsis-h me-2"></i>Nyingine
+                                        </label>
                                     </div>
                                 </div>
                             </div>
                             
-                            <div class="mb-3">
+                            <div class="mb-4">
                                 <label for="return-reason-details" class="form-label">Maelezo Zaidi (Inahitajika)</label>
-                                <textarea class="form-control" id="return-reason-details" rows="4" placeholder="Eleza kwa undani kwa nini unataka kurudisha bidhaa hii..." required></textarea>
+                                <div class="form-field-with-icon">
+                                    <i class="fas fa-edit"></i>
+                                    <textarea class="form-control" id="return-reason-details" rows="3" placeholder="Eleza kwa undani kwa nini unataka kurudisha bidhaa hii..." required></textarea>
+                                </div>
                             </div>
                             
-                            <div class="mb-3">
+                            <div class="mb-4">
                                 <label class="form-label">Hali ya Bidhaa</label>
                                 <div>
-                                    <div class="form-check">
+                                    <div class="form-check mb-2">
                                         <input class="form-check-input" type="checkbox" id="original-packaging">
-                                        <label class="form-check-label" for="original-packaging">Bidhaa iko kwenye kifurushi chake asili</label>
+                                        <label class="form-check-label" for="original-packaging">
+                                            Bidhaa iko kwenye kifurushi chake asili
+                                        </label>
                                     </div>
-                                    <div class="form-check">
+                                    <div class="form-check mb-2">
                                         <input class="form-check-input" type="checkbox" id="tags-attached">
-                                        <label class="form-check-label" for="tags-attached">Lebo na vitambulisho vimeachwa</label>
+                                        <label class="form-check-label" for="tags-attached">
+                                            Lebo na vitambulisho vimeachwa
+                                        </label>
                                     </div>
-                                    <div class="form-check">
+                                    <div class="form-check mb-2">
                                         <input class="form-check-input" type="checkbox" id="not-used">
-                                        <label class="form-check-label" for="not-used">Bidhaa haijatumika</label>
+                                        <label class="form-check-label" for="not-used">
+                                            Bidhaa haijatumika
+                                        </label>
                                     </div>
                                 </div>
                             </div>
                             
-                            <button type="submit" class="btn btn-primary w-100 btn-lg">Wasilisha Ombi la Kurudisha</button>
+                            <button type="submit" class="btn btn-primary w-100 btn-lg">
+                                <i class="fas fa-undo me-2"></i>Wasilisha Ombi la Kurudisha
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -1978,7 +2592,7 @@
 
         <!-- Cancel Order Modal -->
         <div class="modal fade" id="cancelOrderModal" tabindex="-1">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Batilisha Agizo</h5>
@@ -1988,39 +2602,52 @@
                         <form id="cancel-order-form">
                             <input type="hidden" id="cancel-order-id">
                             
-                            <div class="mb-3">
+                            <div class="mb-4">
                                 <label class="form-label">Chagua Sababu ya Kughairi</label>
                                 <div class="mb-2">
-                                    <div class="form-check">
+                                    <div class="form-check mb-2">
                                         <input class="form-check-input" type="radio" name="cancel-reason-type" id="cancel-change-mind" value="Nimebadilisha nia">
-                                        <label class="form-check-label" for="cancel-change-mind">Nimebadilisha nia</label>
+                                        <label class="form-check-label" for="cancel-change-mind">
+                                            Nimebadilisha nia
+                                        </label>
                                     </div>
-                                    <div class="form-check">
+                                    <div class="form-check mb-2">
                                         <input class="form-check-input" type="radio" name="cancel-reason-type" id="cancel-price" value="Bei sio sahihi">
-                                        <label class="form-check-label" for="cancel-price">Bei sio sahihi</label>
+                                        <label class="form-check-label" for="cancel-price">
+                                            Bei sio sahihi
+                                        </label>
                                     </div>
-                                    <div class="form-check">
+                                    <div class="form-check mb-2">
                                         <input class="form-check-input" type="radio" name="cancel-reason-type" id="cancel-delivery" value="Muda wa usafirishaji mrefu">
-                                        <label class="form-check-label" for="cancel-delivery">Muda wa usafirishaji mrefu</label>
+                                        <label class="form-check-label" for="cancel-delivery">
+                                            Muda wa usafirishaji mrefu
+                                        </label>
                                     </div>
-                                    <div class="form-check">
+                                    <div class="form-check mb-2">
                                         <input class="form-check-input" type="radio" name="cancel-reason-type" id="cancel-other" value="Nyingine">
-                                        <label class="form-check-label" for="cancel-other">Nyingine</label>
+                                        <label class="form-check-label" for="cancel-other">
+                                            Nyingine
+                                        </label>
                                     </div>
                                 </div>
                             </div>
                             
-                            <div class="mb-3">
+                            <div class="mb-4">
                                 <label for="cancel-reason-details" class="form-label">Maelezo Zaidi (Inahitajika)</label>
-                                <textarea class="form-control" id="cancel-reason-details" rows="3" placeholder="Tafadhali andika sababu ya kughairi agizo hili..." required></textarea>
+                                <div class="form-field-with-icon">
+                                    <i class="fas fa-edit"></i>
+                                    <textarea class="form-control" id="cancel-reason-details" rows="3" placeholder="Tafadhali andika sababu ya kughairi agizo hili..." required></textarea>
+                                </div>
                             </div>
                             
-                            <div class="alert alert-warning">
+                            <div class="alert alert-warning mb-4">
                                 <i class="fas fa-exclamation-triangle me-2"></i>
                                 <strong>Angalishi:</strong> Agizo linaweza kughairiwa tu ikiwa bado halijaanza kusafirishwa.
                             </div>
                             
-                            <button type="submit" class="btn btn-danger w-100">Thibitisha Kughairi Agizo</button>
+                            <button type="submit" class="btn btn-danger w-100 btn-lg">
+                                <i class="fas fa-times me-2"></i>Thibitisha Kughairi Agizo
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -2029,7 +2656,7 @@
 
         <!-- Order Details Modal -->
         <div class="modal fade" id="orderDetailsModal" tabindex="-1">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Maelezo ya Agizo #<span id="order-details-id"></span></h5>
@@ -2142,6 +2769,7 @@
     let selectedAddress = null;
     let customerMessages = [];
     let productRatings = [];
+    let resetToken = null;
 
     // DOM Elements
     const homeSection = document.getElementById('home-section');
@@ -2153,6 +2781,8 @@
     const productsGrid = document.getElementById('products-grid');
     const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
     const registerModal = new bootstrap.Modal(document.getElementById('registerModal'));
+    const forgotPasswordModal = new bootstrap.Modal(document.getElementById('forgotPasswordModal'));
+    const passwordVerificationModal = new bootstrap.Modal(document.getElementById('passwordVerificationModal'));
     const orderSuccessModal = new bootstrap.Modal(document.getElementById('orderSuccessModal'));
     const ratingModal = new bootstrap.Modal(document.getElementById('ratingModal'));
     const returnOrderModal = new bootstrap.Modal(document.getElementById('returnOrderModal'));
@@ -2177,6 +2807,17 @@
     // Initialize the application
     document.addEventListener('DOMContentLoaded', function() {
         console.log('Initializing application...');
+        
+        // Check if coming from terms page
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('from') === 'terms') {
+            // Show registration modal
+            registerModal.show();
+            
+            // Clear the parameter from URL without refreshing
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+        
         checkAuthStatus();
         loadInitialData();
         setupEventListeners();
@@ -2271,7 +2912,7 @@
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ refreshToken })
+                body: JSON.stringify({ refreshToken: refreshToken })
             });
             
             if (response.ok) {
@@ -2298,6 +2939,7 @@
         refreshToken = null;
         isFirstOrder = true;
         selectedAddress = null;
+        resetToken = null;
         localStorage.removeItem('authToken');
         localStorage.removeItem('refreshToken');
         updateAuthSection();
@@ -2335,7 +2977,7 @@
                         product.images = product.images.map(img => {
                             // If image path is relative, prepend the backend URL
                             if (img.startsWith('/')) {
-                                return `http://localhost:5000${img}`;
+                                return `https://api.fourbrothers.online${img}`;
                             }
                             return img;
                         });
@@ -2355,7 +2997,7 @@
         }
     }
 
-    // Load product ratings - UPDATED to handle authentication
+    // Load product ratings
     async function loadProductRatings() {
         try {
             console.log('Loading product ratings from API...');
@@ -2407,7 +3049,7 @@
                 // Fix ad image URLs
                 ads.forEach(ad => {
                     if (ad.image_url && ad.image_url.startsWith('/')) {
-                        ad.image_url = `http://localhost:5000${ad.image_url}`;
+                        ad.image_url = `https://api.fourbrothers.online${ad.image_url}`;
                     }
                 });
                 renderAds();
@@ -2637,7 +3279,7 @@
         // Add event listeners for product cards
         document.querySelectorAll('.product-card').forEach(card => {
             card.addEventListener('click', function(e) {
-                if (!e.target.classList.contains('add-to-cart-btn')) {
+                if (!e.target.classList.contains('add-to-cart-btn') && !e.target.closest('.add-to-cart-btn')) {
                     const productId = parseInt(this.getAttribute('data-product-id'));
                     showProductDetail(productId);
                 }
@@ -2669,7 +3311,7 @@
         });
     }
 
-    // Get product rating - FIXED for string to number conversion
+    // Get product rating
     function getProductRating(productId) {
         if (!productRatings || productRatings.length === 0) {
             return { avg_rating: 0, total_ratings: 0 };
@@ -2733,7 +3375,7 @@
         }
     }
 
-    // Enhanced setupEventListeners function with order management and search
+    // Enhanced setupEventListeners function with password authentication
     function setupEventListeners() {
         // Theme toggle
         themeToggle.addEventListener('click', toggleTheme);
@@ -2763,9 +3405,11 @@
             });
         });
 
-        // Back to products
+        // Back to products - FIXED: Scroll to top when going back to products
         document.getElementById('back-to-products').addEventListener('click', function() {
             showSection('home');
+            // Scroll to top of the page
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
         // Add to cart from product detail
@@ -2839,6 +3483,10 @@
             
             showSection('checkout');
             updateAddressSelection();
+            // Scroll to top of checkout section
+            setTimeout(() => {
+                checkoutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
         });
 
         // Account menu tabs
@@ -2909,57 +3557,36 @@
             loginModal.show();
         });
 
+        // Forgot password links
+        document.getElementById('forgot-password-login').addEventListener('click', function(e) {
+            e.preventDefault();
+            loginModal.hide();
+            forgotPasswordModal.show();
+        });
+
+        document.getElementById('forgot-password-checkout').addEventListener('click', function(e) {
+            e.preventDefault();
+            forgotPasswordModal.show();
+        });
+
         // Login form
         document.getElementById('login-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             const phone = document.getElementById('login-mobile').value.trim();
+            const password = document.getElementById('login-password').value;
             
-            if (!phone) {
-                alert('Tafadhali weka nambari ya simu.');
+            if (!phone || !password) {
+                alert('Tafadhali weka nambari ya simu na nenosiri.');
                 return;
             }
 
             try {
-                const response = await fetch(`${API_BASE_URL}/send-otp`, {
+                const response = await fetch(`${API_BASE_URL}/login`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ phone })
-                });
-                
-                const data = await response.json();
-                
-                if (response.ok) {
-                    document.getElementById('login-otp-section').classList.remove('hidden');
-                    alert('OTP imetumwa kwenye nambari yako ya simu.');
-                } else {
-                    alert(data.message || 'Hitilafu imetokea. Tafadhali jaribu tena.');
-                }
-            } catch (error) {
-                console.error('Login error:', error);
-                alert('Hitilafu ya mtandao. Tafadhali jaribu tena.');
-            }
-        });
-
-        // Confirm login
-        document.getElementById('confirm-login').addEventListener('click', async function() {
-            const phone = document.getElementById('login-mobile').value.trim();
-            const otpInputs = document.querySelectorAll('#login-otp-inputs .otp-input');
-            const otp = Array.from(otpInputs).map(input => input.value).join('');
-            
-            if (otp.length !== 6) {
-                alert('Tafadhali ingiza OTP kamili (tarakimu 6).');
-                return;
-            }
-
-            try {
-                const response = await fetch(`${API_BASE_URL}/verify-otp`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ phone, otp })
+                    body: JSON.stringify({ phone, password })
                 });
                 
                 const data = await response.json();
@@ -2976,9 +3603,8 @@
                     loginModal.hide();
                     await loadUserData();
                     
-                    // Reset OTP inputs
-                    document.querySelectorAll('#login-otp-inputs .otp-input').forEach(input => input.value = '');
-                    document.getElementById('login-otp-section').classList.add('hidden');
+                    // Reset form
+                    document.getElementById('login-form').reset();
                     
                     alert('Umefanikiwa kuingia!');
                     
@@ -2988,7 +3614,7 @@
                         window.pendingCheckout = false;
                     }
                 } else {
-                    alert(data.message || 'OTP si sahihi. Tafadhali jaribu tena.');
+                    alert(data.message || 'Nambari ya simu au nenosiri si sahihi. Tafadhali jaribu tena.');
                 }
             } catch (error) {
                 console.error('Login error:', error);
@@ -2996,19 +3622,26 @@
             }
         });
 
-        // Register form
+        // Registration form
         document.getElementById('register-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const firstName = document.getElementById('reg-first-name').value.trim();
             const lastName = document.getElementById('reg-last-name').value.trim();
             const mobile = document.getElementById('reg-mobile').value.trim();
+            const password = document.getElementById('reg-password').value;
+            const confirmPassword = document.getElementById('reg-confirm-password').value;
             const email = document.getElementById('reg-email').value.trim();
             const address = document.getElementById('reg-address').value.trim();
             const gender = document.querySelector('input[name="reg-gender"]:checked')?.value;
             
-            if (!firstName || !lastName || !mobile || !address || !gender) {
+            if (!firstName || !lastName || !mobile || !password || !confirmPassword || !address || !gender) {
                 alert('Tafadhali jaza sehemu zote zinazohitajika.');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                alert('Nenosiri halifanani. Tafadhali hakikisha nenosiri ni sawa.');
                 return;
             }
 
@@ -3022,6 +3655,8 @@
                         first_name: firstName,
                         last_name: lastName,
                         phone: mobile,
+                        password: password,
+                        confirm_password: confirmPassword,
                         email: email || null,
                         address: address,
                         gender: gender
@@ -3043,6 +3678,161 @@
                 }
             } catch (error) {
                 console.error('Registration error:', error);
+                alert('Hitilafu ya mtandao. Tafadhali jaribu tena.');
+            }
+        });
+
+        // Forgot password form
+        document.getElementById('forgot-password-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const firstName = document.getElementById('forgot-first-name').value.trim();
+            const lastName = document.getElementById('forgot-last-name').value.trim();
+            
+            if (!firstName || !lastName) {
+                alert('Tafadhali weka jina lako la kwanza na jina la mwisho.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/forgot-password`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ first_name: firstName, last_name: lastName })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    resetToken = data.reset_token;
+                    // Show step 2
+                    document.getElementById('forgot-password-step-1').classList.add('hidden');
+                    document.getElementById('forgot-password-step-2').classList.remove('hidden');
+                } else {
+                    alert(data.message || 'Mteja hajapatikana na maelezo hayo. Tafadhali jaribu tena.');
+                }
+            } catch (error) {
+                console.error('Forgot password error:', error);
+                alert('Hitilafu ya mtandao. Tafadhali jaribu tena.');
+            }
+        });
+
+        // Reset password button
+        document.getElementById('reset-password-btn').addEventListener('click', function() {
+            document.getElementById('forgot-password-step-2').classList.add('hidden');
+            document.getElementById('reset-password-form').classList.remove('hidden');
+        });
+
+        // Reset mobile button
+        document.getElementById('reset-mobile-btn').addEventListener('click', function() {
+            document.getElementById('forgot-password-step-2').classList.add('hidden');
+            document.getElementById('reset-mobile-form').classList.remove('hidden');
+        });
+
+        // New password form
+        document.getElementById('new-password-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const newPassword = document.getElementById('new-password-reset').value;
+            const confirmPassword = document.getElementById('confirm-new-password-reset').value;
+            
+            if (!newPassword || !confirmPassword) {
+                alert('Tafadhali weka nenosiri jipya na urudie.');
+                return;
+            }
+
+            if (newPassword !== confirmPassword) {
+                alert('Nenosiri halifanani. Tafadhali hakikisha nenosiri ni sawa.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/reset-password`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        reset_token: resetToken,
+                        new_password: newPassword,
+                        confirm_password: confirmPassword
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    alert('Nenosiri limebadilishwa kikamilifu! Unaweza kuingia sasa kwa nenosiri jipya.');
+                    forgotPasswordModal.hide();
+                    loginModal.show();
+                    resetToken = null;
+                    
+                    // Reset forms
+                    document.getElementById('forgot-password-form').reset();
+                    document.getElementById('new-password-form').reset();
+                    document.getElementById('forgot-password-step-1').classList.remove('hidden');
+                    document.getElementById('forgot-password-step-2').classList.add('hidden');
+                    document.getElementById('reset-password-form').classList.add('hidden');
+                } else {
+                    alert(data.message || 'Hitilafu katika kubadilisha nenosiri. Tafadhali jaribu tena.');
+                }
+            } catch (error) {
+                console.error('Reset password error:', error);
+                alert('Hitilafu ya mtandao. Tafadhali jaribu tena.');
+            }
+        });
+
+        // New mobile form
+        document.getElementById('new-mobile-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const newMobile = document.getElementById('new-mobile').value.trim();
+            const confirmMobile = document.getElementById('confirm-new-mobile').value.trim();
+            
+            if (!newMobile || !confirmMobile) {
+                alert('Tafadhali weka nambari mpya ya simu na urudie.');
+                return;
+            }
+
+            if (newMobile !== confirmMobile) {
+                alert('Nambari za simu hazifanani. Tafadhali hakikisha nambari ni sawa.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/change-mobile`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        first_name: document.getElementById('forgot-first-name').value,
+                        last_name: document.getElementById('forgot-last-name').value,
+                        new_mobile: newMobile,
+                        confirm_mobile: confirmMobile
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    alert('Nambari ya simu imebadilishwa kikamilifu! Unaweza kuingia sasa kwa nambari mpya.');
+                    forgotPasswordModal.hide();
+                    loginModal.show();
+                    
+                    // Reset forms
+                    document.getElementById('forgot-password-form').reset();
+                    document.getElementById('new-mobile-form').reset();
+                    document.getElementById('forgot-password-step-1').classList.remove('hidden');
+                    document.getElementById('forgot-password-step-2').classList.add('hidden');
+                    document.getElementById('reset-mobile-form').classList.add('hidden');
+                } else {
+                    alert(data.message || 'Hitilafu katika kubadilisha nambari ya simu. Tafadhali jaribu tena.');
+                }
+            } catch (error) {
+                console.error('Change mobile error:', error);
                 alert('Hitilafu ya mtandao. Tafadhali jaribu tena.');
             }
         });
@@ -3088,29 +3878,10 @@
             updateCheckoutSummary();
         });
 
-        document.getElementById('proceed-to-payment').addEventListener('click', async function() {
-            // Only request OTP for first order
+        document.getElementById('proceed-to-payment').addEventListener('click', function() {
+            // Show password verification for first order
             if (isFirstOrder) {
-                try {
-                    const response = await fetch(`${API_BASE_URL}/me/request-change-otp`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${authToken}`
-                        },
-                        body: JSON.stringify({ type: 'phone' })
-                    });
-                    
-                    if (response.ok) {
-                        document.getElementById('otp-section').style.display = 'block';
-                        alert('OTP imetumwa kwenye nambari yako ya simu. Ingiza ili kuthibitisha agizo.');
-                    } else {
-                        alert('Hitilafu katika kutuma OTP. Tafadhali jaribu tena.');
-                        }
-                } catch (error) {
-                    console.error('OTP request error:', error);
-                    alert('Hitilafu ya mtandao. Tafadhali jaribu tena.');
-                }
+                document.getElementById('password-verification-section').style.display = 'block';
             }
             
             document.getElementById('checkout-step-2').classList.add('hidden');
@@ -3120,30 +3891,17 @@
             updateCheckoutProgress(3);
         });
 
-        // Resend OTP for checkout
-        document.getElementById('resend-otp').addEventListener('click', async function() {
-            try {
-                const response = await fetch(`${API_BASE_URL}/me/request-change-otp`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${authToken}`
-                    },
-                    body: JSON.stringify({ type: 'phone' })
-                });
-                
-                if (response.ok) {
-                    alert('OTP imetumwa tena kwenye nambari yako ya simu.');
-                    } else {
-                    alert('Hitilafu katika kutuma OTP. Tafadhali jaribu tena.');
-                }
-            } catch (error) {
-                console.error('Resend OTP error:', error);
-                alert('Hitilafu ya mtandao. Tafadhali jaribu tena.');
+        // Password verification for checkout
+        document.getElementById('password-verification').addEventListener('input', function() {
+            const password = this.value;
+            if (password.length >= 6) {
+                confirmOrderBtn.disabled = false;
+            } else {
+                confirmOrderBtn.disabled = true;
             }
         });
 
-        // Enhanced Confirm order with animation
+        // Enhanced Confirm order with password verification
         confirmOrderBtn.addEventListener('click', async function(e) {
             e.preventDefault();
             
@@ -3152,19 +3910,37 @@
                 return;
             }
             
-            // For first order, require OTP
+            // For first order, require password verification
             if (isFirstOrder) {
-                const otpInputs = document.querySelectorAll('#otp-inputs .otp-input');
-                const otp = Array.from(otpInputs).map(input => input.value).join('');
+                const password = document.getElementById('password-verification').value;
                 
-                if (otp.length !== 6) {
-                    alert('Tafadhali ingiza OTP kamili (tarakimu 6).');
+                if (!password) {
+                    alert('Tafadhali ingiza nenosiri lako kuthibitisha agizo lako la kwanza.');
                     return;
                 }
                 
-                console.log('Placing first order with OTP:', otp); // Log OTP for testing
-            } else {
-                console.log('Placing subsequent order without OTP');
+                // Verify password first
+                try {
+                    const response = await fetch(`${API_BASE_URL}/verify-password`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${authToken}`
+                        },
+                        body: JSON.stringify({ password })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (!response.ok) {
+                        alert(data.message || 'Nenosiri si sahihi. Tafadhali jaribu tena.');
+                        return;
+                    }
+                } catch (error) {
+                    console.error('Password verification error:', error);
+                    alert('Hitilafu ya mtandao. Tafadhali jaribu tena.');
+                    return;
+                }
             }
             
             // Show loading state
@@ -3237,27 +4013,6 @@
             }
         });
 
-        // OTP input handling
-        document.querySelectorAll('.otp-input').forEach(input => {
-            input.addEventListener('input', function() {
-                if (this.value.length === 1) {
-                    const next = this.nextElementSibling;
-                    if (next && next.classList.contains('otp-input')) {
-                        next.focus();
-                    }
-                }
-            });
-            
-            input.addEventListener('keydown', function(e) {
-                if (e.key === 'Backspace' && this.value === '') {
-                    const prev = this.previousElementSibling;
-                    if (prev && prev.classList.contains('otp-input')) {
-                        prev.focus();
-                    }
-                }
-            });
-        });
-
         // Profile form
         document.getElementById('profile-form').addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -3308,34 +4063,82 @@
             }
         });
 
-        // Change phone number
-        document.getElementById('change-mobile').addEventListener('click', function() {
-            // Request OTP to current phone number first
-            fetch(`${API_BASE_URL}/me/request-change-otp`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${authToken}`
-                },
-                body: JSON.stringify({ type: 'phone' })
-            })
-            .then(response => {
+        // Change password form in profile
+        document.getElementById('change-password-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const currentPassword = document.getElementById('current-password').value;
+            const newPassword = document.getElementById('new-password').value;
+            const confirmNewPassword = document.getElementById('confirm-new-password').value;
+            
+            if (!currentPassword || !newPassword || !confirmNewPassword) {
+                alert('Tafadhali jaza sehemu zote.');
+                return;
+            }
+
+            if (newPassword !== confirmNewPassword) {
+                alert('Nenosiri jipya halifanani. Tafadhali hakikisha nenosiri ni sawa.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/me/change-password`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({
+                        current_password: currentPassword,
+                        new_password: newPassword,
+                        confirm_password: confirmNewPassword
+                    })
+                });
+                
+                const data = await response.json();
+                
                 if (response.ok) {
-                    alert('OTP imetumwa kwenye nambari yako ya sasa.');
-                    } else {
-                    alert('Hitilafu katika kutuma OTP. Tafadhali jaribu tena.');
+                    alert('Nenosiri limebadilishwa kikamilifu!');
+                    document.getElementById('change-password-form').reset();
+                } else {
+                    alert(data.message || 'Hitilafu katika kubadilisha nenosiri. Tafadhali jaribu tena.');
                 }
-            })
-            .catch(error => {
-                console.error('OTP request error:', error);
+            } catch (error) {
+                console.error('Change password error:', error);
                 alert('Hitilafu ya mtandao. Tafadhali jaribu tena.');
-            });
+            }
+        });
+
+        // Change phone number
+        document.getElementById('change-mobile-btn').addEventListener('click', function() {
+            const newMobile = prompt('Weka nambari mpya ya simu:');
+            if (!newMobile) return;
+            
+            const confirmMobile = prompt('Rudia nambari mpya ya simu:');
+            if (!confirmMobile) return;
+            
+            if (newMobile !== confirmMobile) {
+                alert('Nambari za simu hazifanani.');
+                return;
+            }
+            
+            const currentPassword = prompt('Weka nenosiri lako la sasa kuthibitisha:');
+            if (!currentPassword) return;
+            
+            // In a real implementation, you would make an API call here
+            alert('Kubadilisha nambari ya simu kunahitaji uthibitisho wa ziada. Tafadhali wasiliana na msaada wa wateja.');
         });
 
         // Change email
-        document.getElementById('change-email').addEventListener('click', function() {
-            // No OTP required for email change in this implementation
-            alert('Unaweza kubadilisha barua pepe moja kwa moja.');
+        document.getElementById('change-email-btn').addEventListener('click', function() {
+            const newEmail = prompt('Weka barua pepe mpya:');
+            if (!newEmail) return;
+            
+            const currentPassword = prompt('Weka nenosiri lako la sasa kuthibitisha:');
+            if (!currentPassword) return;
+            
+            // In a real implementation, you would make an API call here
+            alert('Kubadilisha barua pepe kunahitaji uthibitisho. Tafadhali wasiliana na msaada wa wateja.');
         });
 
         // Add new address in account section
@@ -3392,6 +4195,52 @@
                 }
             } catch (error) {
                 console.error('Message sending error:', error);
+                alert('Hitilafu ya mtandao. Tafadhali jaribu tena.');
+            }
+        });
+
+        // Password verification form for order confirmation
+        document.getElementById('password-verification-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const password = document.getElementById('verification-password').value;
+            const orderId = document.getElementById('password-verification-form').getAttribute('data-order-id');
+            
+            if (!password) {
+                alert('Tafadhali ingiza nenosiri lako.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/orders/${orderId}/confirm`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({ password })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    alert('Agizo limepokelewa kikamilifu! Asante kwa ununuzi wako.');
+                    passwordVerificationModal.hide();
+                    
+                    // Update order status locally
+                    const order = orders.find(o => o.id == orderId);
+                    if (order) {
+                        order.status = 'Imepokelewa';
+                    }
+                    updateOrdersDisplay();
+                    
+                    // Reset form
+                    document.getElementById('password-verification-form').reset();
+                } else {
+                    alert(data.message || 'Nenosiri si sahihi. Tafadhali jaribu tena.');
+                }
+            } catch (error) {
+                console.error('Order confirmation error:', error);
                 alert('Hitilafu ya mtandao. Tafadhali jaribu tena.');
             }
         });
@@ -3459,14 +4308,6 @@
                 });
             });
         });
-
-        // Get rating value from stars
-        function getRatingValue(ratingId) {
-            const stars = document.querySelectorAll(`#${ratingId} .star`);
-            let rating = 0;
-            stars.forEach(star => { if (star.classList.contains('active')) rating++; });
-            return rating > 0 ? rating : null;
-        }
 
         // ---------------------- RATING FORM SUBMIT ----------------------
         document.getElementById('rating-form').addEventListener('submit', async function(e) {
@@ -3578,75 +4419,7 @@
             }
         });
 
-
-        // Return order form
-        document.getElementById('return-order-form').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const orderId = document.getElementById('return-order-id').value;
-            const selectedReason = document.querySelector('input[name="return-reason-type"]:checked');
-            const reasonDetails = document.getElementById('return-reason-details').value.trim();
-            const originalPackaging = document.getElementById('original-packaging').checked;
-            const tagsAttached = document.getElementById('tags-attached').checked;
-            const notUsed = document.getElementById('not-used').checked;
-            
-            if (!selectedReason || !reasonDetails) {
-                alert('Tafadhali chagua sababu na uandike maelezo zaidi.');
-                return;
-            }
-            if (!originalPackaging || !tagsAttached || !notUsed) {
-                alert('Bidhaa lazima iwe kwenye kifurushi chake asili, lebo ziwe zimeachwa, na haijatumika.');
-                return;
-            }
-
-            // Read product condition checkboxes
-            const productCondition = {
-                originalPackaging: document.getElementById('original-packaging').checked,
-                tagsAttached: document.getElementById('tags-attached').checked,
-                notUsed: document.getElementById('not-used').checked
-            };
-
-            const fullReason = `${selectedReason.value}: ${reasonDetails}`;
-
-            try {
-                const response = await fetch(`${API_BASE_URL}/orders/${orderId}/return`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${authToken}`
-                    },
-                    body: JSON.stringify({ 
-                        reason: fullReason,
-                        productCondition 
-                    })
-                });
-                
-                const data = await response.json();
-                
-                if (response.ok) {
-                    alert('Ombi lako la kurudisha bidhaa limepokelewa! Tutawasiliana nawe hivi karibuni kuhusu mchakato wa kurudisha.');
-                    returnOrderModal.hide();
-                    
-                    // Reset form
-                    document.getElementById('return-order-form').reset();
-                    
-                    // Update order status locally
-                    const order = orders.find(o => o.id == orderId);
-                    if (order) {
-                        order.status = 'Kurudishwa';
-                    }
-                    updateOrdersDisplay();
-                } else {
-                    alert(data.message || 'Hitilafu katika kuwasilisha ombi la kurudisha. Tafadhali jaribu tena.');
-                }
-            } catch (error) {
-                console.error('Return order error:', error);
-                alert('Hitilafu ya mtandao. Tafadhali jaribu tena.');
-            }
-        });
-
-
-        // Cancel order form
+        // ---------------------- CANCEL ORDER FORM ----------------------
         document.getElementById('cancel-order-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             
@@ -3694,6 +4467,45 @@
                 alert('Hitilafu ya mtandao. Tafadhali jaribu tena.');
             }
         });
+
+        // Password strength indicator
+        const passwordInput = document.getElementById('reg-password');
+        const strengthMeter = document.getElementById('password-strength-meter');
+        
+        if (passwordInput && strengthMeter) {
+            passwordInput.addEventListener('input', function() {
+                const password = this.value;
+                let strength = 0;
+                
+                // Check password strength
+                if (password.length >= 8) strength++;
+                if (/[A-Z]/.test(password)) strength++;
+                if (/[0-9]/.test(password)) strength++;
+                if (/[^A-Za-z0-9]/.test(password)) strength++;
+                
+                // Update strength meter
+                strengthMeter.className = 'password-strength-meter';
+                if (password.length === 0) {
+                    strengthMeter.style.width = '0';
+                } else if (strength === 1) {
+                    strengthMeter.classList.add('strength-weak');
+                } else if (strength === 2) {
+                    strengthMeter.classList.add('strength-medium');
+                } else if (strength === 3) {
+                    strengthMeter.classList.add('strength-strong');
+                } else if (strength >= 4) {
+                    strengthMeter.classList.add('strength-very-strong');
+                }
+            });
+        }
+    }
+
+    // Get rating value from stars
+    function getRatingValue(ratingId) {
+        const stars = document.querySelectorAll(`#${ratingId} .star`);
+        let rating = 0;
+        stars.forEach(star => { if (star.classList.contains('active')) rating++; });
+        return rating > 0 ? rating : null;
     }
 
     // Search functionality
@@ -3732,19 +4544,6 @@
 
     function hideSearchResults() {
         searchResults.style.display = 'none';
-    }
-
-    function getRatingValue(ratingId) {
-        const stars = document.querySelectorAll(`#${ratingId} .star`);
-        let rating = 0;
-
-        stars.forEach(star => {
-            if (star.classList.contains('active')) {
-                rating++;
-            }
-        });
-
-        return rating > 0 ? rating : null;
     }
 
     // Create confetti effect
@@ -3798,7 +4597,7 @@
         }
     }
 
-    // Show specific section
+    // Show specific section - FIXED: Added scroll to top when showing sections
     function showSection(sectionName) {
         homeSection.classList.add('hidden');
         productDetailSection.classList.add('hidden');
@@ -3809,10 +4608,16 @@
         switch(sectionName) {
             case 'home':
                 homeSection.classList.remove('hidden');
+                // Scroll to top when going home
+                window.scrollTo({ top: 0, behavior: 'smooth' });
                 break;
             case 'cart':
                 cartSection.classList.remove('hidden');
                 updateCartDisplay();
+                // Scroll to top of cart section
+                setTimeout(() => {
+                    cartSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
                 break;
             case 'account':
                 if (!currentUser) {
@@ -3822,6 +4627,10 @@
                 }
                 accountSection.classList.remove('hidden');
                 updateOrdersDisplay();
+                // Scroll to top of account section
+                setTimeout(() => {
+                    accountSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
                 break;
             case 'checkout':
                 if (!currentUser) {
@@ -3832,6 +4641,10 @@
                 checkoutSection.classList.remove('hidden');
                 updateAddressSelection();
                 updateCheckoutProgress(1);
+                // Scroll to top of checkout section
+                setTimeout(() => {
+                    checkoutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
                 break;
         }
         
@@ -3930,7 +4743,7 @@
         });
     }
 
-    // Show product detail with enhanced carousel
+    // Show product detail with enhanced carousel - FIXED: Scroll to top when showing product detail
     function showProductDetail(productId) {
         const product = products.find(p => p.id === productId);
         if (!product) {
@@ -3991,7 +4804,9 @@
                 thumbnail.addEventListener('click', function() {
                     // Update main carousel
                     const carousel = bootstrap.Carousel.getInstance(document.getElementById('productImagesCarousel'));
-                    carousel.to(index);
+                    if (carousel) {
+                        carousel.to(index);
+                    }
                     
                     // Update active states
                     document.querySelectorAll('.thumbnail').forEach(thumb => thumb.classList.remove('active'));
@@ -4091,6 +4906,21 @@
         // Show the section
         homeSection.classList.add('hidden');
         productDetailSection.classList.remove('hidden');
+        
+        // Scroll to top of product detail section
+        setTimeout(() => {
+            productDetailSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+        
+        // Initialize carousel if it exists
+        setTimeout(() => {
+            const carouselElement = document.getElementById('productImagesCarousel');
+            if (carouselElement) {
+                new bootstrap.Carousel(carouselElement, {
+                    interval: 5000
+                });
+            }
+        }, 100);
     }
 
     // Add product to cart
@@ -4335,6 +5165,12 @@
                             </button>` : 
                             ''
                         }
+                        ${order.status === 'Imesafirishwa' ? 
+                            `<button class="btn btn-sm btn-outline-success confirm-order-btn" data-order-id="${order.id}">
+                                <i class="fas fa-check"></i> Thibitisha
+                            </button>` : 
+                            ''
+                        }
                         ${order.status === 'Imepokelewa' && !isRated ? 
                             `<button class="btn btn-sm btn-outline-primary rate-order-btn" data-order-id="${order.id}">
                                 <i class="fas fa-star"></i> Tathmini
@@ -4365,6 +5201,13 @@
             });
         });
         
+        document.querySelectorAll('.confirm-order-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const orderId = this.getAttribute('data-order-id');
+                showPasswordVerificationModal(orderId);
+            });
+        });
+        
         document.querySelectorAll('.rate-order-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 const orderId = this.getAttribute('data-order-id');
@@ -4386,6 +5229,13 @@
                 showOrderDetails(orderId);
             });
         });
+    }
+
+    // Show password verification modal for order confirmation
+    function showPasswordVerificationModal(orderId) {
+        document.getElementById('password-verification-form').setAttribute('data-order-id', orderId);
+        document.getElementById('verification-password').value = '';
+        passwordVerificationModal.show();
     }
 
     // Check if order can be returned
@@ -4498,13 +5348,9 @@
         // Reset checkout progress UI
         updateCheckoutProgress(1);
         
-        // Clear OTP inputs
-        document.querySelectorAll('.otp-input').forEach(input => {
-            input.value = '';
-        });
-        
-        // Hide OTP section
-        document.getElementById('otp-section').style.display = 'none';
+        // Clear password input
+        document.getElementById('password-verification').value = '';
+        document.getElementById('password-verification-section').style.display = 'none';
         
         // Reset selected address
         selectedAddress = null;
