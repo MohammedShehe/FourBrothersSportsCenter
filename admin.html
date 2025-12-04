@@ -41,6 +41,7 @@
       color: #34495e;
       overflow-x: hidden;
       line-height: 1.6;
+      height: 100vh;
     }
     
     /* Login Styles - Professional Redesign */
@@ -85,6 +86,28 @@
       z-index: 1;
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255,255,255,0.2);
+      max-height: 90vh;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--primary-light) #f1f1f1;
+    }
+
+    .login-card::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .login-card::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 3px;
+    }
+
+    .login-card::-webkit-scrollbar-thumb {
+      background: var(--primary-light);
+      border-radius: 3px;
+    }
+
+    .login-card::-webkit-scrollbar-thumb:hover {
+      background: var(--primary);
     }
 
     .login-card:hover {
@@ -237,6 +260,8 @@
       background: #f8f9fa;
       border-radius: 8px;
       border-left: 4px solid var(--primary);
+      max-height: 250px;
+      overflow: hidden;
     }
 
     .terms-header {
@@ -245,6 +270,8 @@
       justify-content: space-between;
       margin-bottom: 1rem;
       cursor: pointer;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #e1e8ed;
     }
 
     .terms-header h6 {
@@ -257,15 +284,33 @@
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.4s ease-out;
+      position: relative;
     }
 
     .terms-content.show {
       max-height: 200px;
+      overflow-y: auto;
+      padding-right: 5px;
+    }
+
+    .terms-content::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .terms-content::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 2px;
+    }
+
+    .terms-content::-webkit-scrollbar-thumb {
+      background: #bdc3c7;
+      border-radius: 2px;
     }
 
     .terms-content ul {
       padding-left: 1.5rem;
       margin-bottom: 0;
+      margin-top: 1rem;
     }
 
     .terms-content li {
@@ -320,18 +365,53 @@
 
     /* Responsive adjustments for login */
     @media (max-width: 576px) {
+      .login-container {
+        padding: 1rem;
+        align-items: flex-start;
+        padding-top: 2rem;
+      }
+      
       .login-card {
-        padding: 2rem 1.5rem;
-        margin: 1rem;
+        padding: 1.5rem;
+        margin: 0.5rem;
+        max-height: 85vh;
       }
       
       .login-header h4 {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
       }
       
       .logo-container {
-        width: 120px;
-        height: 50px;
+        width: 100px;
+        height: 45px;
+      }
+      
+      .terms-section {
+        margin-top: 1.5rem;
+        padding: 1rem;
+        max-height: 200px;
+      }
+      
+      .terms-content.show {
+        max-height: 150px;
+      }
+    }
+
+    @media (max-width: 375px) {
+      .login-card {
+        padding: 1.25rem;
+      }
+      
+      .login-header h4 {
+        font-size: 1.25rem;
+      }
+      
+      .form-control {
+        padding: 0.75rem;
+      }
+      
+      .login-btn {
+        padding: 0.875rem;
       }
     }
 
@@ -344,6 +424,26 @@
       transition: var(--transition);
       z-index: 1000;
       box-shadow: 2px 0 20px rgba(0,0,0,0.1);
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100%;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,255,255,0.3) transparent;
+    }
+    
+    .sidebar::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    .sidebar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    
+    .sidebar::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.3);
+      border-radius: 3px;
     }
     
     .nav-link {
@@ -355,7 +455,7 @@
       display: flex;
       align-items: center;
       position: relative;
-      overflow: hidden;
+      overflow: visible !important;
     }
     
     .nav-link:hover {
@@ -493,6 +593,9 @@
       gap: 10px;
       flex-wrap: wrap;
       margin-top: 10px;
+      max-height: 120px;
+      overflow-y: auto;
+      padding: 5px;
     }
     
     .image-preview img {
@@ -543,7 +646,7 @@
       color: white;
     }
     
-    /* Notification badge */
+    /* Notification badges */
     .notification-badge {
       position: absolute;
       top: -5px;
@@ -559,6 +662,23 @@
       justify-content: center;
       font-weight: bold;
       animation: pulse 2s infinite;
+      z-index: 1;
+    }
+    
+    .mobile-notification-badge {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: var(--danger);
+      color: white;
+      border-radius: 50%;
+      width: 16px;
+      height: 16px;
+      font-size: 0.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
     }
     
     /* Loading spinner */
@@ -600,10 +720,17 @@
       
       .main-content {
         width: 100%;
+        margin-left: 0;
+        padding-top: 70px;
       }
       
       .modal-dialog {
         margin: 1rem;
+      }
+      
+      .modal-dialog-scrollable .modal-body {
+        max-height: calc(80vh - 120px);
+        overflow-y: auto;
       }
       
       .table-responsive {
@@ -613,16 +740,21 @@
       .nav-link {
         padding: 12px 16px;
       }
+      
+      .section-title {
+        font-size: 1.3rem;
+      }
+      
+      .section-title:after {
+        width: 40px;
+        bottom: -8px;
+      }
     }
     
     @media (max-width: 768px) {
       .login-card {
         margin: 20px;
         padding: 2rem;
-      }
-      
-      .section-title:after {
-        width: 40px;
       }
       
       .card-small {
@@ -634,8 +766,12 @@
         font-size: 0.875rem;
       }
       
+      .modal-dialog {
+        margin: 0.75rem;
+      }
+      
       .modal-dialog-scrollable .modal-body {
-        max-height: 60vh;
+        max-height: calc(70vh - 120px);
       }
     }
     
@@ -681,6 +817,17 @@
       
       .card-small .fa-2x {
         font-size: 1.5rem;
+      }
+      
+      .quick-action-btn {
+        padding: 12px;
+        font-size: 0.9rem;
+      }
+      
+      .dashboard-card-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.25rem;
       }
     }
     
@@ -759,6 +906,8 @@
         text-align: right;
         color: var(--dark);
         font-weight: 500;
+        max-width: 60%;
+        overflow-wrap: break-word;
       }
     }
     
@@ -768,11 +917,13 @@
       background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
       padding: 1rem 1.5rem;
       border-bottom: none;
-      position: sticky;
+      position: fixed;
       top: 0;
+      width: 100%;
       z-index: 100;
       box-shadow: 0 2px 20px rgba(0,0,0,0.1);
       color: white;
+      height: 70px;
     }
     
     @media (max-width: 991px) {
@@ -786,10 +937,17 @@
         color: white;
         margin: 0;
         font-weight: 600;
+        font-size: 1.1rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 200px;
       }
       
       .mobile-header small {
         color: rgba(255,255,255,0.8);
+        font-size: 0.8rem;
+        display: block;
       }
     }
     
@@ -840,6 +998,7 @@
       gap: 10px;
       text-align: center;
       width: 100%;
+      cursor: pointer;
     }
     
     .quick-action-btn:hover {
@@ -862,6 +1021,111 @@
       margin-left: 5px;
       font-weight: bold;
     }
+    
+    /* Main content area */
+    .main-content {
+      margin-left: 280px;
+      width: calc(100% - 280px);
+      min-height: 100vh;
+      background-color: #f5f7fa;
+      transition: margin-left 0.3s ease;
+    }
+    
+    @media (max-width: 991px) {
+      .main-content {
+        margin-left: 0;
+        width: 100%;
+      }
+    }
+    
+    /* Fix for modal scrolling on mobile */
+    .modal {
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    .modal-body {
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+    
+    @media (max-height: 600px) {
+      .modal-body {
+        max-height: 50vh;
+      }
+    }
+    
+    /* Fix for chart responsiveness */
+    .chart-container {
+      position: relative;
+      height: 300px;
+      width: 100%;
+    }
+    
+    @media (max-width: 768px) {
+      .chart-container {
+        height: 250px;
+      }
+    }
+    
+    /* Better button spacing on mobile */
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+    
+    .btn-group .btn {
+      margin: 2px;
+      flex: 1;
+      min-width: 120px;
+    }
+    
+    /* Adjust modal sizes for mobile */
+    @media (max-width: 768px) {
+      .modal-lg {
+        max-width: 95%;
+      }
+      
+      .modal-dialog-scrollable {
+        max-height: 85vh;
+      }
+    }
+    
+    /* Improve tap targets on mobile */
+    @media (max-width: 768px) {
+      .btn, .nav-link, .form-check-label {
+        min-height: 44px;
+        min-width: 44px;
+      }
+      
+      .btn-sm {
+        min-height: 36px;
+        min-width: 36px;
+      }
+    }
+    
+    /* Prevent horizontal scrolling */
+    body, .main-content, .modal-body, .login-card {
+      overflow-x: hidden;
+    }
+    
+    /* Better spacing for mobile cards */
+    @media (max-width: 576px) {
+      .mobile-card {
+        padding: 15px;
+      }
+      
+      .mobile-card-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .mobile-card-value {
+        text-align: left;
+        width: 100%;
+        margin-top: 4px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -877,17 +1141,17 @@
         <p>Ingia kwenye dashibodi ya usimamizi</p>
       </div>
       
-      <form id="adminLoginForm">
+      <form id="adminLoginForm" novalidate>
         <div class="form-group">
           <label class="form-label">Nambari ya Simu</label>
           <input type="text" class="form-control" id="adminMobileLogin" required placeholder="Ingiza nambari ya simu">
-          <div class="invalid-feedback">Tafadhali ingiza nambari ya simu</div>
+          <div class="invalid-feedback" id="mobileError">Tafadhali ingiza nambari ya simu</div>
         </div>
         
         <div class="form-group">
           <label class="form-label">Nenosiri</label>
           <input type="password" class="form-control" id="adminPassword" required placeholder="Ingiza nenosiri lako">
-          <div class="invalid-feedback">Tafadhali ingiza nenosiri</div>
+          <div class="invalid-feedback" id="passwordError">Tafadhali ingiza nenosiri</div>
         </div>
         
         <button type="submit" class="login-btn">
@@ -1067,10 +1331,11 @@
           </a>
           <a class="nav-link" data-section="notifications" href="#" id="notificationsNavLink">
             <i class="fa fa-envelope me-2"></i>Arifa & Ujumbe
-            <span class="badge bg-danger" id="notificationCountBadge" style="display: none;">0</span>
+            <!-- Badge will be added dynamically -->
           </a>
-          <a class="nav-link" data-section="orders" href="#">
+          <a class="nav-link" data-section="orders" href="#" id="ordersNavLink">
             <i class="fa fa-shopping-cart me-2"></i>Maagizo Yaliyowekwa
+            <!-- Badge will be added dynamically -->
           </a>
           <a class="nav-link" data-section="admins" href="#" id="adminsNavLink" style="display: none;">
             <i class="fa fa-user-shield me-2"></i>Wasimamizi
@@ -1160,7 +1425,7 @@
               <div class="col-lg-8">
                 <div class="card shadow-sm p-4 mb-4">
                   <h6 class="section-title">Maendeleo ya Mapato (kila mwezi)</h6>
-                  <div style="position: relative; height: 300px; margin-top: 20px;">
+                  <div class="chart-container" style="position: relative; height: 300px; margin-top: 20px;">
                     <canvas id="incomeChart"></canvas>
                   </div>
                 </div>
@@ -1192,7 +1457,7 @@
               <div class="col-12">
                 <div class="card shadow-sm p-4">
                   <h6 class="section-title">Maagizo ya Hivi Karibuni</h6>
-                  <div id="recentOrders" class="mt-3">
+                  <div id="recentOrders" class="mt-3" style="max-height: 300px; overflow-y: auto;">
                     <!-- Recent orders will be populated here -->
                     <div class="text-center py-4 text-muted">
                       <i class="fa fa-shopping-cart fa-2x mb-3"></i>
@@ -1211,7 +1476,7 @@
               <div class="d-flex flex-column flex-md-row gap-2 w-100 w-md-auto">
                 <div class="input-group" style="min-width: 250px;">
                   <span class="input-group-text"><i class="fa fa-search"></i></span>
-                  <input type="text" id="productSearch" placeholder="Tafuta bidhaa..." class="form-control">
+                  <input type="text" id="productSearch" placeholder="Tafuta bidhaa..." class="form-control" autocomplete="off">
                 </div>
                 <button class="btn btn-outline-info" onclick="loadProducts()">
                   <i class="fa fa-refresh me-1"></i>Pakia Upya
@@ -1233,8 +1498,8 @@
                     <th>Rangi</th>
                     <th>Punguzo %</th>
                     <th>Aina</th>
-                    <th>Ukubwa (EU)</th>
-                    <th>Idadi</th>
+                    <th>Saizi & Akiba</th>
+                    <th>Jumla ya Akiba</th>
                     <th>Bei (TSh)</th>
                     <th>Vitendo</th>
                   </tr>
@@ -1254,7 +1519,7 @@
               <div class="d-flex flex-column flex-md-row gap-2 w-100 w-md-auto">
                 <div class="input-group" style="min-width: 250px;">
                   <span class="input-group-text"><i class="fa fa-search"></i></span>
-                  <input type="text" id="customerSearch" placeholder="Tafuta wateja..." class="form-control">
+                  <input type="text" id="customerSearch" placeholder="Tafuta wateja..." class="form-control" autocomplete="off">
                 </div>
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAddCustomer">
                   <i class="fa fa-plus me-1"></i>Ongeza Mteja
@@ -1315,12 +1580,12 @@
 
             <div class="card shadow-sm p-4 mb-4">
               <h6 class="section-title">Ujumbe kutoka kwa Wateja</h6>
-              <div id="messagesList" class="list-group mt-3"></div>
+              <div id="messagesList" class="list-group mt-3" style="max-height: 400px; overflow-y: auto;"></div>
             </div>
             
             <div class="card shadow-sm p-4">
               <h6 class="section-title">Historia ya Arifa</h6>
-              <div id="announcementsList" class="mt-3">
+              <div id="announcementsList" class="mt-3" style="max-height: 400px; overflow-y: auto;">
                 <div class="text-center py-4 text-muted">
                   <i class="fa fa-bullhorn fa-2x mb-3"></i>
                   <p>Hakuna arifa zilizotolewa</p>
@@ -1397,7 +1662,7 @@
   </div>
 
   <!-- Modals -->
-  <!-- Add/Edit Product Modal - Updated -->
+  <!-- Add/Edit Product Modal -->
 <div class="modal fade" id="modalAddProduct" tabindex="-1">
   <div class="modal-dialog modal-lg modal-dialog-scrollable">
     <div class="modal-content">
@@ -1410,12 +1675,12 @@
           <div class="row g-3">
             <!-- Basic Info -->
             <div class="col-md-6">
-              <label class="form-label">Jina la Bidhaa</label>
-              <input class="form-control" id="prodTitle" required>
+              <label class="form-label">Jina la Bidhaa <span class="text-danger">*</span></label>
+              <input class="form-control" id="prodTitle" required autocomplete="off">
             </div>
             <div class="col-md-6">
-              <label class="form-label">Kampuni</label>
-              <select id="prodBrand" class="form-select">
+              <label class="form-label">Kampuni <span class="text-danger">*</span></label>
+              <select id="prodBrand" class="form-select" required>
                 <option value="">Chagua...</option>
                 <option>Nike</option>
                 <option>Adidas</option>
@@ -1425,8 +1690,9 @@
             </div>
 
             <div class="col-md-4">
-              <label class="form-label">Rangi</label>
-              <select id="prodColor" class="form-select">
+              <label class="form-label">Rangi <span class="text-danger">*</span></label>
+              <select id="prodColor" class="form-select" required>
+                <option value="">Chagua...</option>
                 <option>Nyeusi</option>
                 <option>Nyeupe</option>
                 <option>Njano</option>
@@ -1437,11 +1703,12 @@
             </div>
             <div class="col-md-4">
               <label class="form-label">Punguzo (%)</label>
-              <input type="number" min="0" max="100" id="prodOffer" class="form-control" value="0">
+              <input type="number" min="0" max="100" id="prodOffer" class="form-control" value="0" autocomplete="off">
             </div>
             <div class="col-md-4">
-              <label class="form-label">Aina</label>
-              <select id="prodType" class="form-select">
+              <label class="form-label">Aina <span class="text-danger">*</span></label>
+              <select id="prodType" class="form-select" required>
+                <option value="">Chagua...</option>
                 <option value="Njumu">Njumu</option>
                 <option value="Trainer">Trainer</option>
                 <option value="Njumu na Trainer">Njumu na Trainer</option>
@@ -1449,48 +1716,36 @@
             </div>
 
             <div class="col-md-6">
-              <label class="form-label">Bei (TSh)</label>
-              <input type="number" id="prodPrice" class="form-control" required>
+              <label class="form-label">Bei (TSh) <span class="text-danger">*</span></label>
+              <input type="number" id="prodPrice" class="form-control" required min="0" step="1000" autocomplete="off">
             </div>
             
             <div class="col-md-6">
               <label class="form-label">Maelezo (hiari)</label>
-              <textarea id="prodDescription" class="form-control" rows="2" placeholder="Maelezo ya bidhaa..."></textarea>
+              <textarea id="prodDescription" class="form-control" rows="2" placeholder="Maelezo ya bidhaa..." autocomplete="off"></textarea>
             </div>
 
             <!-- Sizes Management -->
             <div class="col-12">
-              <label class="form-label">Saizi na Akiba</label>
+              <label class="form-label">Saizi na Akiba <span class="text-danger">*</span></label>
               <div id="sizesContainer">
-                <div class="row g-2 mb-2">
-                  <div class="col-md-3">
-                    <input type="text" class="form-control size-code" placeholder="Kifupi (39, M, XL)" required>
-                  </div>
-                  <div class="col-md-5">
-                    <input type="text" class="form-control size-label" placeholder="Jina kamili (39 EU, Medium)" required>
-                  </div>
-                  <div class="col-md-3">
-                    <input type="number" class="form-control size-stock" placeholder="Akiba" min="0" value="0" required>
-                  </div>
-                  <div class="col-md-1">
-                    <button type="button" class="btn btn-danger btn-sm remove-size" disabled>
-                      <i class="fa fa-times"></i>
-                    </button>
-                  </div>
-                </div>
+                <!-- Sizes will be added dynamically -->
               </div>
               <button type="button" class="btn btn-sm btn-outline-primary mt-2" id="addSizeBtn">
                 <i class="fa fa-plus me-1"></i>Ongeza Saizi Nyingine
               </button>
               <div class="form-text">
-                Weka saizi zote zinazopatikana kwa bidhaa hii
+                Weka saizi zote zinazopatikana kwa bidhaa hii. Ukiongeza saizi mpya, fanya yafuatayo: <br>
+                1. Kifupi (39, M, XL) - Ingiza mfano wa saizi<br>
+                2. Jina kamili (39 EU, Medium) - Weka jina kamili la saizi<br>
+                3. Akiba - Idadi ya bidhaa zilizopo
               </div>
             </div>
 
             <!-- Images -->
             <div class="col-12">
               <label class="form-label">Picha (kiwango cha juu 5)</label>
-              <input type="file" id="prodImages" class="form-control" accept="image/*" multiple>
+              <input type="file" id="prodImages" class="form-control" accept="image/*" multiple autocomplete="off">
               <div id="prodPreview" class="image-preview"></div>
             </div>
 
@@ -1521,22 +1776,22 @@
           <div class="modal-body">
             <div class="mb-3">
               <label class="form-label">Jina la Kwanza</label>
-              <input id="custFname" class="form-control" required>
+              <input id="custFname" class="form-control" required autocomplete="off">
             </div>
             <div class="mb-3">
               <label class="form-label">Jina la Mwisho</label>
-              <input id="custLname" class="form-control" required>
+              <input id="custLname" class="form-control" required autocomplete="off">
             </div>
             <div class="mb-3">
               <label class="form-label">Namba ya Simu</label>
-              <input id="custMobile" class="form-control" required>
+              <input id="custMobile" class="form-control" required autocomplete="off">
               <div class="invalid-feedback">
                 Nambari ya simu tayari imesajiliwa au sio halali!
               </div>
             </div>
             <div class="mb-3">
               <label class="form-label">Barua pepe (hiari)</label>
-              <input id="custEmail" class="form-control">
+              <input id="custEmail" class="form-control" autocomplete="off">
             </div>
             <div class="mb-3">
               <label class="form-label">Jinsia</label>
@@ -1549,11 +1804,11 @@
             </div>
             <div class="mb-3">
               <label class="form-label">Nenosiri</label>
-              <input type="password" id="custPassword" class="form-control" required>
+              <input type="password" id="custPassword" class="form-control" required autocomplete="new-password">
             </div>
             <div class="mb-3">
               <label class="form-label">Rudia Nenosiri</label>
-              <input type="password" id="custConfirmPassword" class="form-control" required>
+              <input type="password" id="custConfirmPassword" class="form-control" required autocomplete="new-password">
             </div>
             <input type="hidden" id="editingCustomerId">
           </div>
@@ -1581,11 +1836,11 @@
           <div class="modal-body">
             <div class="mb-3">
               <label class="form-label">Picha ya Tangazo</label>
-              <input type="file" id="adImage" class="form-control" accept="image/*" required>
+              <input type="file" id="adImage" class="form-control" accept="image/*" required autocomplete="off">
             </div>
             <div class="mb-3">
               <label class="form-label">Kiungo (hiari)</label>
-              <input id="adLink" class="form-control" placeholder="https://">
+              <input id="adLink" class="form-control" placeholder="https://" autocomplete="off">
             </div>
           </div>
           <div class="modal-footer">
@@ -1612,7 +1867,7 @@
           <div class="modal-body">
             <div class="mb-3">
               <label class="form-label">Arifa</label>
-              <textarea id="announcementText" class="form-control" rows="4" required></textarea>
+              <textarea id="announcementText" class="form-control" rows="4" required autocomplete="off"></textarea>
             </div>
           </div>
           <div class="modal-footer">
@@ -1645,7 +1900,7 @@
             </div>
             <div class="mb-3">
               <label class="form-label">Ujumbe</label>
-              <textarea id="msgBody" class="form-control" rows="4" required></textarea>
+              <textarea id="msgBody" class="form-control" rows="4" required autocomplete="off"></textarea>
             </div>
           </div>
           <div class="modal-footer">
@@ -1675,7 +1930,7 @@
           </div>
           <div class="mb-3">
             <label class="form-label">Ingiza Nenosiri la Mteja</label>
-            <input type="password" id="passwordInput" class="form-control" placeholder="Ingiza nenosiri la mteja">
+            <input type="password" id="passwordInput" class="form-control" placeholder="Ingiza nenosiri la mteja" autocomplete="new-password">
             <div class="form-text">
               Mteja atahitaji kuingiza nenosiri lake kuthibitisha kupokea agizo.
             </div>
@@ -1704,26 +1959,26 @@
           <div class="modal-body">
             <div class="mb-3">
               <label class="form-label">Jina la Kwanza</label>
-              <input id="adminFname" class="form-control" required>
+              <input id="adminFname" class="form-control" required autocomplete="off">
             </div>
             <div class="mb-3">
               <label class="form-label">Jina la Mwisho</label>
-              <input id="adminLname" class="form-control" required>
+              <input id="adminLname" class="form-control" required autocomplete="off">
             </div>
             <div class="mb-3">
               <label class="form-label">Namba ya Simu</label>
-              <input id="adminMobile" class="form-control" required>
+              <input id="adminMobile" class="form-control" required autocomplete="off">
               <div class="invalid-feedback" id="adminMobileError">
                 Nambari ya simu tayari imesajiliwa au sio halali!
               </div>
             </div>
             <div class="mb-3">
               <label class="form-label">Nenosiri</label>
-              <input type="password" id="adminNewPassword" class="form-control" placeholder="Nenosiri" required>
+              <input type="password" id="adminNewPassword" class="form-control" placeholder="Nenosiri" required autocomplete="new-password">
             </div>
             <div class="mb-3">
               <label class="form-label">Rudia Nenosiri</label>
-              <input type="password" id="adminConfirmPassword" class="form-control" placeholder="Rudia Nenosiri" required>
+              <input type="password" id="adminConfirmPassword" class="form-control" placeholder="Rudia Nenosiri" required autocomplete="new-password">
             </div>
             <input type="hidden" id="editingAdminId">
           </div>
@@ -1747,6 +2002,8 @@
     let authToken = localStorage.getItem('adminToken') || '';
     let currentAdmin = null;
     let unreadNotifications = 0;
+    let notificationInterval;
+    const REFRESH_INTERVAL = 30000; // 30 seconds
     
     // Check if already logged in
     if (authToken) {
@@ -1870,33 +2127,118 @@
       return 'TSh ' + Number(price).toLocaleString('en-TZ');
     };
 
-    // Update notification count display
-    function updateNotificationCount(count) {
-      unreadNotifications = count;
-      const badge = document.getElementById('notificationCountBadge');
-      const titleBadge = document.getElementById('notificationCountTitle');
-      const quickCount = document.getElementById('quickMessageCount');
+    // ===============================
+    // NOTIFICATION COUNTS SYSTEM
+    // ===============================
+    async function loadNotificationCounts() {
+      try {
+        const counts = await apiCall('/notifications/unread-counts');
+        
+        // Update notification badges
+        updateNotificationBadge('notifications', counts.unread_customer_notifications);
+        updateNotificationBadge('orders', counts.unread_order_notifications);
+        
+        // Update title badge
+        const titleBadge = document.getElementById('notificationCountTitle');
+        if (titleBadge) {
+          titleBadge.textContent = counts.unread_customer_notifications;
+        }
+        
+        // Update quick action button
+        const quickCount = document.getElementById('quickMessageCount');
+        if (quickCount) {
+          if (counts.unread_customer_notifications > 0) {
+            quickCount.textContent = counts.unread_customer_notifications;
+            quickCount.style.display = 'inline-block';
+          } else {
+            quickCount.style.display = 'none';
+          }
+        }
+        
+        return counts;
+      } catch (error) {
+        console.error('Error loading notification counts:', error);
+        return {
+          unread_customer_notifications: 0,
+          unread_order_notifications: 0
+        };
+      }
+    }
+
+    function updateNotificationBadge(section, count) {
+      const navLink = document.querySelector(`[data-section="${section}"]`);
+      if (!navLink) return;
+      
+      let badge = navLink.querySelector('.notification-badge');
+      
+      if (!badge && count > 0) {
+        badge = document.createElement('span');
+        badge.className = 'notification-badge';
+        navLink.appendChild(badge);
+      }
       
       if (badge) {
         if (count > 0) {
           badge.textContent = count;
-          badge.style.display = 'inline-block';
+          badge.style.display = 'flex';
         } else {
           badge.style.display = 'none';
         }
       }
-      
-      if (titleBadge) {
-        titleBadge.textContent = count;
+    }
+
+    async function markNotificationRead(notificationId) {
+      try {
+        await apiCall(`/notifications/mark-read/${notificationId}`, {
+          method: 'PUT'
+        });
+        
+        await loadNotificationCounts();
+      } catch (error) {
+        console.error('Error marking notification as read:', error);
+      }
+    }
+
+    async function markOrderViewed(orderId) {
+      try {
+        await apiCall(`/orders/mark-viewed/${orderId}`, {
+          method: 'PUT'
+        });
+        
+        await loadNotificationCounts();
+      } catch (error) {
+        console.error('Error marking order as viewed:', error);
+      }
+    }
+
+    // Start auto-refresh for notification counts
+    function startAutoRefresh() {
+      if (notificationInterval) {
+        clearInterval(notificationInterval);
       }
       
-      if (quickCount) {
-        if (count > 0) {
-          quickCount.textContent = count;
-          quickCount.style.display = 'inline-block';
-        } else {
-          quickCount.style.display = 'none';
+      notificationInterval = setInterval(async () => {
+        try {
+          const activeModal = document.querySelector('.modal.show');
+          if (!activeModal) {
+            await loadNotificationCounts();
+            
+            const currentSection = document.querySelector('.section:not(.d-none)').id;
+            if (currentSection === 'dashboard') {
+              await loadDashboardData();
+            }
+          }
+        } catch (error) {
+          console.error('Auto-refresh error:', error);
         }
+      }, REFRESH_INTERVAL);
+    }
+
+    // Stop auto-refresh
+    function stopAutoRefresh() {
+      if (notificationInterval) {
+        clearInterval(notificationInterval);
+        notificationInterval = null;
       }
     }
 
@@ -1904,24 +2246,22 @@
     async function checkAdminAuth() {
       try {
         const response = await apiCall('/dashboard/stats');
-        // If we can access dashboard stats, we're authenticated
         document.getElementById('loginPage').style.display = 'none';
         document.getElementById('adminPanel').style.display = 'block';
         
-        // Load admin data from localStorage
         const storedAdmin = localStorage.getItem('adminData');
         if (storedAdmin) {
           currentAdmin = JSON.parse(storedAdmin);
           document.getElementById('adminNameDisplay').textContent = currentAdmin.first_name + ' ' + currentAdmin.last_name;
           document.getElementById('adminRoleDisplay').textContent = currentAdmin.can_manage_admins ? 'Msimamizi Mkuu' : 'Msimamizi';
           
-          // Show/hide admin management based on role
           if (currentAdmin.can_manage_admins) {
             document.getElementById('adminsNavLink').style.display = 'block';
           }
         }
         
         loadDashboardData();
+        startAutoRefresh();
       } catch (error) {
         console.log('Not authenticated:', error);
         logout();
@@ -1934,15 +2274,36 @@
     document.getElementById('adminLoginForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       
-      const mobile = document.getElementById('adminMobileLogin').value.trim();
-      const password = document.getElementById('adminPassword').value;
+      // Reset validation
+      const mobileInput = document.getElementById('adminMobileLogin');
+      const passwordInput = document.getElementById('adminPassword');
+      const mobileError = document.getElementById('mobileError');
+      const passwordError = document.getElementById('passwordError');
       
-      if (!mobile || !password) {
-        showLoginAlert('Tafadhali jaza nambari ya simu na nenosiri');
+      mobileInput.classList.remove('is-invalid');
+      passwordInput.classList.remove('is-invalid');
+      
+      let isValid = true;
+      
+      const mobile = mobileInput.value.trim();
+      const password = passwordInput.value;
+      
+      if (!mobile) {
+        mobileInput.classList.add('is-invalid');
+        mobileError.textContent = 'Tafadhali ingiza nambari ya simu';
+        isValid = false;
+      }
+      
+      if (!password) {
+        passwordInput.classList.add('is-invalid');
+        passwordError.textContent = 'Tafadhali ingiza nenosiri';
+        isValid = false;
+      }
+      
+      if (!isValid) {
         return;
       }
       
-      // Show loading state
       document.getElementById('loginBtnText').style.display = 'none';
       document.getElementById('loginSpinner').style.display = 'inline-block';
       
@@ -1958,7 +2319,6 @@
         const data = await response.json();
         
         if (response.ok) {
-          // Login successful
           authToken = data.token;
           currentAdmin = data.admin;
           localStorage.setItem('adminToken', authToken);
@@ -1969,12 +2329,11 @@
           document.getElementById('adminNameDisplay').textContent = currentAdmin.first_name + ' ' + currentAdmin.last_name;
           document.getElementById('adminRoleDisplay').textContent = currentAdmin.can_manage_admins ? 'Msimamizi Mkuu' : 'Msimamizi';
           
-          // Show/hide admin management based on role
           if (currentAdmin.can_manage_admins) {
             document.getElementById('adminsNavLink').style.display = 'block';
           }
           
-          // Load dashboard data
+          startAutoRefresh();
           loadDashboardData();
           
         } else {
@@ -2035,7 +2394,6 @@
         return;
       }
       
-      // Show loading state
       document.getElementById('resetBtnText').style.display = 'none';
       document.getElementById('resetSpinner').style.display = 'inline-block';
       
@@ -2051,7 +2409,6 @@
         const data = await response.json();
         
         if (response.ok) {
-          // Show reset options
           document.getElementById('forgotPasswordSection').style.display = 'none';
           document.getElementById('resetOptionsSection').style.display = 'block';
           hideLoginAlert();
@@ -2098,12 +2455,10 @@
         return;
       }
       
-      // Show loading state
       document.getElementById('newPasswordBtnText').style.display = 'none';
       document.getElementById('newPasswordSpinner').style.display = 'inline-block';
       
       try {
-        // First get reset token
         const forgotResponse = await fetch(`${API_BASE_URL}/forgot-password`, {
           method: 'POST',
           headers: {
@@ -2115,7 +2470,6 @@
         const forgotData = await forgotResponse.json();
         
         if (forgotResponse.ok) {
-          // Now reset password with token
           const resetResponse = await fetch(`${API_BASE_URL}/reset-password`, {
             method: 'POST',
             headers: {
@@ -2133,7 +2487,6 @@
           if (resetResponse.ok) {
             showLoginAlert('Nenosiri limebadilishwa kikamilifu! Unaweza kuingia sasa.', 'success');
             
-            // Reset forms and go back to login
             setTimeout(() => {
               document.getElementById('resetPasswordFormSection').style.display = 'none';
               document.getElementById('adminLoginForm').style.display = 'block';
@@ -2176,7 +2529,6 @@
         return;
       }
       
-      // Show loading state
       document.getElementById('newMobileBtnText').style.display = 'none';
       document.getElementById('newMobileSpinner').style.display = 'inline-block';
       
@@ -2199,7 +2551,6 @@
         if (response.ok) {
           showLoginAlert('Nambari ya simu imebadilishwa kikamilifu! Unaweza kuingia sasa.', 'success');
           
-          // Reset forms and go back to login
           setTimeout(() => {
             document.getElementById('resetMobileFormSection').style.display = 'none';
             document.getElementById('adminLoginForm').style.display = 'block';
@@ -2227,30 +2578,26 @@
       try {
         const stats = await apiCall('/dashboard/stats');
         
-        // Update dashboard stats
         document.getElementById('totalUsers').innerText = stats.total_customers || 0;
         document.getElementById('totalProducts').innerText = stats.total_products || 0;
         document.getElementById('totalIncome').innerText = formatPrice(stats.total_income || 0);
         document.getElementById('totalOrders').innerText = stats.total_ordered_products || 0;
         
-        // Update income chart
         updateIncomeChart(stats.monthly_income || []);
         
-        // Load other data
+        await loadNotificationCounts();
         await loadProducts();
         await loadCustomers();
         await loadAds();
         await loadOrders();
         await loadNotifications();
         
-        // Load admins if main admin
         if (currentAdmin && currentAdmin.can_manage_admins) {
           await loadAdmins();
         }
         
       } catch (error) {
         console.error('Error loading dashboard data:', error);
-        // Set default values
         document.getElementById('totalUsers').innerText = 0;
         document.getElementById('totalProducts').innerText = 0;
         document.getElementById('totalIncome').innerText = formatPrice(0);
@@ -2262,16 +2609,13 @@
     function updateIncomeChart(monthlyData) {
       const ctx = document.getElementById('incomeChart').getContext('2d');
       
-      // Safely destroy existing chart
       if (window.incomeChart && typeof window.incomeChart.destroy === 'function') {
         window.incomeChart.destroy();
       }
       
-      // Ensure we have valid data
       const months = monthlyData.map(item => item.month) || [];
       const income = monthlyData.map(item => item.income) || [];
       
-      // If no data, create empty chart
       if (months.length === 0) {
         months.push('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
         income.push(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
@@ -2376,7 +2720,6 @@
         });
       } catch (error) {
         console.error('Error creating chart:', error);
-        // Create a simple error message on the canvas
         ctx.fillStyle = '#f8f9fa';
         ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         ctx.fillStyle = '#6c757d';
@@ -2387,87 +2730,307 @@
     }
 
     // ===============================
-    // PRODUCTS MANAGEMENT
+    // PRODUCTS MANAGEMENT - MULTI-SIZE APPROACH
     // ===============================
     let products = [];
+
+    // Size Management System
+    const sizeManager = {
+      container: null,
+      
+      init: function() {
+        this.container = document.getElementById('sizesContainer');
+        this.addDefaultSizeRow();
+        this.bindEvents();
+      },
+      
+      addDefaultSizeRow: function() {
+        this.container.innerHTML = '';
+        this.addSizeRow();
+      },
+      
+      addSizeRow: function(sizeData = { code: '', label: '', stock: 0 }) {
+        const sizeRow = document.createElement('div');
+        sizeRow.className = 'row g-2 mb-2 size-row';
+        sizeRow.innerHTML = `
+          <div class="col-md-3">
+            <input type="text" class="form-control size-code" placeholder="Kifupi (39, M, XL)" 
+                  value="${sizeData.code || ''}" required autocomplete="off">
+            <div class="invalid-feedback">Kifupi cha saizi kinahitajika</div>
+          </div>
+          <div class="col-md-5">
+            <input type="text" class="form-control size-label" placeholder="Jina kamili (39 EU, Medium)" 
+                  value="${sizeData.label || ''}" required autocomplete="off">
+            <div class="invalid-feedback">Jina kamili la saizi linahitajika</div>
+          </div>
+          <div class="col-md-3">
+            <input type="number" class="form-control size-stock" placeholder="Akiba" 
+                  min="0" value="${sizeData.stock || 0}" required autocomplete="off">
+            <div class="invalid-feedback">Akiba inahitajika</div>
+          </div>
+          <div class="col-md-1">
+            <button type="button" class="btn btn-danger btn-sm remove-size" ${this.getRowCount() === 0 ? 'disabled' : ''}>
+              <i class="fa fa-times"></i>
+            </button>
+          </div>
+        `;
+        
+        this.container.appendChild(sizeRow);
+        
+        const removeBtn = sizeRow.querySelector('.remove-size');
+        removeBtn.addEventListener('click', () => {
+          if (this.getRowCount() > 1) {
+            sizeRow.remove();
+            this.updateRemoveButtons();
+          }
+        });
+        
+        this.updateRemoveButtons();
+      },
+      
+      bindEvents: function() {
+        document.getElementById('addSizeBtn').addEventListener('click', () => {
+          this.addSizeRow();
+        });
+        
+        this.updateRemoveButtons();
+      },
+      
+      getRowCount: function() {
+        return document.querySelectorAll('.size-row').length;
+      },
+      
+      updateRemoveButtons: function() {
+        const sizeRows = document.querySelectorAll('.size-row');
+        const removeButtons = document.querySelectorAll('.remove-size');
+        
+        if (sizeRows.length <= 1) {
+          removeButtons.forEach(btn => btn.disabled = true);
+        } else {
+          removeButtons.forEach(btn => btn.disabled = false);
+        }
+      },
+      
+      getSizesData: function() {
+        const sizeRows = document.querySelectorAll('.size-row');
+        const sizes = [];
+        
+        sizeRows.forEach(row => {
+          const codeInput = row.querySelector('.size-code');
+          const labelInput = row.querySelector('.size-label');
+          const stockInput = row.querySelector('.size-stock');
+          
+          const code = codeInput.value.trim();
+          const label = labelInput.value.trim();
+          const stock = parseInt(stockInput.value) || 0;
+          
+          // Validate inputs
+          let isValid = true;
+          
+          if (!code) {
+            codeInput.classList.add('is-invalid');
+            isValid = false;
+          } else {
+            codeInput.classList.remove('is-invalid');
+          }
+          
+          if (!label) {
+            labelInput.classList.add('is-invalid');
+            isValid = false;
+          } else {
+            labelInput.classList.remove('is-invalid');
+          }
+          
+          if (stock < 0) {
+            stockInput.classList.add('is-invalid');
+            isValid = false;
+          } else {
+            stockInput.classList.remove('is-invalid');
+          }
+          
+          if (isValid) {
+            sizes.push({
+              code: code,
+              label: label,
+              stock: stock
+            });
+          }
+        });
+        
+        return sizes;
+      },
+      
+      setSizesData: function(sizes) {
+        this.container.innerHTML = '';
+        
+        if (sizes && sizes.length > 0) {
+          // Add all sizes from data
+          sizes.forEach(size => {
+            this.addSizeRow({
+              code: size.size_code || size.code || '',
+              label: size.size_label || size.label || '',
+              stock: size.stock || 0
+            });
+          });
+        } else {
+          // Add one empty row if no sizes
+          this.addSizeRow();
+        }
+        
+        this.updateRemoveButtons();
+      },
+      
+      validateSizes: function() {
+        const sizeRows = document.querySelectorAll('.size-row');
+        if (sizeRows.length === 0) {
+          showAlert('Tafadhali angalau ongeza saizi moja', 'warning');
+          return false;
+        }
+        
+        let hasValidSize = false;
+        const sizes = this.getSizesData();
+        
+        if (sizes.length === 0) {
+          showAlert('Tafadhali angalau ongeza saizi moja', 'warning');
+          return false;
+        }
+        
+        return true;
+      }
+    };
+
+    // Initialize size manager
+    if (document.getElementById('sizesContainer')) {
+      sizeManager.init();
+    }
 
     // Get correct image URL
     function fixImagePath(path) {
       if (!path) return '';
-      // If URL starts with http(s), return as-is (Cloudinary or absolute URL)
       if (path.startsWith('http')) return path;
-      // Otherwise, prepend local server URL
-      return `https://api.fourbrothers.online/${path.replace(/^\//, '')}`;
-    }
-
-    // LOAD PRODUCTS
-    async function loadProducts() {
-      try {
-        console.log('⏳ Loading products from API...');
-        products = await apiCall('/products');
-        console.log('✅ Products loaded:', products);
-
-        renderProductsTable();
-        renderProductsMobileCards();
-      } catch (error) {
-        console.error('❌ Error loading products:', error);
-        products = [];
-        renderProductsTable();
-        renderProductsMobileCards();
+      if (path.startsWith('/')) {
+        return `https://api.fourbrothers.online${path}`;
       }
+      return `https://api.fourbrothers.online/${path}`;
     }
+
+        // LOAD PRODUCTS
+        async function loadProducts() {
+          try {
+            products = await apiCall('/products');
+            renderProductsTable();
+            renderProductsMobileCards();
+          } catch (error) {
+            console.error('Error loading products:', error);
+            showAlert('Hitilafu katika kupakia bidhaa', 'danger');
+            products = [];
+            renderProductsTable();
+            renderProductsMobileCards();
+          }
+        }
 
     // ADD / EDIT PRODUCT FORM SUBMIT
-    document.getElementById('productForm').addEventListener('submit', async function (e) {
+    document.getElementById('productForm').addEventListener('submit', async function(e) {
       e.preventDefault();
+
+      // Reset validation
+      const inputs = this.querySelectorAll('input, select');
+      inputs.forEach(input => input.classList.remove('is-invalid'));
+      
+      // Validate required fields
+      let isValid = true;
+      
+      if (!document.getElementById('prodTitle').value.trim()) {
+        document.getElementById('prodTitle').classList.add('is-invalid');
+        isValid = false;
+      }
+      
+      if (!document.getElementById('prodBrand').value) {
+        document.getElementById('prodBrand').classList.add('is-invalid');
+        isValid = false;
+      }
+      
+      if (!document.getElementById('prodColor').value) {
+        document.getElementById('prodColor').classList.add('is-invalid');
+        isValid = false;
+      }
+      
+      if (!document.getElementById('prodType').value) {
+        document.getElementById('prodType').classList.add('is-invalid');
+        isValid = false;
+      }
+      
+      const price = document.getElementById('prodPrice').value;
+      if (!price || price <= 0) {
+        document.getElementById('prodPrice').classList.add('is-invalid');
+        isValid = false;
+      }
+      
+      if (!isValid) {
+        showAlert('Tafadhali jaza sehemu zote zinazohitajika', 'warning');
+        return;
+      }
+      
+      if (!sizeManager.validateSizes()) {
+        return;
+      }
 
       const productId = document.getElementById('editingProductId').value;
       const formData = new FormData();
 
-      // Product fields
       formData.append('name', document.getElementById('prodTitle').value);
       formData.append('company', document.getElementById('prodBrand').value);
       formData.append('color', document.getElementById('prodColor').value);
-      formData.append('discount_percent', document.getElementById('prodOffer').value);
+      formData.append('discount_percent', document.getElementById('prodOffer').value || 0);
       formData.append('type', document.getElementById('prodType').value);
-      formData.append('size_us', document.getElementById('prodSize').value);
-      formData.append('stock', document.getElementById('prodQuantity').value);
       formData.append('price', document.getElementById('prodPrice').value);
+      formData.append('description', document.getElementById('prodDescription').value || '');
 
-      // Images
+      const sizesData = sizeManager.getSizesData();
+      formData.append('sizes', JSON.stringify(sizesData));
+
       const imageFiles = document.getElementById('prodImages').files;
       for (let i = 0; i < imageFiles.length; i++) {
         formData.append('images', imageFiles[i]);
       }
 
-      // Button loading state
       document.getElementById('productBtnText').style.display = 'none';
       document.getElementById('productSpinner').style.display = 'inline-block';
 
       try {
+        let result;
         if (productId) {
-          await apiCallWithFormData(`/products/${productId}`, formData, 'PUT');
-          showAlert('Bidhaa imesasishwa kikamilifu');
+          result = await apiCallWithFormData(`/products/${productId}`, formData, 'PUT');
+          showAlert('Bidhaa imesasishwa kikamilifu', 'success');
         } else {
-          await apiCallWithFormData('/products', formData);
-          showAlert('Bidhaa imeongezwa kikamilifu');
+          result = await apiCallWithFormData('/products', formData);
+          showAlert('Bidhaa imeongezwa kikamilifu', 'success');
         }
 
-        document.getElementById('productForm').reset();
+        this.reset();
         document.getElementById('prodPreview').innerHTML = '';
         document.getElementById('editingProductId').value = '';
-        bootstrap.Modal.getInstance(document.getElementById('modalAddProduct')).hide();
+        sizeManager.setSizesData([]);
+        
+        const productModal = bootstrap.Modal.getInstance(document.getElementById('modalAddProduct'));
+        if (productModal) {
+          productModal.hide();
+        }
 
         await loadProducts();
+        
+        // Reload the products array with fresh data
+        products = await apiCall('/products');
       } catch (error) {
-        console.error('❌ Error saving product:', error);
+        console.error('Error saving product:', error);
+        showAlert(error.message || 'Hitilafu katika kuhifadhi bidhaa', 'danger');
       } finally {
         document.getElementById('productBtnText').style.display = 'inline-block';
         document.getElementById('productSpinner').style.display = 'none';
       }
     });
 
-    // RENDER PRODUCTS TABLE - Updated
+    // RENDER PRODUCTS TABLE
     function renderProductsTable(filter = '') {
       const tbody = document.getElementById('productsTableBody');
       tbody.innerHTML = '';
@@ -2491,12 +3054,18 @@
         const tr = document.createElement('tr');
         const imageUrl = product.images?.length > 0 ? fixImagePath(product.images[0]) : '';
         
-        // Format sizes display
         let sizesDisplay = 'Hakuna saizi';
+        let totalStock = 0;
+        
         if (product.sizes && product.sizes.length > 0) {
           sizesDisplay = product.sizes.map(size => 
-            `${size.size_label || size.size_code} (${size.stock})`
+            `${size.size_label || size.label} (${size.stock || 0})`
           ).join(', ');
+          
+          totalStock = product.sizes.reduce((sum, size) => sum + (parseInt(size.stock) || 0), 0);
+        } else if (product.stock) {
+          totalStock = product.stock;
+          sizesDisplay = product.size_us ? `${product.size_us} (${product.stock})` : `${product.stock} units`;
         }
 
         tr.innerHTML = `
@@ -2509,7 +3078,7 @@
           <td>${product.discount_percent || 0}%</td>
           <td>${product.type || '-'}</td>
           <td>${sizesDisplay}</td>
-          <td>${product.total_stock || 0}</td>
+          <td>${totalStock}</td>
           <td>${formatPrice(product.price || 0)}</td>
           <td>
             <button class="btn btn-sm btn-outline-primary me-1" onclick="editProduct('${product.id}')">Hariri</button>
@@ -2519,6 +3088,7 @@
         tbody.appendChild(tr);
       });
     }
+
     // RENDER PRODUCTS MOBILE CARDS
     function renderProductsMobileCards(filter = '') {
       const container = document.getElementById('productsMobileCards');
@@ -2538,12 +3108,29 @@
         return;
       }
 
-      filteredProducts.forEach(product => {
+      filteredProducts.forEach((product, index) => {
         const imageUrl = product.images?.length > 0 ? fixImagePath(product.images[0]) : '';
+        
+        let totalStock = 0;
+        let sizesDisplay = 'Hakuna saizi';
+        
+        if (product.sizes && product.sizes.length > 0) {
+          totalStock = product.sizes.reduce((sum, size) => sum + (parseInt(size.stock) || 0), 0);
+          sizesDisplay = product.sizes.map(size => 
+            `${size.size_label || size.label} (${size.stock || 0})`
+          ).join(', ');
+        } else if (product.stock) {
+          totalStock = product.stock;
+          sizesDisplay = product.size_us ? `${product.size_us} (${product.stock})` : `${product.stock} units`;
+        }
 
         const card = document.createElement('div');
         card.className = 'mobile-card';
         card.innerHTML = `
+          <div class="mobile-card-row">
+            <div class="mobile-card-label">#</div>
+            <div class="mobile-card-value">${index + 1}</div>
+          </div>
           <div class="mobile-card-row">
             <div class="mobile-card-label">Picha</div>
             <div class="mobile-card-value">
@@ -2557,8 +3144,8 @@
           <div class="mobile-card-row"><div class="mobile-card-label">Rangi</div><div class="mobile-card-value">${product.color || '-'}</div></div>
           <div class="mobile-card-row"><div class="mobile-card-label">Punguzo</div><div class="mobile-card-value">${product.discount_percent || 0}%</div></div>
           <div class="mobile-card-row"><div class="mobile-card-label">Aina</div><div class="mobile-card-value">${product.type || '-'}</div></div>
-          <div class="mobile-card-row"><div class="mobile-card-label">Ukubwa (EU)</div><div class="mobile-card-value">${product.size_us || '-'}</div></div>
-          <div class="mobile-card-row"><div class="mobile-card-label">Idadi</div><div class="mobile-card-value">${product.stock || 0}</div></div>
+          <div class="mobile-card-row"><div class="mobile-card-label">Saizi</div><div class="mobile-card-value">${sizesDisplay}</div></div>
+          <div class="mobile-card-row"><div class="mobile-card-label">Jumla ya Akiba</div><div class="mobile-card-value">${totalStock}</div></div>
           <div class="mobile-card-row"><div class="mobile-card-label">Bei</div><div class="mobile-card-value">${formatPrice(product.price || 0)}</div></div>
           <div class="mobile-card-row">
             <div class="mobile-card-label">Vitendo</div>
@@ -2572,261 +3159,76 @@
       });
     }
 
-    // Size Management Functions
-    function initializeSizeManagement() {
-      const sizesContainer = document.getElementById('sizesContainer');
-      const addSizeBtn = document.getElementById('addSizeBtn');
-      
-      // Add new size row
-      function addSizeRow(sizeData = { code: '', label: '', stock: 0 }) {
-        const sizeRow = document.createElement('div');
-        sizeRow.className = 'row g-2 mb-2 size-row';
-        sizeRow.innerHTML = `
-          <div class="col-md-3">
-            <input type="text" class="form-control size-code" placeholder="Kifupi (39, M, XL)" 
-                  value="${sizeData.code || ''}" required>
-          </div>
-          <div class="col-md-5">
-            <input type="text" class="form-control size-label" placeholder="Jina kamili (39 EU, Medium)" 
-                  value="${sizeData.label || ''}" required>
-          </div>
-          <div class="col-md-3">
-            <input type="number" class="form-control size-stock" placeholder="Akiba" 
-                  min="0" value="${sizeData.stock || 0}" required>
-          </div>
-          <div class="col-md-1">
-            <button type="button" class="btn btn-danger btn-sm remove-size">
-              <i class="fa fa-times"></i>
-            </button>
-          </div>
-        `;
-        
-        sizesContainer.appendChild(sizeRow);
-        
-        // Add event listener to remove button
-        const removeBtn = sizeRow.querySelector('.remove-size');
-        removeBtn.addEventListener('click', function() {
-          if (document.querySelectorAll('.size-row').length > 1) {
-            sizeRow.remove();
-            updateRemoveButtons();
+        // EDIT PRODUCT
+        async function editProduct(id) {
+          try {
+            // Load fresh product data from API
+            const product = await apiCall(`/products/${id}`);
+            
+            if (!product) {
+              showAlert('Bidhaa haijapatikana', 'danger');
+              return;
+            }
+
+            document.getElementById('editingProductId').value = product.id;
+            
+            // Fill basic product info
+            document.getElementById('prodTitle').value = product.name || '';
+            document.getElementById('prodBrand').value = product.company || '';
+            document.getElementById('prodColor').value = product.color || '';
+            document.getElementById('prodOffer').value = product.discount_percent || 0;
+            document.getElementById('prodType').value = product.type || '';
+            document.getElementById('prodPrice').value = product.price || 0;
+            document.getElementById('prodDescription').value = product.description || '';
+
+            // Load sizes - handle both property naming conventions
+            if (product.sizes && product.sizes.length > 0) {
+              sizeManager.setSizesData(product.sizes.map(size => ({
+                code: size.size_code || size.code || '',
+                label: size.size_label || size.label || '',
+                stock: size.stock || 0
+              })));
+            } else {
+              // Fallback for old products with single size
+              sizeManager.setSizesData([{
+                code: product.size_us || '',
+                label: product.size_us || '',
+                stock: product.stock || 0
+              }]);
+            }
+
+            const preview = document.getElementById('prodPreview');
+            preview.innerHTML = '';
+
+            if (product.images && product.images.length > 0) {
+              product.images.forEach(imgPath => {
+                const img = document.createElement('img');
+                img.src = fixImagePath(imgPath);
+                img.onerror = function () {
+                  this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCI+PHJlY3Qgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNDAiIHk9IjQwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkVycm9yPC90ZXh0Pjwvc3ZnPg==';
+                };
+                img.style.width = '80px';
+                img.style.height = '80px';
+                img.style.objectFit = 'cover';
+                img.style.margin = '5px';
+                img.style.borderRadius = '5px';
+                img.style.border = '2px solid #e1e8ed';
+                preview.appendChild(img);
+              });
+            }
+
+            // Show modal
+            const modal = new bootstrap.Modal(document.getElementById('modalAddProduct'));
+            modal.show();
+            
+            // Update modal title for editing
+            document.querySelector('#modalAddProduct .modal-title').textContent = 'Hariri Bidhaa';
+            
+          } catch (error) {
+            console.error('Error loading product for editing:', error);
+            showAlert('Hitilafu katika kupakia taarifa za bidhaa', 'danger');
           }
-        });
-        
-        updateRemoveButtons();
-      }
-      
-      // Update remove buttons state
-      function updateRemoveButtons() {
-        const sizeRows = document.querySelectorAll('.size-row');
-        const removeButtons = document.querySelectorAll('.remove-size');
-        
-        if (sizeRows.length <= 1) {
-          removeButtons.forEach(btn => btn.disabled = true);
-        } else {
-          removeButtons.forEach(btn => btn.disabled = false);
         }
-      }
-      
-      // Get all sizes data
-      function getSizesData() {
-        const sizeRows = document.querySelectorAll('.size-row');
-        const sizes = [];
-        
-        sizeRows.forEach(row => {
-          const code = row.querySelector('.size-code').value.trim();
-          const label = row.querySelector('.size-label').value.trim();
-          const stock = parseInt(row.querySelector('.size-stock').value) || 0;
-          
-          if (code && label) {
-            sizes.push({
-              code: code,
-              label: label,
-              stock: stock
-            });
-          }
-        });
-        
-        return sizes;
-      }
-      
-      // Set sizes data for editing
-      function setSizesData(sizes) {
-        // Clear existing sizes except first row
-        const existingRows = document.querySelectorAll('.size-row');
-        existingRows.forEach((row, index) => {
-          if (index > 0) row.remove();
-        });
-        
-        // Update first row
-        if (sizes.length > 0) {
-          const firstRow = document.querySelector('.size-row');
-          firstRow.querySelector('.size-code').value = sizes[0].size_code || sizes[0].code || '';
-          firstRow.querySelector('.size-label').value = sizes[0].size_label || sizes[0].label || '';
-          firstRow.querySelector('.size-stock').value = sizes[0].stock || 0;
-        }
-        
-        // Add remaining sizes
-        for (let i = 1; i < sizes.length; i++) {
-          addSizeRow({
-            code: sizes[i].size_code || sizes[i].code,
-            label: sizes[i].size_label || sizes[i].label,
-            stock: sizes[i].stock || 0
-          });
-        }
-        
-        updateRemoveButtons();
-      }
-      
-      // Event Listeners
-      addSizeBtn.addEventListener('click', function() {
-        addSizeRow();
-      });
-      
-      // Initialize with one size row
-      updateRemoveButtons();
-      
-      return {
-        getSizesData,
-        setSizesData,
-        addSizeRow
-      };
-    }
-
-    // Initialize size management
-    const sizeManager = initializeSizeManagement();
-
-    // Updated product form submission
-    document.getElementById('productForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-
-      const productId = document.getElementById('editingProductId').value;
-      const formData = new FormData();
-
-      // Product fields
-      formData.append('name', document.getElementById('prodTitle').value);
-      formData.append('company', document.getElementById('prodBrand').value);
-      formData.append('color', document.getElementById('prodColor').value);
-      formData.append('discount_percent', document.getElementById('prodOffer').value);
-      formData.append('type', document.getElementById('prodType').value);
-      formData.append('price', document.getElementById('prodPrice').value);
-      formData.append('description', document.getElementById('prodDescription').value || '');
-
-      // Sizes data as JSON
-      const sizesData = sizeManager.getSizesData();
-      formData.append('sizes', JSON.stringify(sizesData));
-
-      // Images
-      const imageFiles = document.getElementById('prodImages').files;
-      for (let i = 0; i < imageFiles.length; i++) {
-        formData.append('images', imageFiles[i]);
-      }
-
-      // Button loading state
-      document.getElementById('productBtnText').style.display = 'none';
-      document.getElementById('productSpinner').style.display = 'inline-block';
-
-      try {
-        if (productId) {
-          await apiCallWithFormData(`/products/${productId}`, formData, 'PUT');
-          showAlert('Bidhaa imesasishwa kikamilifu');
-        } else {
-          await apiCallWithFormData('/products', formData);
-          showAlert('Bidhaa imeongezwa kikamilifu');
-        }
-
-        document.getElementById('productForm').reset();
-        document.getElementById('prodPreview').innerHTML = '';
-        document.getElementById('editingProductId').value = '';
-        
-        // Reset sizes to one row
-        sizeManager.setSizesData([]);
-        
-        bootstrap.Modal.getInstance(document.getElementById('modalAddProduct')).hide();
-        await loadProducts();
-      } catch (error) {
-        console.error('❌ Error saving product:', error);
-      } finally {
-        document.getElementById('productBtnText').style.display = 'inline-block';
-        document.getElementById('productSpinner').style.display = 'none';
-      }
-    });
-
-    // Updated editProduct function
-    async function editProduct(id) {
-      const product = products.find(p => p.id == id);
-      if (!product) return;
-
-      document.getElementById('editingProductId').value = product.id;
-      document.getElementById('prodTitle').value = product.name;
-      document.getElementById('prodBrand').value = product.company;
-      document.getElementById('prodColor').value = product.color;
-      document.getElementById('prodOffer').value = product.discount_percent;
-      document.getElementById('prodType').value = product.type;
-      document.getElementById('prodPrice').value = product.price;
-      document.getElementById('prodDescription').value = product.description || '';
-
-      // Load sizes for this product
-      try {
-        const [sizes] = await db.query(
-          "SELECT size_code, size_label, stock FROM product_sizes WHERE product_id=? ORDER BY size_code",
-          [id]
-        );
-        sizeManager.setSizesData(sizes);
-      } catch (error) {
-        console.error('Error loading sizes:', error);
-        sizeManager.setSizesData([]);
-      }
-
-      // Existing images preview
-      const preview = document.getElementById('prodPreview');
-      preview.innerHTML = '';
-
-      if (product.images?.length > 0) {
-        product.images.forEach(imgPath => {
-          const img = document.createElement('img');
-          img.src = fixImagePath(imgPath);
-          img.onerror = function () {
-            this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCI+PHJlY3Qgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNDAiIHk9IjQwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkVycm9yPC90ZXh0Pjwvc3ZnPg==';
-          };
-          preview.appendChild(img);
-        });
-      }
-
-      new bootstrap.Modal(document.getElementById('modalAddProduct')).show();
-    }
-
-    // EDIT PRODUCT
-    async function editProduct(id) {
-      const product = products.find(p => p.id == id);
-      if (!product) return;
-
-      document.getElementById('editingProductId').value = product.id;
-      document.getElementById('prodTitle').value = product.name;
-      document.getElementById('prodBrand').value = product.company;
-      document.getElementById('prodColor').value = product.color;
-      document.getElementById('prodOffer').value = product.discount_percent;
-      document.getElementById('prodType').value = product.type;
-      document.getElementById('prodSize').value = product.size_us;
-      document.getElementById('prodQuantity').value = product.stock;
-      document.getElementById('prodPrice').value = product.price;
-
-      // Existing images preview
-      const preview = document.getElementById('prodPreview');
-      preview.innerHTML = '';
-
-      if (product.images?.length > 0) {
-        product.images.forEach(imgPath => {
-          const img = document.createElement('img');
-          img.src = fixImagePath(imgPath);
-          img.onerror = function () {
-            this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCI+PHJlY3Qgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNDAiIHk9IjQwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkVycm9yPC90ZXh0Pjwvc3ZnPg==';
-          };
-          preview.appendChild(img);
-        });
-      }
-
-      new bootstrap.Modal(document.getElementById('modalAddProduct')).show();
-    }
 
     // DELETE PRODUCT
     async function deleteProduct(id) {
@@ -2834,15 +3236,16 @@
 
       try {
         await apiCall(`/products/${id}`, { method: 'DELETE' });
-        showAlert('Bidhaa imefutwa kikamilifu');
+        showAlert('Bidhaa imefutwa kikamilifu', 'success');
         await loadProducts();
       } catch (error) {
-        console.error('❌ Error deleting product:', error);
+        console.error('Error deleting product:', error);
+        showAlert(error.message || 'Hitilafu katika kufuta bidhaa', 'danger');
       }
     }
 
     // IMAGE PREVIEW
-    document.getElementById('prodImages').addEventListener('change', function () {
+    document.getElementById('prodImages').addEventListener('change', function() {
       const preview = document.getElementById('prodPreview');
 
       if (!document.getElementById('editingProductId').value) {
@@ -2851,32 +3254,41 @@
 
       const files = this.files;
       if (files.length > 5) {
-        alert('Ruhusiwa picha 5 pekee');
+        showAlert('Ruhusiwa picha 5 pekee', 'warning');
         this.value = '';
         return;
       }
 
       Array.from(files).forEach(file => {
+        if (!file.type.startsWith('image/')) {
+          showAlert('Tafadhali chagua faili za picha tu', 'warning');
+          return;
+        }
+
         const fr = new FileReader();
         fr.onload = () => {
           const img = document.createElement('img');
           img.src = fr.result;
+          img.style.maxWidth = '100px';
+          img.style.maxHeight = '100px';
+          img.style.objectFit = 'cover';
+          img.style.margin = '5px';
+          img.style.borderRadius = '5px';
           preview.appendChild(img);
         };
         fr.readAsDataURL(file);
       });
     });
 
-    // QUANTITY BUTTONS
-    document.getElementById('qtyMinus').addEventListener('click', () => {
-      const qty = document.getElementById('prodQuantity');
-      qty.value = Math.max(0, Number(qty.value) - 1);
-    });
-
-    document.getElementById('qtyPlus').addEventListener('click', () => {
-      const qty = document.getElementById('prodQuantity');
-      qty.value = Number(qty.value) + 1;
-    });
+        // Reset product form when modal is closed
+        document.getElementById('modalAddProduct').addEventListener('hidden.bs.modal', function() {
+          document.getElementById('productForm').reset();
+          document.getElementById('editingProductId').value = '';
+          document.getElementById('prodPreview').innerHTML = '';
+          sizeManager.setSizesData([]);
+          document.querySelector('#modalAddProduct .modal-title').textContent = 'Ongeza / Hariri Bidhaa';
+        });
+    
 
     // ===============================
     // CUSTOMERS MANAGEMENT
@@ -2891,6 +3303,7 @@
         populateCustomerSelects();
       } catch (error) {
         console.error('Error loading customers:', error);
+        showAlert('Hitilafu katika kupakia wateja', 'danger');
       }
     }
 
@@ -2902,7 +3315,7 @@
       const confirmPassword = document.getElementById('custConfirmPassword').value;
       
       if (password !== confirmPassword) {
-        alert('Nenosiri halifanani!');
+        showAlert('Nenosiri halifanani!', 'danger');
         return;
       }
       
@@ -2916,20 +3329,17 @@
         confirm_password: confirmPassword
       };
       
-      // Show loading state
       document.getElementById('customerBtnText').style.display = 'none';
       document.getElementById('customerSpinner').style.display = 'inline-block';
       
       try {
         if (customerId) {
-          // Update existing customer
           await apiCall(`/customers/${customerId}`, {
             method: 'PUT',
             body: JSON.stringify(customerData)
           });
           showAlert('Mteja amesasishwa kikamilifu');
         } else {
-          // Add new customer
           await apiCall('/customers', {
             method: 'POST',
             body: JSON.stringify(customerData)
@@ -2937,17 +3347,15 @@
           showAlert('Mteja ameongezwa kikamilifu');
         }
         
-        // Reset form and close modal
         document.getElementById('customerForm').reset();
         document.getElementById('editingCustomerId').value = '';
         bootstrap.Modal.getInstance(document.getElementById('modalAddCustomer')).hide();
         
-        // Reload customers
         await loadCustomers();
         
       } catch (error) {
         console.error('Error saving customer:', error);
-        alert(error.message || 'Hitilafu katika kuhifadhi mteja');
+        showAlert(error.message || 'Hitilafu katika kuhifadhi mteja', 'danger');
       } finally {
         document.getElementById('customerBtnText').style.display = 'inline-block';
         document.getElementById('customerSpinner').style.display = 'none';
@@ -3065,11 +3473,14 @@
         await loadCustomers();
       } catch (error) {
         console.error('Error deleting customer:', error);
+        showAlert('Hitilafu katika kufuta mteja', 'danger');
       }
     }
 
     function populateCustomerSelects() {
       const select = document.getElementById('selectCustomerMsg');
+      if (!select) return;
+      
       select.innerHTML = '<option value="">Tuma kwa wote</option>';
       
       customers.forEach(customer => {
@@ -3113,7 +3524,6 @@
       formData.append('image', imageFile);
       if (link) formData.append('link', link);
 
-      // Show loading
       document.getElementById('adBtnText').style.display = 'none';
       document.getElementById('adSpinner').style.display = 'inline-block';
 
@@ -3168,8 +3578,7 @@
                   ${ad.link
                     ? `<a href="${ad.link}" target="_blank"
                         class="btn btn-sm btn-outline-primary">
-                        <i class="fa fa-external-link-alt me-1"></i>Tembelea
-                      </a>`
+                        <i class="fa fa-external-link-alt me-1"></i>Tembelea</a>`
                     : `<span class="text-muted small">Hakuna kiungo</span>`}
 
                   <button class="btn btn-sm btn-danger" onclick="deleteAd('${ad.id}')">
@@ -3215,7 +3624,6 @@
         return;
       }
       
-      // Show loading state
       document.getElementById('announcementBtnText').style.display = 'none';
       document.getElementById('announcementSpinner').style.display = 'inline-block';
       
@@ -3231,6 +3639,7 @@
         
       } catch (error) {
         console.error('Error posting announcement:', error);
+        showAlert('Hitilafu katika kutuma arifa', 'danger');
       } finally {
         document.getElementById('announcementBtnText').style.display = 'inline-block';
         document.getElementById('announcementSpinner').style.display = 'none';
@@ -3251,7 +3660,6 @@
         return;
       }
       
-      // Show loading state
       document.getElementById('messageBtnText').style.display = 'none';
       document.getElementById('messageSpinner').style.display = 'inline-block';
       
@@ -3272,76 +3680,96 @@
         
       } catch (error) {
         console.error('Error sending message:', error);
+        showAlert('Hitilafu katika kutuma ujumbe', 'danger');
       } finally {
         document.getElementById('messageBtnText').style.display = 'inline-block';
         document.getElementById('messageSpinner').style.display = 'none';
       }
     });
 
-    // ===============================
-    // NOTIFICATIONS
-    // ===============================
-    let notifications = [];
+        // ===============================
+        // NOTIFICATIONS
+        // ===============================
+        let notifications = [];
 
-    async function loadNotifications() {
-      try {
-        notifications = await apiCall('/notifications/customer');
-        renderNotifications();
-        
-        // Calculate unread notifications (for demo, we'll count all as unread)
-        const unreadCount = notifications.length;
-        updateNotificationCount(unreadCount);
-      } catch (error) {
-        console.error('Error loading notifications:', error);
-        updateNotificationCount(0);
-      }
-    }
+        // Helper function to update notification count display
+        function updateNotificationCount(count) {
+          const titleBadge = document.getElementById('notificationCountTitle');
+          if (titleBadge) {
+            titleBadge.textContent = count;
+          }
+          
+          // Update quick action button
+          const quickCount = document.getElementById('quickMessageCount');
+          if (quickCount) {
+            if (count > 0) {
+              quickCount.textContent = count;
+              quickCount.style.display = 'inline-block';
+            } else {
+              quickCount.style.display = 'none';
+            }
+          }
+        }
 
-    function renderNotifications() {
-      const list = document.getElementById('messagesList');
-      list.innerHTML = '';
-      
-      if (notifications.length === 0) {
-        list.innerHTML = '<div class="text-center py-4 text-muted">Hakuna ujumbe uliopokelewa</div>';
-        return;
-      }
-      
-      notifications.forEach(notification => {
-        const el = document.createElement('div');
-        el.className = 'list-group-item d-flex justify-content-between align-items-start border-0 mb-2 rounded';
-        el.style.borderLeft = '4px solid var(--primary-light)';
-        el.innerHTML = `
-          <div class="flex-grow-1">
-            <div class="d-flex justify-content-between align-items-center mb-1">
-              <strong>${notification.first_name} ${notification.last_name}</strong>
-              <small class="text-muted">${new Date(notification.created_at).toLocaleDateString('sw-TZ')}</small>
-            </div>
-            <div class="text-muted mb-2">${notification.message}</div>
-            <div class="d-flex gap-2">
-              <span class="badge bg-light text-dark"><i class="fa fa-phone me-1"></i>${notification.phone}</span>
-              ${notification.email ? `<span class="badge bg-light text-dark"><i class="fa fa-envelope me-1"></i>${notification.email}</span>` : ''}
-            </div>
-          </div>
-          <div class="ms-3">
-            <button class="btn btn-sm btn-outline-primary" onclick="replyToCustomer('${notification.id}')">
-              <i class="fa fa-reply me-1"></i>Jibu
-            </button>
-          </div>
-        `;
-        list.appendChild(el);
-      });
-    }
+        async function loadNotifications() {
+          try {
+            notifications = await apiCall('/notifications/customer');
+            renderNotifications();
+            
+            const unreadCount = notifications.length;
+            updateNotificationCount(unreadCount);
+          } catch (error) {
+            console.error('Error loading notifications:', error);
+            updateNotificationCount(0);
+            showAlert('Hitilafu katika kupakia arifa', 'danger');
+          }
+        }
 
-    function replyToCustomer(notificationId) {
-      const notification = notifications.find(n => n.id == notificationId);
-      if (!notification) return;
-      
-      document.getElementById('selectCustomerMsg').value = notification.customer_id || '';
-      document.getElementById('msgBody').value = `Jibu kwa ${notification.first_name}:\n\n`;
-      
-      const modal = new bootstrap.Modal(document.getElementById('modalSendMessage'));
-      modal.show();
-    }
+        function renderNotifications() {
+          const list = document.getElementById('messagesList');
+          list.innerHTML = '';
+          
+          if (notifications.length === 0) {
+            list.innerHTML = '<div class="text-center py-4 text-muted">Hakuna ujumbe uliopokelewa</div>';
+            return;
+          }
+          
+          notifications.forEach(notification => {
+            const el = document.createElement('div');
+            el.className = 'list-group-item d-flex justify-content-between align-items-start border-0 mb-2 rounded';
+            el.style.borderLeft = '4px solid var(--primary-light)';
+            el.innerHTML = `
+              <div class="flex-grow-1">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <strong>${notification.first_name} ${notification.last_name}</strong>
+                  <small class="text-muted">${new Date(notification.created_at).toLocaleDateString('sw-TZ')}</small>
+                </div>
+                <div class="text-muted mb-2">${notification.message}</div>
+                <div class="d-flex gap-2">
+                  <span class="badge bg-light text-dark"><i class="fa fa-phone me-1"></i>${notification.phone}</span>
+                  ${notification.email ? `<span class="badge bg-light text-dark"><i class="fa fa-envelope me-1"></i>${notification.email}</span>` : ''}
+                </div>
+              </div>
+              <div class="ms-3">
+                <button class="btn btn-sm btn-outline-primary" onclick="replyToCustomer('${notification.id}')">
+                  <i class="fa fa-reply me-1"></i>Jibu
+                </button>
+              </div>
+            `;
+            list.appendChild(el);
+          });
+        }
+
+        function replyToCustomer(notificationId) {
+          const notification = notifications.find(n => n.id == notificationId);
+          if (!notification) return;
+          
+          document.getElementById('selectCustomerMsg').value = notification.customer_id || '';
+          document.getElementById('msgBody').value = `Jibu kwa ${notification.first_name}:\n\n`;
+          
+          const modal = new bootstrap.Modal(document.getElementById('modalSendMessage'));
+          modal.show();
+        }
 
     // ===============================
     // ORDERS MANAGEMENT
@@ -3351,12 +3779,34 @@
     // Load all orders
     async function loadOrders() {
       try {
-        orders = await apiCall('/orders');
+        const ordersData = await apiCall('/orders');
+        orders = ordersData;
         renderOrders();
         renderOrdersMobileCards();
         renderRecentOrders();
+        
+        const currentSection = document.querySelector('.section:not(.d-none)').id;
+        if (currentSection === 'orders') {
+          await markAllOrdersAsViewed();
+        }
       } catch (error) {
         console.error('Error loading orders:', error);
+        showAlert('Hitilafu katika kupakia maagizo', 'danger');
+      }
+    }
+
+    // Function to mark all orders as viewed
+    async function markAllOrdersAsViewed() {
+      try {
+        const unviewedOrders = orders.filter(order => !order.admin_viewed);
+        
+        for (const order of unviewedOrders) {
+          await markOrderViewed(order.order_id);
+        }
+        
+        await loadNotificationCounts();
+      } catch (error) {
+        console.error('Error marking all orders as viewed:', error);
       }
     }
 
@@ -3365,7 +3815,7 @@
       const tbody = document.getElementById('ordersTableBody');
       tbody.innerHTML = '';
 
-      if (orders.length === 0) {
+      if (!orders || orders.length === 0) {
         tbody.innerHTML = '<tr><td colspan="6" class="text-center py-4 text-muted">Hakuna maagizo yaliyopatikana</td></tr>';
         return;
       }
@@ -3373,20 +3823,20 @@
       orders.forEach(order => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td><strong>${order.order_id}</strong></td>
-          <td>${order.first_name} ${order.last_name}</td>
-          <td>${order.product_name}</td>
-          <td>${formatPrice(order.total_price)}</td>
-          <td id="status_${order.order_id}">
+          <td><strong>${order.order_id || order.id}</strong></td>
+          <td>${order.first_name || ''} ${order.last_name || ''}</td>
+          <td>${order.product_name || ''}</td>
+          <td>${formatPrice(order.total_price || 0)}</td>
+          <td id="status_${order.order_id || order.id}">
             <span class="status-badge status-${order.status}">${order.status}</span>
           </td>
           <td>
             <div class="btn-group" role="group">
-              <button class="btn btn-sm btn-outline-secondary" onclick="updateOrderStatus('${order.order_id}','Imewekwa')">Imewekwa</button>
-              <button class="btn btn-sm btn-outline-warning" onclick="updateOrderStatus('${order.order_id}','Inasafirishwa')">Safirishwa</button>
-              <button class="btn btn-sm btn-outline-danger" onclick="updateOrderStatus('${order.order_id}','Ghairishwa')">Ghairi</button>
-              <button class="btn btn-sm btn-info" onclick="updateOrderStatus('${order.order_id}','Kurudishwa')">Rudisha</button>
-              <button class="btn btn-sm btn-success" onclick="markAsReceived('${order.order_id}')">Pokea</button>
+              <button class="btn btn-sm btn-outline-secondary" onclick="updateOrderStatus('${order.order_id || order.id}','Imewekwa')">Imewekwa</button>
+              <button class="btn btn-sm btn-outline-warning" onclick="updateOrderStatus('${order.order_id || order.id}','Inasafirishwa')">Safirishwa</button>
+              <button class="btn btn-sm btn-outline-danger" onclick="updateOrderStatus('${order.order_id || order.id}','Ghairishwa')">Ghairi</button>
+              <button class="btn btn-sm btn-info" onclick="updateOrderStatus('${order.order_id || order.id}','Kurudishwa')">Rudisha</button>
+              <button class="btn btn-sm btn-success" onclick="markAsReceived('${order.order_id || order.id}')">Pokea</button>
             </div>
           </td>
         `;
@@ -3399,7 +3849,7 @@
       const container = document.getElementById('ordersMobileCards');
       container.innerHTML = '';
 
-      if (orders.length === 0) {
+      if (!orders || orders.length === 0) {
         container.innerHTML = '<div class="text-center py-4 text-muted">Hakuna maagizo yaliyopatikana</div>';
         return;
       }
@@ -3410,19 +3860,19 @@
         card.innerHTML = `
           <div class="mobile-card-row">
             <div class="mobile-card-label">Namba ya Agizo</div>
-            <div class="mobile-card-value"><strong>${order.order_id}</strong></div>
+            <div class="mobile-card-value"><strong>${order.order_id || order.id}</strong></div>
           </div>
           <div class="mobile-card-row">
             <div class="mobile-card-label">Mteja</div>
-            <div class="mobile-card-value">${order.first_name} ${order.last_name}</div>
+            <div class="mobile-card-value">${order.first_name || ''} ${order.last_name || ''}</div>
           </div>
           <div class="mobile-card-row">
             <div class="mobile-card-label">Bidhaa</div>
-            <div class="mobile-card-value">${order.product_name}</div>
+            <div class="mobile-card-value">${order.product_name || ''}</div>
           </div>
           <div class="mobile-card-row">
             <div class="mobile-card-label">Jumla</div>
-            <div class="mobile-card-value">${formatPrice(order.total_price)}</div>
+            <div class="mobile-card-value">${formatPrice(order.total_price || 0)}</div>
           </div>
           <div class="mobile-card-row">
             <div class="mobile-card-label">Hali</div>
@@ -3434,11 +3884,11 @@
             <div class="mobile-card-label">Kitendo</div>
             <div class="mobile-card-value">
               <div class="d-flex flex-wrap gap-1">
-                <button class="btn btn-sm btn-outline-secondary" onclick="updateOrderStatus('${order.order_id}','Imewekwa')">Imewekwa</button>
-                <button class="btn btn-sm btn-outline-warning" onclick="updateOrderStatus('${order.order_id}','Inasafirishwa')">Safirishwa</button>
-                <button class="btn btn-sm btn-outline-danger" onclick="updateOrderStatus('${order.order_id}','Ghairishwa')">Ghairi</button>
-                <button class="btn btn-sm btn-info" onclick="updateOrderStatus('${order.order_id}','Kurudishwa')">Rudisha</button>
-                <button class="btn btn-sm btn-success" onclick="markAsReceived('${order.order_id}')">Pokea</button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="updateOrderStatus('${order.order_id || order.id}','Imewekwa')">Imewekwa</button>
+                <button class="btn btn-sm btn-outline-warning" onclick="updateOrderStatus('${order.order_id || order.id}','Inasafirishwa')">Safirishwa</button>
+                <button class="btn btn-sm btn-outline-danger" onclick="updateOrderStatus('${order.order_id || order.id}','Ghairishwa')">Ghairi</button>
+                <button class="btn btn-sm btn-info" onclick="updateOrderStatus('${order.order_id || order.id}','Kurudishwa')">Rudisha</button>
+                <button class="btn btn-sm btn-success" onclick="markAsReceived('${order.order_id || order.id}')">Pokea</button>
               </div>
             </div>
           </div>
@@ -3463,12 +3913,12 @@
         div.className = 'd-flex justify-content-between align-items-center border-bottom py-3';
         div.innerHTML = `
           <div>
-            <div class="fw-bold small">${order.order_id}</div>
-            <div class="text-muted small">${order.first_name} ${order.last_name}</div>
-            <div class="text-muted small mt-1">${order.product_name}</div>
+            <div class="fw-bold small">${order.order_id || order.id}</div>
+            <div class="text-muted small">${order.first_name || ''} ${order.last_name || ''}</div>
+            <div class="text-muted small mt-1">${order.product_name || ''}</div>
           </div>
           <div class="text-end">
-            <div class="fw-bold">${formatPrice(order.total_price)}</div>
+            <div class="fw-bold">${formatPrice(order.total_price || 0)}</div>
             <span class="status-badge status-${order.status} mt-1">${order.status}</span>
           </div>
         `;
@@ -3495,7 +3945,7 @@
         return response;
       } catch (error) {
         console.error('Error updating order status:', error);
-        showAlert(error?.message || 'Tatizo kuthibitisha hali ya agizo');
+        showAlert(error?.message || 'Tatizo kuthibitisha hali ya agizo', 'danger');
         throw error;
       }
     }
@@ -3503,11 +3953,10 @@
     // Mark as received (opens password modal)
     async function markAsReceived(orderId) {
       try {
-        // Open password verification modal
         openPasswordModal(orderId);
       } catch (err) {
         console.error('Error marking as received:', err);
-        showAlert(err?.message || 'Tatizo, jaribu tena');
+        showAlert(err?.message || 'Tatizo, jaribu tena', 'danger');
       }
     }
 
@@ -3532,7 +3981,6 @@
       document.getElementById('passwordSpinner').style.display = 'inline-block';
 
       try {
-        // For now, just update status to "Inasafirishwa" (shipping)
         await apiCall(`/orders/${orderId}/status`, {
           method: 'PUT',
           body: JSON.stringify({ status: 'Inasafirishwa' })
@@ -3550,7 +3998,7 @@
         await loadOrders();
       } catch (error) {
         console.error('Error confirming order:', error);
-        showAlert(error?.message || 'Tatizo, jaribu tena');
+        showAlert(error?.message || 'Tatizo, jaribu tena', 'danger');
       } finally {
         document.getElementById('passwordBtnText').style.display = 'inline-block';
         document.getElementById('passwordSpinner').style.display = 'none';
@@ -3577,20 +4025,16 @@
       link.addEventListener('click', function(e) {
         e.preventDefault();
         
-        // Update active link
         document.querySelectorAll('.nav-link').forEach(x => x.classList.remove('active'));
         this.classList.add('active');
         
-        // Show corresponding section
         const sectionId = this.getAttribute('data-section');
         document.querySelectorAll('.section').forEach(s => s.classList.add('d-none'));
         const targetSection = document.getElementById(sectionId);
         
-        // Special handling for admins section
         if (sectionId === 'admins') {
           if (!currentAdmin || !currentAdmin.can_manage_admins) {
             showAlert('Huna ruhusa ya kupata ukurasa huu!', 'danger');
-            // Redirect to dashboard
             document.querySelectorAll('.nav-link').forEach(x => x.classList.remove('active'));
             document.querySelector('[data-section="dashboard"]').classList.add('active');
             document.querySelectorAll('.section').forEach(s => s.classList.add('d-none'));
@@ -3603,7 +4047,6 @@
         
         targetSection.classList.remove('d-none');
         
-        // Update section title
         const titleMap = {
           dashboard: 'Dashibodi ya Msimamizi',
           products: 'Usimamizi wa Bidhaa',
@@ -3616,7 +4059,6 @@
         document.getElementById('sectionTitle').textContent = titleMap[sectionId] || 'Dashibodi ya Msimamizi';
         document.getElementById('mobileSectionTitle').textContent = titleMap[sectionId] || 'Dashibodi';
         
-        // Load data when switching to specific sections
         if (sectionId === 'products') {
           loadProducts();
         } else if (sectionId === 'customers') {
@@ -3631,7 +4073,6 @@
           loadAdmins();
         }
         
-        // Close sidebar on mobile after navigation
         if (window.innerWidth < 992) {
           document.getElementById('sidebar').classList.remove('show');
           document.getElementById('sidebarOverlay').classList.remove('show');
@@ -3648,6 +4089,7 @@
       document.getElementById('editingProductId').value = '';
       document.getElementById('productForm').reset();
       document.getElementById('prodPreview').innerHTML = '';
+      sizeManager.setSizesData([]);
       new bootstrap.Modal(document.getElementById('modalAddProduct')).show();
     });
     
@@ -3721,6 +4163,8 @@
     });
 
     function logout() {
+      stopAutoRefresh();
+      
       authToken = '';
       currentAdmin = null;
       localStorage.removeItem('adminToken');
@@ -3743,10 +4187,8 @@
     let admins = [];
 
     async function loadAdmins() {
-      // Only load admins if current admin has permission
       if (!currentAdmin || !currentAdmin.can_manage_admins) {
         console.log('Not authorized to view admins');
-        // Hide the admins section if not authorized
         document.getElementById('admins').classList.add('d-none');
         return;
       }
@@ -3755,11 +4197,11 @@
         admins = await apiCall('/admins');
         renderAdminsTable();
         renderAdminsMobileCards();
-        // Show the admins section when authorized
         document.getElementById('admins').classList.remove('d-none');
       } catch (error) {
         console.error('Error loading admins:', error);
         document.getElementById('admins').classList.add('d-none');
+        showAlert('Hitilafu katika kupakia wasimamizi', 'danger');
       }
     }
 
@@ -3767,7 +4209,7 @@
       const tbody = document.getElementById('adminsTableBody');
       tbody.innerHTML = '';
 
-      if (admins.length === 0) {
+      if (!admins || admins.length === 0) {
         tbody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-muted">Hakuna wasimamizi waliopatikana</td></tr>';
         return;
       }
@@ -3796,7 +4238,7 @@
       const container = document.getElementById('adminsMobileCards');
       container.innerHTML = '';
 
-      if (admins.length === 0) {
+      if (!admins || admins.length === 0) {
         container.innerHTML = '<div class="text-center py-4 text-muted">Hakuna wasimamizi waliopatikana</div>';
         return;
       }
@@ -3852,7 +4294,6 @@
       const admin = admins.find(a => a.id == id);
       if (!admin) return;
       
-      // Prevent editing main admin (id=1)
       if (parseInt(id) === 1) {
         showAlert('Huwezi kuhariri msimamizi mkuu!', 'warning');
         return;
@@ -3863,7 +4304,6 @@
       document.getElementById('adminLname').value = admin.last_name;
       document.getElementById('adminMobile').value = admin.mobile;
       
-      // Clear password fields for editing (optional)
       document.getElementById('adminNewPassword').value = '';
       document.getElementById('adminConfirmPassword').value = '';
       document.getElementById('adminNewPassword').placeholder = 'Nenosiri jipya (hiari)';
@@ -3871,7 +4311,6 @@
       document.getElementById('adminNewPassword').removeAttribute('required');
       document.getElementById('adminConfirmPassword').removeAttribute('required');
       
-      // Update modal title
       document.getElementById('adminModalTitle').textContent = 'Hariri Msimamizi';
       
       const modal = new bootstrap.Modal(document.getElementById('modalAddAdmin'));
@@ -3907,7 +4346,6 @@
     document.getElementById('adminForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       
-      // Check if current admin has permission
       if (!currentAdmin || !currentAdmin.can_manage_admins) {
         showAlert('Huna ruhusa ya kuongeza/kuhariri wasimamizi!', 'danger');
         return;
@@ -3920,54 +4358,45 @@
       const password = document.getElementById('adminNewPassword').value;
       const confirmPassword = document.getElementById('adminConfirmPassword').value;
       
-      // Validate required fields
       if (!firstName || !lastName || !mobile) {
         showAlert('Tafadhali jaza sehemu zote zinazohitajika!', 'danger');
         return;
       }
       
-      // Validate mobile number format (basic validation)
       if (!/^[0-9+\-\s()]{10,15}$/.test(mobile)) {
         showAlert('Tafadhali ingiza nambari ya simu halali!', 'danger');
         document.getElementById('adminMobile').classList.add('is-invalid');
         return;
       }
       
-      // For new admin, password is required
       if (!adminId && (!password || !confirmPassword)) {
         showAlert('Nenosiri linahitajika kwa msimamizi mpya!', 'danger');
         return;
       }
       
-      // Check password confirmation
       if (password && password !== confirmPassword) {
         showAlert('Nenosiri halifanani!', 'danger');
         return;
       }
       
-      // Check password strength for new admin
       if (!adminId && password && password.length < 6) {
         showAlert('Nenosiri lazima liwe na angalau herufi 6!', 'danger');
         return;
       }
       
-      // Prepare data
       const adminData = {
         first_name: firstName,
         last_name: lastName,
         mobile: mobile
       };
       
-      // Add password if provided
       if (password) {
         adminData.password = password;
         if (!adminId) {
-          // For new admin, also send confirm_password
           adminData.confirm_password = confirmPassword;
         }
       }
       
-      // Show loading state
       document.getElementById('adminBtnText').style.display = 'none';
       document.getElementById('adminSpinner').style.display = 'inline-block';
       
@@ -3975,14 +4404,12 @@
         let response;
         
         if (adminId) {
-          // Update existing admin
           response = await apiCall(`/admins/${adminId}`, {
             method: 'PUT',
             body: JSON.stringify(adminData)
           });
           showAlert('Msimamizi amesasishwa kikamilifu', 'success');
         } else {
-          // Add new admin
           response = await apiCall('/admins', {
             method: 'POST',
             body: JSON.stringify(adminData)
@@ -3990,31 +4417,26 @@
           showAlert('Msimamizi ameongezwa kikamilifu', 'success');
         }
         
-        // Reset form and close modal
         document.getElementById('adminForm').reset();
         document.getElementById('editingAdminId').value = '';
         document.getElementById('adminMobile').classList.remove('is-invalid');
         
-        // Reset modal title and placeholders
         document.getElementById('adminModalTitle').textContent = 'Ongeza Msimamizi Mpya';
         document.getElementById('adminNewPassword').placeholder = 'Nenosiri';
         document.getElementById('adminConfirmPassword').placeholder = 'Rudia Nenosiri';
         document.getElementById('adminNewPassword').setAttribute('required', 'true');
         document.getElementById('adminConfirmPassword').setAttribute('required', 'true');
         
-        // Close modal
         const modal = bootstrap.Modal.getInstance(document.getElementById('modalAddAdmin'));
         if (modal) {
           modal.hide();
         }
         
-        // Reload admins list
         await loadAdmins();
         
       } catch (error) {
         console.error('Error saving admin:', error);
         
-        // Provide user-friendly error messages
         if (error.message.includes('Mobile number already registered') || error.message.includes('already in use')) {
           showAlert('Nambari ya simu tayari imesajiliwa! Tafadhali tumia nambari nyingine.', 'danger');
           document.getElementById('adminMobile').classList.add('is-invalid');
@@ -4043,10 +4465,8 @@
     const adminModal = document.getElementById('modalAddAdmin');
     if (adminModal) {
       adminModal.addEventListener('show.bs.modal', function () {
-        // Check if user has permission when modal is about to show
         if (!currentAdmin || !currentAdmin.can_manage_admins) {
           showAlert('Huna ruhusa ya kuongeza wasimamizi!', 'danger');
-          // Prevent modal from opening
           setTimeout(() => {
             const bsModal = bootstrap.Modal.getInstance(adminModal);
             if (bsModal) {
@@ -4056,8 +4476,6 @@
           return;
         }
         
-        // If editing, the form is already set up by editAdmin()
-        // If not editing, reset for adding new admin
         if (!document.getElementById('editingAdminId').value) {
           document.getElementById('adminForm').reset();
           document.getElementById('adminModalTitle').textContent = 'Ongeza Msimamizi Mpya';
@@ -4070,7 +4488,6 @@
       });
       
       adminModal.addEventListener('hidden.bs.modal', function () {
-        // Reset form when modal is closed
         document.getElementById('adminForm').reset();
         document.getElementById('editingAdminId').value = '';
         document.getElementById('adminModalTitle').textContent = 'Ongeza Msimamizi Mpya';
@@ -4098,6 +4515,16 @@
     
     document.getElementById('adminMobile').addEventListener('input', function() {
       this.classList.remove('is-invalid');
+    });
+
+    // Initialize size manager when script loads
+    if (document.getElementById('sizesContainer')) {
+      sizeManager.init();
+    }
+
+    // Prevent autofill from browser on product search
+    document.getElementById('productSearch').addEventListener('focus', function() {
+      this.value = '';
     });
   </script>
 </body>
