@@ -1397,101 +1397,117 @@
   </div>
 
   <!-- Modals -->
-  <!-- Add/Edit Product Modal -->
-  <div class="modal fade" id="modalAddProduct" tabindex="-1">
-    <div class="modal-dialog modal-lg modal-dialog-scrollable">
-      <div class="modal-content">
-        <form id="productForm">
-          <div class="modal-header">
-            <h5 class="modal-title">Ongeza / Hariri Bidhaa</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-          </div>
-          <div class="modal-body">
-            <div class="row g-3">
-              <div class="col-md-6">
-                <label class="form-label">Jina la Bidhaa</label>
-                <input class="form-control" id="prodTitle" required>
-              </div>
-              <div class="col-md-6">
-                <label class="form-label">Kampuni</label>
-                <select id="prodBrand" class="form-select">
-                  <option value="">Chagua...</option>
-                  <option>Nike</option>
-                  <option>Adidas</option>
-                  <option>AirZoom</option>
-                  <option>Mercurial</option>
-                </select>
-              </div>
+  <!-- Add/Edit Product Modal - Updated -->
+<div class="modal fade" id="modalAddProduct" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <form id="productForm">
+        <div class="modal-header">
+          <h5 class="modal-title">Ongeza / Hariri Bidhaa</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-3">
+            <!-- Basic Info -->
+            <div class="col-md-6">
+              <label class="form-label">Jina la Bidhaa</label>
+              <input class="form-control" id="prodTitle" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Kampuni</label>
+              <select id="prodBrand" class="form-select">
+                <option value="">Chagua...</option>
+                <option>Nike</option>
+                <option>Adidas</option>
+                <option>AirZoom</option>
+                <option>Mercurial</option>
+              </select>
+            </div>
 
-              <div class="col-md-4">
-                <label class="form-label">Rangi</label>
-                <select id="prodColor" class="form-select">
-                  <option>Nyeusi</option>
-                  <option>Nyeupe</option>
-                  <option>Njano</option>
-                  <option>Buluu</option>
-                  <option>Kijani</option>
-                  <option>Zambarau</option>
-                </select>
-              </div>
-              <div class="col-md-4">
-                <label class="form-label">Punguzo (%)</label>
-                <input type="number" min="0" max="100" id="prodOffer" class="form-control" value="0">
-              </div>
-              <div class="col-md-4">
-                <label class="form-label">Aina</label>
-                <select id="prodType" class="form-select">
-                  <option value="Njumu">Njumu</option>
-                  <option value="Trainer">Trainer</option>
-                  <option value="Njumu na Trainer">Njumu na Trainer</option>
-                </select>
-              </div>
+            <div class="col-md-4">
+              <label class="form-label">Rangi</label>
+              <select id="prodColor" class="form-select">
+                <option>Nyeusi</option>
+                <option>Nyeupe</option>
+                <option>Njano</option>
+                <option>Buluu</option>
+                <option>Kijani</option>
+                <option>Zambarau</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Punguzo (%)</label>
+              <input type="number" min="0" max="100" id="prodOffer" class="form-control" value="0">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Aina</label>
+              <select id="prodType" class="form-select">
+                <option value="Njumu">Njumu</option>
+                <option value="Trainer">Trainer</option>
+                <option value="Njumu na Trainer">Njumu na Trainer</option>
+              </select>
+            </div>
 
-              <div class="col-md-4">
-                <label class="form-label">Ukubwa (EU)</label>
-                <select id="prodSize" class="form-select">
-                  <option>39</option>
-                  <option>40</option>
-                  <option>41</option>
-                  <option>42</option>
-                  <option>43</option>
-                  <option>44</option>
-                  <option>45</option>
-                </select>
-              </div>
-              <div class="col-md-4">
-                <label class="form-label">Idadi</label>
-                <div class="input-group">
-                  <button class="btn btn-outline-secondary" type="button" id="qtyMinus">-</button>
-                  <input id="prodQuantity" class="form-control text-center" value="1" type="number" min="0">
-                  <button class="btn btn-outline-secondary" type="button" id="qtyPlus">+</button>
+            <div class="col-md-6">
+              <label class="form-label">Bei (TSh)</label>
+              <input type="number" id="prodPrice" class="form-control" required>
+            </div>
+            
+            <div class="col-md-6">
+              <label class="form-label">Maelezo (hiari)</label>
+              <textarea id="prodDescription" class="form-control" rows="2" placeholder="Maelezo ya bidhaa..."></textarea>
+            </div>
+
+            <!-- Sizes Management -->
+            <div class="col-12">
+              <label class="form-label">Saizi na Akiba</label>
+              <div id="sizesContainer">
+                <div class="row g-2 mb-2">
+                  <div class="col-md-3">
+                    <input type="text" class="form-control size-code" placeholder="Kifupi (39, M, XL)" required>
+                  </div>
+                  <div class="col-md-5">
+                    <input type="text" class="form-control size-label" placeholder="Jina kamili (39 EU, Medium)" required>
+                  </div>
+                  <div class="col-md-3">
+                    <input type="number" class="form-control size-stock" placeholder="Akiba" min="0" value="0" required>
+                  </div>
+                  <div class="col-md-1">
+                    <button type="button" class="btn btn-danger btn-sm remove-size" disabled>
+                      <i class="fa fa-times"></i>
+                    </button>
+                  </div>
                 </div>
               </div>
-              <div class="col-md-4">
-                <label class="form-label">Bei (TSh)</label>
-                <input type="number" id="prodPrice" class="form-control" required>
+              <button type="button" class="btn btn-sm btn-outline-primary mt-2" id="addSizeBtn">
+                <i class="fa fa-plus me-1"></i>Ongeza Saizi Nyingine
+              </button>
+              <div class="form-text">
+                Weka saizi zote zinazopatikana kwa bidhaa hii
               </div>
-
-              <div class="col-12">
-                <label class="form-label">Picha (kiwango cha juu 5)</label>
-                <input type="file" id="prodImages" class="form-control" accept="image/*" multiple>
-                <div id="prodPreview" class="image-preview"></div>
-              </div>
-
-              <input type="hidden" id="editingProductId">
             </div>
+
+            <!-- Images -->
+            <div class="col-12">
+              <label class="form-label">Picha (kiwango cha juu 5)</label>
+              <input type="file" id="prodImages" class="form-control" accept="image/*" multiple>
+              <div id="prodPreview" class="image-preview"></div>
+            </div>
+
+            <input type="hidden" id="editingProductId">
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Funga</button>
-            <button type="submit" class="btn btn-primary">
-              <span id="productBtnText">Hifadhi Bidhaa</span>
-              <span id="productSpinner" class="spinner-border spinner-border-sm" style="display: none;"></span>
-            </button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Funga</button>
+          <button type="submit" class="btn btn-primary">
+            <span id="productBtnText">Hifadhi Bidhaa</span>
+            <span id="productSpinner" class="spinner-border spinner-border-sm" style="display: none;"></span>
+          </button>
+        </div>
+      </form>
     </div>
   </div>
+</div>
 
   <!-- Add Customer Modal -->
   <div class="modal fade" id="modalAddCustomer" tabindex="-1">
@@ -2451,7 +2467,7 @@
       }
     });
 
-    // RENDER PRODUCTS TABLE
+    // RENDER PRODUCTS TABLE - Updated
     function renderProductsTable(filter = '') {
       const tbody = document.getElementById('productsTableBody');
       tbody.innerHTML = '';
@@ -2465,7 +2481,7 @@
 
       if (filteredProducts.length === 0) {
         tbody.innerHTML = `
-          <tr><td colspan="11" class="text-center py-4 text-muted">
+          <tr><td colspan="12" class="text-center py-4 text-muted">
             ${productList.length === 0 ? 'Hakuna bidhaa zilizopatikana' : 'Hakuna bidhaa zilizoambatana na utafutaji'}
           </td></tr>`;
         return;
@@ -2474,18 +2490,26 @@
       filteredProducts.forEach((product, index) => {
         const tr = document.createElement('tr');
         const imageUrl = product.images?.length > 0 ? fixImagePath(product.images[0]) : '';
+        
+        // Format sizes display
+        let sizesDisplay = 'Hakuna saizi';
+        if (product.sizes && product.sizes.length > 0) {
+          sizesDisplay = product.sizes.map(size => 
+            `${size.size_label || size.size_code} (${size.stock})`
+          ).join(', ');
+        }
 
         tr.innerHTML = `
           <td>${index + 1}</td>
           <td><img src="${imageUrl}" class="product-thumb" alt="${product.name}"
-              onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSI+PHJlY3Qgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iMzAiIHk9IjMwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkVycm9yPC90ZXh0Pjwvc3ZnPg=='"></td>
+              onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCI+PHJlY3Qgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iMzAiIHk9IjMwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkVycm9yPC90ZXh0Pjwvc3ZnPg=='"></td>
           <td>${product.company || '-'}</td>
           <td>${product.name || 'No Name'}</td>
           <td>${product.color || '-'}</td>
           <td>${product.discount_percent || 0}%</td>
           <td>${product.type || '-'}</td>
-          <td>${product.size_us || '-'}</td>
-          <td>${product.stock || 0}</td>
+          <td>${sizesDisplay}</td>
+          <td>${product.total_stock || 0}</td>
           <td>${formatPrice(product.price || 0)}</td>
           <td>
             <button class="btn btn-sm btn-outline-primary me-1" onclick="editProduct('${product.id}')">Hariri</button>
@@ -2495,7 +2519,6 @@
         tbody.appendChild(tr);
       });
     }
-
     // RENDER PRODUCTS MOBILE CARDS
     function renderProductsMobileCards(filter = '') {
       const container = document.getElementById('productsMobileCards');
@@ -2547,6 +2570,229 @@
         `;
         container.appendChild(card);
       });
+    }
+
+    // Size Management Functions
+    function initializeSizeManagement() {
+      const sizesContainer = document.getElementById('sizesContainer');
+      const addSizeBtn = document.getElementById('addSizeBtn');
+      
+      // Add new size row
+      function addSizeRow(sizeData = { code: '', label: '', stock: 0 }) {
+        const sizeRow = document.createElement('div');
+        sizeRow.className = 'row g-2 mb-2 size-row';
+        sizeRow.innerHTML = `
+          <div class="col-md-3">
+            <input type="text" class="form-control size-code" placeholder="Kifupi (39, M, XL)" 
+                  value="${sizeData.code || ''}" required>
+          </div>
+          <div class="col-md-5">
+            <input type="text" class="form-control size-label" placeholder="Jina kamili (39 EU, Medium)" 
+                  value="${sizeData.label || ''}" required>
+          </div>
+          <div class="col-md-3">
+            <input type="number" class="form-control size-stock" placeholder="Akiba" 
+                  min="0" value="${sizeData.stock || 0}" required>
+          </div>
+          <div class="col-md-1">
+            <button type="button" class="btn btn-danger btn-sm remove-size">
+              <i class="fa fa-times"></i>
+            </button>
+          </div>
+        `;
+        
+        sizesContainer.appendChild(sizeRow);
+        
+        // Add event listener to remove button
+        const removeBtn = sizeRow.querySelector('.remove-size');
+        removeBtn.addEventListener('click', function() {
+          if (document.querySelectorAll('.size-row').length > 1) {
+            sizeRow.remove();
+            updateRemoveButtons();
+          }
+        });
+        
+        updateRemoveButtons();
+      }
+      
+      // Update remove buttons state
+      function updateRemoveButtons() {
+        const sizeRows = document.querySelectorAll('.size-row');
+        const removeButtons = document.querySelectorAll('.remove-size');
+        
+        if (sizeRows.length <= 1) {
+          removeButtons.forEach(btn => btn.disabled = true);
+        } else {
+          removeButtons.forEach(btn => btn.disabled = false);
+        }
+      }
+      
+      // Get all sizes data
+      function getSizesData() {
+        const sizeRows = document.querySelectorAll('.size-row');
+        const sizes = [];
+        
+        sizeRows.forEach(row => {
+          const code = row.querySelector('.size-code').value.trim();
+          const label = row.querySelector('.size-label').value.trim();
+          const stock = parseInt(row.querySelector('.size-stock').value) || 0;
+          
+          if (code && label) {
+            sizes.push({
+              code: code,
+              label: label,
+              stock: stock
+            });
+          }
+        });
+        
+        return sizes;
+      }
+      
+      // Set sizes data for editing
+      function setSizesData(sizes) {
+        // Clear existing sizes except first row
+        const existingRows = document.querySelectorAll('.size-row');
+        existingRows.forEach((row, index) => {
+          if (index > 0) row.remove();
+        });
+        
+        // Update first row
+        if (sizes.length > 0) {
+          const firstRow = document.querySelector('.size-row');
+          firstRow.querySelector('.size-code').value = sizes[0].size_code || sizes[0].code || '';
+          firstRow.querySelector('.size-label').value = sizes[0].size_label || sizes[0].label || '';
+          firstRow.querySelector('.size-stock').value = sizes[0].stock || 0;
+        }
+        
+        // Add remaining sizes
+        for (let i = 1; i < sizes.length; i++) {
+          addSizeRow({
+            code: sizes[i].size_code || sizes[i].code,
+            label: sizes[i].size_label || sizes[i].label,
+            stock: sizes[i].stock || 0
+          });
+        }
+        
+        updateRemoveButtons();
+      }
+      
+      // Event Listeners
+      addSizeBtn.addEventListener('click', function() {
+        addSizeRow();
+      });
+      
+      // Initialize with one size row
+      updateRemoveButtons();
+      
+      return {
+        getSizesData,
+        setSizesData,
+        addSizeRow
+      };
+    }
+
+    // Initialize size management
+    const sizeManager = initializeSizeManagement();
+
+    // Updated product form submission
+    document.getElementById('productForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const productId = document.getElementById('editingProductId').value;
+      const formData = new FormData();
+
+      // Product fields
+      formData.append('name', document.getElementById('prodTitle').value);
+      formData.append('company', document.getElementById('prodBrand').value);
+      formData.append('color', document.getElementById('prodColor').value);
+      formData.append('discount_percent', document.getElementById('prodOffer').value);
+      formData.append('type', document.getElementById('prodType').value);
+      formData.append('price', document.getElementById('prodPrice').value);
+      formData.append('description', document.getElementById('prodDescription').value || '');
+
+      // Sizes data as JSON
+      const sizesData = sizeManager.getSizesData();
+      formData.append('sizes', JSON.stringify(sizesData));
+
+      // Images
+      const imageFiles = document.getElementById('prodImages').files;
+      for (let i = 0; i < imageFiles.length; i++) {
+        formData.append('images', imageFiles[i]);
+      }
+
+      // Button loading state
+      document.getElementById('productBtnText').style.display = 'none';
+      document.getElementById('productSpinner').style.display = 'inline-block';
+
+      try {
+        if (productId) {
+          await apiCallWithFormData(`/products/${productId}`, formData, 'PUT');
+          showAlert('Bidhaa imesasishwa kikamilifu');
+        } else {
+          await apiCallWithFormData('/products', formData);
+          showAlert('Bidhaa imeongezwa kikamilifu');
+        }
+
+        document.getElementById('productForm').reset();
+        document.getElementById('prodPreview').innerHTML = '';
+        document.getElementById('editingProductId').value = '';
+        
+        // Reset sizes to one row
+        sizeManager.setSizesData([]);
+        
+        bootstrap.Modal.getInstance(document.getElementById('modalAddProduct')).hide();
+        await loadProducts();
+      } catch (error) {
+        console.error('❌ Error saving product:', error);
+      } finally {
+        document.getElementById('productBtnText').style.display = 'inline-block';
+        document.getElementById('productSpinner').style.display = 'none';
+      }
+    });
+
+    // Updated editProduct function
+    async function editProduct(id) {
+      const product = products.find(p => p.id == id);
+      if (!product) return;
+
+      document.getElementById('editingProductId').value = product.id;
+      document.getElementById('prodTitle').value = product.name;
+      document.getElementById('prodBrand').value = product.company;
+      document.getElementById('prodColor').value = product.color;
+      document.getElementById('prodOffer').value = product.discount_percent;
+      document.getElementById('prodType').value = product.type;
+      document.getElementById('prodPrice').value = product.price;
+      document.getElementById('prodDescription').value = product.description || '';
+
+      // Load sizes for this product
+      try {
+        const [sizes] = await db.query(
+          "SELECT size_code, size_label, stock FROM product_sizes WHERE product_id=? ORDER BY size_code",
+          [id]
+        );
+        sizeManager.setSizesData(sizes);
+      } catch (error) {
+        console.error('Error loading sizes:', error);
+        sizeManager.setSizesData([]);
+      }
+
+      // Existing images preview
+      const preview = document.getElementById('prodPreview');
+      preview.innerHTML = '';
+
+      if (product.images?.length > 0) {
+        product.images.forEach(imgPath => {
+          const img = document.createElement('img');
+          img.src = fixImagePath(imgPath);
+          img.onerror = function () {
+            this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCI+PHJlY3Qgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNDAiIHk9IjQwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkVycm9yPC90ZXh0Pjwvc3ZnPg==';
+          };
+          preview.appendChild(img);
+        });
+      }
+
+      new bootstrap.Modal(document.getElementById('modalAddProduct')).show();
     }
 
     // EDIT PRODUCT
