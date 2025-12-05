@@ -217,25 +217,76 @@
             color: white;
         }
         
-        .size-option {
-            width: 40px;
-            height: 40px;
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 10px;
-            cursor: pointer;
-            transition: all 0.2s;
-            background-color: var(--card-bg);
-            color: var(--text-color);
+        /* Enhanced Size Options Styling */
+        .size-options-container {
+            margin: 20px 0;
         }
         
-        .size-option:hover, .size-option.active {
+        .size-options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .size-option {
+            height: 50px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .size-option:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        .size-option.active {
             background-color: var(--primary-color);
             color: white;
             border-color: var(--primary-color);
+            transform: scale(1.05);
+        }
+        
+        .size-option.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            position: relative;
+        }
+        
+        .size-option.disabled::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: var(--danger-color);
+            transform: rotate(-45deg);
+        }
+        
+        .size-label {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        
+        .size-stock {
+            font-size: 0.7rem;
+            margin-top: 2px;
+            opacity: 0.8;
+        }
+        
+        .size-option.active .size-stock {
+            color: rgba(255, 255, 255, 0.9);
         }
         
         .cart-item {
@@ -706,6 +757,9 @@
             .modal-dialog {
                 margin: 10px;
             }
+            .size-options-grid {
+                grid-template-columns: repeat(auto-fill, minmax(55px, 1fr));
+            }
         }
 
         @media (min-width: 769px) {
@@ -780,7 +834,7 @@
         }
         
         .return-period-info {
-            background-color: #fff3cd;
+            background-color: #f5c014;
             border: 1px solid #ffeaa7;
             border-radius: 5px;
             padding: 10px;
@@ -1590,6 +1644,91 @@
         .terms-link:hover {
             text-decoration: underline;
         }
+        
+        /* Enhanced Product Description Styling */
+        .product-description-container {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+        }
+        
+        .product-description-container h4 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 8px;
+        }
+        
+        .product-description-text {
+            line-height: 1.6;
+            color: var(--text-color);
+            font-size: 1rem;
+            white-space: pre-line;
+        }
+        
+        .product-description-text p {
+            margin-bottom: 10px;
+        }
+        
+        .description-placeholder {
+            color: var(--light-text);
+            font-style: italic;
+        }
+        
+        /* Button Loading State */
+        .btn-loading-state {
+            position: relative;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+        
+        .btn-loading-state .btn-text {
+            visibility: hidden;
+        }
+        
+        .btn-loading-state::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            border: 3px solid transparent;
+            border-top-color: #ffffff;
+            border-radius: 50%;
+            animation: button-loading-spinner 1s ease infinite;
+        }
+        
+        @keyframes button-loading-spinner {
+            from {
+                transform: rotate(0turn);
+            }
+            to {
+                transform: rotate(1turn);
+            }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 576px) {
+            .product-description-container {
+                padding: 15px;
+            }
+            
+            .product-description-text {
+                font-size: 0.95rem;
+            }
+            
+            .size-option {
+                height: 45px;
+                font-size: 0.9rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1736,12 +1875,25 @@
                         <span class="offer-badge discount-pulse" id="offer-badge" style="display: none;">0% OFF</span>
                     </div>
                     
-                    <p id="product-description">Maelezo ya bidhaa yataingizwa hapa.</p>
+                    <!-- Enhanced Product Description Section -->
+                    <div class="product-description-container">
+                        <h4>Maelezo ya Bidhaa</h4>
+                        <div class="product-description-text" id="product-description">
+                            Maelezo ya bidhaa yataonyeshwa hapa.
+                        </div>
+                        <div id="description-placeholder" class="description-placeholder hidden">
+                            Bidhaa haina maelezo ya ziada.
+                        </div>
+                    </div>
                     
-                    <div class="mb-4">
+                    <!-- Enhanced Size Selection -->
+                    <div class="size-options-container">
                         <h5>Chagua Saizi (EU)</h5>
-                        <div class="d-flex flex-wrap" id="size-options">
+                        <div class="size-options-grid" id="size-options">
                             <!-- Size options will be loaded here -->
+                        </div>
+                        <div class="mt-2">
+                            <small class="text-muted">Nambari ndani ya mabano inaonyesha idadi ya akiba kwa kila saizi</small>
                         </div>
                     </div>
                     
@@ -1771,7 +1923,7 @@
             <div class="mt-5">
                 <ul class="nav nav-tabs" id="productDetailsTabs">
                     <li class="nav-item">
-                        <a class="nav-link active" data-bs-toggle="tab" href="#details">Maelezo</a>
+                        <a class="nav-link active" data-bs-toggle="tab" href="#details">Maelezo Zaidi</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" data-bs-toggle="tab" href="#reviews">Tathmini</a>
@@ -1779,7 +1931,7 @@
                 </ul>
                 <div class="tab-content p-3 border border-top-0">
                     <div class="tab-pane fade show active" id="details">
-                        <!-- Product details will be loaded here -->
+                        <!-- Additional product details will be loaded here -->
                     </div>
                     <div class="tab-pane fade" id="reviews">
                         <!-- Reviews will be loaded here -->
@@ -1935,8 +2087,7 @@
                                 </div>
                                 
                                 <button class="btn btn-success w-100 btn-lg btn-confirm-order" id="confirm-order">
-                                    <span class="loading-spinner" style="display: none;"></span>
-                                    <span id="confirm-order-text">Thibitisha Agizo</span>
+                                    <span class="btn-text">Thibitisha Agizo</span>
                                     <i class="fas fa-truck truck-icon"></i>
                                 </button>
                             </div>
@@ -2059,7 +2210,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">Hifadhi Mabadiliko</button>
+                            <button type="submit" class="btn btn-primary" id="profile-save-btn">
+                                <span class="btn-text">Hifadhi Mabadiliko</span>
+                            </button>
                         </form>
                         
                         <!-- Change Password Section -->
@@ -2078,7 +2231,9 @@
                                     <label for="confirm-new-password" class="form-label">Rudia Nenosiri Jipya</label>
                                     <input type="password" class="form-control" id="confirm-new-password" required>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Badilisha Nenosiri</button>
+                                <button type="submit" class="btn btn-primary" id="change-password-btn">
+                                    <span class="btn-text">Badilisha Nenosiri</span>
+                                </button>
                             </form>
                         </div>
                     </div>
@@ -2121,8 +2276,9 @@
                                     <span class="forgot-password-link" id="forgot-password-login">Umesahau nenosiri?</span>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary w-100 btn-lg mt-3">
-                                <i class="fas fa-sign-in-alt me-2"></i>Ingia
+                            <button type="submit" class="btn btn-primary w-100 btn-lg mt-3" id="login-submit-btn">
+                                <i class="fas fa-sign-in-alt me-2"></i>
+                                <span class="btn-text">Ingia</span>
                             </button>
                         </form>
                         
@@ -2242,8 +2398,9 @@
                                     <a href="regulations.html" target="_blank" class="terms-link" id="terms-link">Masharti ya Huduma</a>
                                 </label>
                             </div>
-                            <button type="submit" class="btn btn-primary w-100 btn-lg">
-                                <i class="fas fa-user-plus me-2"></i>Jiandikishe
+                            <button type="submit" class="btn btn-primary w-100 btn-lg" id="register-submit-btn">
+                                <i class="fas fa-user-plus me-2"></i>
+                                <span class="btn-text">Jiandikishe</span>
                             </button>
                         </form>
                         
@@ -2295,8 +2452,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary w-100">
-                                    <i class="fas fa-arrow-right me-2"></i>Endelea
+                                <button type="submit" class="btn btn-primary w-100" id="forgot-password-submit-btn">
+                                    <i class="fas fa-arrow-right me-2"></i>
+                                    <span class="btn-text">Endelea</span>
                                 </button>
                             </form>
                         </div>
@@ -2335,8 +2493,9 @@
                                         <input type="password" class="form-control" id="confirm-new-password-reset" placeholder="Rudia nenosiri jipya" required>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary w-100">
-                                    <i class="fas fa-check me-2"></i>Weka Nenosiri Jipya
+                                <button type="submit" class="btn btn-primary w-100" id="reset-password-submit-btn">
+                                    <i class="fas fa-check me-2"></i>
+                                    <span class="btn-text">Weka Nenosiri Jipya</span>
                                 </button>
                             </form>
                         </div>
@@ -2361,8 +2520,9 @@
                                         <input type="text" class="form-control" id="confirm-new-mobile" placeholder="Rudia nambari ya simu" required>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary w-100">
-                                    <i class="fas fa-check me-2"></i>Weka Nambari Mpya
+                                <button type="submit" class="btn btn-primary w-100" id="reset-mobile-submit-btn">
+                                    <i class="fas fa-check me-2"></i>
+                                    <span class="btn-text">Weka Nambari Mpya</span>
                                 </button>
                             </form>
                         </div>
@@ -2393,8 +2553,9 @@
                                     <input type="password" class="form-control form-control-lg" id="verification-password" placeholder="Ingiza nenosiri lako" required>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary w-100 btn-lg">
-                                <i class="fas fa-check-circle me-2"></i>Thibitisha
+                            <button type="submit" class="btn btn-primary w-100 btn-lg" id="password-verification-submit-btn">
+                                <i class="fas fa-check-circle me-2"></i>
+                                <span class="btn-text">Nimepokea</span>
                             </button>
                         </form>
                     </div>
@@ -2426,8 +2587,9 @@
                                     <textarea class="form-control" id="message-content" rows="4" placeholder="Andika ujumbe wako hapa..." required></textarea>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary w-100 btn-lg">
-                                <i class="fas fa-paper-plane me-2"></i>Tuma Ujumbe
+                            <button type="submit" class="btn btn-primary w-100 btn-lg" id="message-submit-btn">
+                                <i class="fas fa-paper-plane me-2"></i>
+                                <span class="btn-text">Tuma Ujumbe</span>
                             </button>
                         </form>
                     </div>
@@ -2522,8 +2684,9 @@
                                 </div>
                             </div>
                             
-                            <button type="submit" class="btn btn-primary w-100 btn-lg">
-                                <i class="fas fa-paper-plane me-2"></i>Wasilisha Tathmini Yako
+                            <button type="submit" class="btn btn-primary w-100 btn-lg" id="rating-submit-btn">
+                                <i class="fas fa-paper-plane me-2"></i>
+                                <span class="btn-text">Wasilisha Tathmini Yako</span>
                             </button>
                         </form>
                     </div>
@@ -2616,8 +2779,9 @@
                                 </div>
                             </div>
                             
-                            <button type="submit" class="btn btn-primary w-100 btn-lg">
-                                <i class="fas fa-undo me-2"></i>Wasilisha Ombi la Kurudisha
+                            <button type="submit" class="btn btn-primary w-100 btn-lg" id="return-order-submit-btn">
+                                <i class="fas fa-undo me-2"></i>
+                                <span class="btn-text">Wasilisha Ombi la Kurudisha</span>
                             </button>
                         </form>
                     </div>
@@ -2680,8 +2844,9 @@
                                 <strong>Angalishi:</strong> Agizo linaweza kughairiwa tu ikiwa bado halijaanza kusafirishwa.
                             </div>
                             
-                            <button type="submit" class="btn btn-danger w-100 btn-lg">
-                                <i class="fas fa-times me-2"></i>Thibitisha Kughairi Agizo
+                            <button type="submit" class="btn btn-danger w-100 btn-lg" id="cancel-order-submit-btn">
+                                <i class="fas fa-times me-2"></i>
+                                <span class="btn-text">Thibitisha Kughairi Agizo</span>
                             </button>
                         </form>
                     </div>
@@ -2829,7 +2994,6 @@
     const searchInput = document.getElementById('search-input');
     const searchResults = document.getElementById('search-results');
     const confirmOrderBtn = document.getElementById('confirm-order');
-    const confirmOrderText = document.getElementById('confirm-order-text');
     
     // Initialize the application
     document.addEventListener('DOMContentLoaded', function() {
@@ -3296,7 +3460,9 @@
         
         productsToRender.forEach(product => {
             // Check if product has any stock (sum of all sizes)
-            const hasStock = product.total_stock > 0;
+            const totalStock = product.sizes ? 
+                product.sizes.reduce((sum, size) => sum + (size.stock || 0), 0) : 0;
+            const hasStock = totalStock > 0;
             const productCard = document.createElement('div');
             productCard.className = `col-md-6 col-lg-3 mb-4 ${!hasStock ? 'out-of-stock' : ''}`;
             
@@ -3308,10 +3474,10 @@
             let stockBadge = '';
             if (!hasStock) {
                 stockBadge = '<span class="product-availability out-of-stock-badge">Hakuna Akiba</span>';
-            } else if (product.total_stock <= 5) {
-                stockBadge = `<span class="product-availability low-stock">Akiba kidogo (${product.total_stock})</span>`;
+            } else if (totalStock <= 5) {
+                stockBadge = `<span class="product-availability low-stock">Akiba kidogo (${totalStock})</span>`;
             } else {
-                stockBadge = `<span class="product-availability in-stock">Akiba (${product.total_stock})</span>`;
+                stockBadge = `<span class="product-availability in-stock">Akiba (${totalStock})</span>`;
             }
             
             // Get the first image
@@ -3383,18 +3549,57 @@
                         return;
                     }
                     
-                    if (product.total_stock <= 0) {
+                    // Calculate total stock from sizes
+                    const totalStock = product.sizes ? 
+                        product.sizes.reduce((sum, size) => sum + (size.stock || 0), 0) : 0;
+                        
+                    if (totalStock <= 0) {
                         alert('Samahani, bidhaa hii hana akiba kwa sasa.');
                         return;
                     }
                     
-                    // For products without sizes, use default size 'M'
-                    const defaultSize = product.sizes && product.sizes.length > 0 ? 
-                        (product.sizes[0].code || product.sizes[0].size_label || 'M') : 'M';
+                    // Get the first available size
+                    let defaultSize = '';
+                    if (product.sizes && product.sizes.length > 0) {
+                        const availableSize = product.sizes.find(s => (s.stock || 0) > 0);
+                        if (availableSize) {
+                            defaultSize = cleanSizeCode(availableSize.code || availableSize.size_label);
+                        } else {
+                            // If no stock, use first size
+                            defaultSize = cleanSizeCode(product.sizes[0].code || product.sizes[0].size_label);
+                        }
+                    } else {
+                        defaultSize = 'M';
+                    }
+                    
                     addToCart(product, 1, defaultSize);
                 }
             });
         });
+    }
+
+    // Helper function for cleaning size codes
+    function cleanSizeCode(size) {
+        if (!size) return '';
+        
+        // Convert to string and clean
+        const sizeStr = size.toString();
+        
+        // Remove "EU", "eu", extra spaces, and any non-numeric characters except dash
+        let clean = sizeStr
+            .replace(/EU/gi, '')
+            .replace(/saizi/gi, '')
+            .replace(/size/gi, '')
+            .replace(/\s+/g, ' ')
+            .trim();
+        
+        // Extract the main size number (e.g., "39" from "39 10")
+        const match = clean.match(/(\d+)/);
+        if (match) {
+            clean = match[1];
+        }
+        
+        return clean;
     }
 
     // Get product rating
@@ -3461,7 +3666,7 @@
         }
     }
 
-    // Enhanced setupEventListeners function with password authentication
+    // Enhanced setupEventListeners function with loading states
     function setupEventListeners() {
         // Theme toggle
         themeToggle.addEventListener('click', toggleTheme);
@@ -3491,10 +3696,9 @@
             });
         });
 
-        // Back to products - FIXED: Scroll to top when going back to products
+        // Back to products
         document.getElementById('back-to-products').addEventListener('click', function() {
             showSection('home');
-            // Scroll to top of the page
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
@@ -3522,7 +3726,7 @@
             
             // Check if selected size has stock
             if (selectedSizeElement) {
-                const selectedSize = selectedSizeElement.textContent;
+                const selectedSize = selectedSizeElement.querySelector('.size-label').textContent;
                 const sizeStock = getSizeStock(product, selectedSize);
                 
                 if (quantity > sizeStock) {
@@ -3546,7 +3750,7 @@
             const selectedSizeElement = document.querySelector('.size-option.active');
             
             if (product && selectedSizeElement) {
-                const selectedSize = selectedSizeElement.textContent;
+                const selectedSize = selectedSizeElement.querySelector('.size-label').textContent;
                 const sizeStock = getSizeStock(product, selectedSize);
                 
                 if (quantity < sizeStock) {
@@ -3666,14 +3870,21 @@
             forgotPasswordModal.show();
         });
 
-        // Login form
+        // Login form with loading state
         document.getElementById('login-form').addEventListener('submit', async function(e) {
             e.preventDefault();
+            const loginBtn = document.getElementById('login-submit-btn');
+            const originalText = loginBtn.querySelector('.btn-text').textContent;
+            
+            // Set loading state
+            loginBtn.classList.add('btn-loading-state');
+            
             const phone = document.getElementById('login-mobile').value.trim();
             const password = document.getElementById('login-password').value;
             
             if (!phone || !password) {
                 alert('Tafadhali weka nambari ya simu na nenosiri.');
+                loginBtn.classList.remove('btn-loading-state');
                 return;
             }
 
@@ -3716,6 +3927,9 @@
             } catch (error) {
                 console.error('Login error:', error);
                 alert('Hitilafu ya mtandao. Tafadhali jaribu tena.');
+            } finally {
+                // Reset loading state
+                loginBtn.classList.remove('btn-loading-state');
             }
         });
 
@@ -3724,9 +3938,13 @@
             saveRegistrationFormData();
         });
 
-        // Registration form
+        // Registration form with loading state
         document.getElementById('register-form').addEventListener('submit', async function(e) {
             e.preventDefault();
+            const registerBtn = document.getElementById('register-submit-btn');
+            
+            // Set loading state
+            registerBtn.classList.add('btn-loading-state');
             
             const firstName = document.getElementById('reg-first-name').value.trim();
             const lastName = document.getElementById('reg-last-name').value.trim();
@@ -3739,11 +3957,13 @@
             
             if (!firstName || !lastName || !mobile || !password || !confirmPassword || !address || !gender) {
                 alert('Tafadhali jaza sehemu zote zinazohitajika.');
+                registerBtn.classList.remove('btn-loading-state');
                 return;
             }
 
             if (password !== confirmPassword) {
                 alert('Nenosiri halifanani. Tafadhali hakikisha nenosiri ni sawa.');
+                registerBtn.classList.remove('btn-loading-state');
                 return;
             }
 
@@ -3784,18 +4004,26 @@
             } catch (error) {
                 console.error('Registration error:', error);
                 alert('Hitilafu ya mtandao. Tafadhali jaribu tena.');
+            } finally {
+                // Reset loading state
+                registerBtn.classList.remove('btn-loading-state');
             }
         });
 
-        // Forgot password form
+        // Forgot password form with loading state
         document.getElementById('forgot-password-form').addEventListener('submit', async function(e) {
             e.preventDefault();
+            const forgotBtn = document.getElementById('forgot-password-submit-btn');
+            
+            // Set loading state
+            forgotBtn.classList.add('btn-loading-state');
             
             const firstName = document.getElementById('forgot-first-name').value.trim();
             const lastName = document.getElementById('forgot-last-name').value.trim();
             
             if (!firstName || !lastName) {
                 alert('Tafadhali weka jina lako la kwanza na jina la mwisho.');
+                forgotBtn.classList.remove('btn-loading-state');
                 return;
             }
 
@@ -3821,6 +4049,9 @@
             } catch (error) {
                 console.error('Forgot password error:', error);
                 alert('Hitilafu ya mtandao. Tafadhali jaribu tena.');
+            } finally {
+                // Reset loading state
+                forgotBtn.classList.remove('btn-loading-state');
             }
         });
 
@@ -3836,20 +4067,26 @@
             document.getElementById('reset-mobile-form').classList.remove('hidden');
         });
 
-        // New password form
+        // New password form with loading state
         document.getElementById('new-password-form').addEventListener('submit', async function(e) {
             e.preventDefault();
+            const resetBtn = document.getElementById('reset-password-submit-btn');
+            
+            // Set loading state
+            resetBtn.classList.add('btn-loading-state');
             
             const newPassword = document.getElementById('new-password-reset').value;
             const confirmPassword = document.getElementById('confirm-new-password-reset').value;
             
             if (!newPassword || !confirmPassword) {
                 alert('Tafadhali weka nenosiri jipya na urudie.');
+                resetBtn.classList.remove('btn-loading-state');
                 return;
             }
 
             if (newPassword !== confirmPassword) {
                 alert('Nenosiri halifanani. Tafadhali hakikisha nenosiri ni sawa.');
+                resetBtn.classList.remove('btn-loading-state');
                 return;
             }
 
@@ -3886,23 +4123,32 @@
             } catch (error) {
                 console.error('Reset password error:', error);
                 alert('Hitilafu ya mtandao. Tafadhali jaribu tena.');
+            } finally {
+                // Reset loading state
+                resetBtn.classList.remove('btn-loading-state');
             }
         });
 
-        // New mobile form
+        // New mobile form with loading state
         document.getElementById('new-mobile-form').addEventListener('submit', async function(e) {
             e.preventDefault();
+            const mobileBtn = document.getElementById('reset-mobile-submit-btn');
+            
+            // Set loading state
+            mobileBtn.classList.add('btn-loading-state');
             
             const newMobile = document.getElementById('new-mobile').value.trim();
             const confirmMobile = document.getElementById('confirm-new-mobile').value.trim();
             
             if (!newMobile || !confirmMobile) {
                 alert('Tafadhali weka nambari mpya ya simu na urudie.');
+                mobileBtn.classList.remove('btn-loading-state');
                 return;
             }
 
             if (newMobile !== confirmMobile) {
                 alert('Nambari za simu hazifanani. Tafadhali hakikisha nambari ni sawa.');
+                mobileBtn.classList.remove('btn-loading-state');
                 return;
             }
 
@@ -3939,6 +4185,9 @@
             } catch (error) {
                 console.error('Change mobile error:', error);
                 alert('Hitilafu ya mtandao. Tafadhali jaribu tena.');
+            } finally {
+                // Reset loading state
+                mobileBtn.classList.remove('btn-loading-state');
             }
         });
 
@@ -4006,7 +4255,7 @@
             }
         });
 
-        // Enhanced Confirm order with password verification
+        // Enhanced Confirm order with password verification and loading state
         confirmOrderBtn.addEventListener('click', async function(e) {
             e.preventDefault();
             
@@ -4015,12 +4264,16 @@
                 return;
             }
             
+            // Set loading state
+            confirmOrderBtn.classList.add('btn-loading-state');
+            
             // For first order, require password verification
             if (isFirstOrder) {
                 const password = document.getElementById('password-verification').value;
                 
                 if (!password) {
                     alert('Tafadhali ingiza nenosiri lako kuthibitisha agizo lako la kwanza.');
+                    confirmOrderBtn.classList.remove('btn-loading-state');
                     return;
                 }
                 
@@ -4039,25 +4292,27 @@
                     
                     if (!response.ok) {
                         alert(data.message || 'Nenosiri si sahihi. Tafadhali jaribu tena.');
+                        confirmOrderBtn.classList.remove('btn-loading-state');
                         return;
                     }
                 } catch (error) {
                     console.error('Password verification error:', error);
                     alert('Hitilafu ya mtandao. Tafadhali jaribu tena.');
+                    confirmOrderBtn.classList.remove('btn-loading-state');
                     return;
                 }
             }
-            
-            // Show loading state
-            confirmOrderBtn.classList.add('btn-loading', 'animating');
-            confirmOrderText.textContent = 'Inaendesha...';
-            confirmOrderBtn.querySelector('.loading-spinner').style.display = 'inline-block';
             
             try {
                 // Prepare order items with product_id and size_id
                 const orderItems = cart.map(item => {
                     // Find the size_id for the selected size
-                    const size = item.product.sizes?.find(s => s.code === item.size || s.size_label === item.size);
+                    const size = item.product.sizes?.find(s => {
+                        const cleanSizeCodeToFind = cleanSizeCode(item.size);
+                        const sizeCodeToCheck = s.code || s.size_label;
+                        const cleanSizeToCheck = cleanSizeCode(sizeCodeToCheck);
+                        return cleanSizeToCheck === cleanSizeCodeToFind;
+                    });
                     
                     return {
                         product_id: item.product.id,
@@ -4068,6 +4323,7 @@
 
                 if (orderItems.length === 0) {
                     alert('Hitilafu: Hakuna bidhaa zilizochaguliwa kwa saizi sahihi.');
+                    confirmOrderBtn.classList.remove('btn-loading-state');
                     return;
                 }
 
@@ -4121,18 +4377,20 @@
                 console.error('Order error:', error);
                 alert('Hitilafu ya mtandao. Tafadhali jaribu tena.');
             } finally {
-                // Reset button state
+                // Reset button state after delay
                 setTimeout(() => {
-                    confirmOrderBtn.classList.remove('btn-loading', 'animating');
-                    confirmOrderText.textContent = 'Thibitisha Agizo';
-                    confirmOrderBtn.querySelector('.loading-spinner').style.display = 'none';
+                    confirmOrderBtn.classList.remove('btn-loading-state');
                 }, 2000);
             }
         });
 
-        // Profile form
+        // Profile form with loading state
         document.getElementById('profile-form').addEventListener('submit', async function(e) {
             e.preventDefault();
+            const profileBtn = document.getElementById('profile-save-btn');
+            
+            // Set loading state
+            profileBtn.classList.add('btn-loading-state');
             
             const firstName = document.getElementById('first-name').value.trim();
             const lastName = document.getElementById('last-name').value.trim();
@@ -4141,6 +4399,7 @@
             
             if (!firstName || !lastName || !address || !gender) {
                 alert('Tafadhali jaza sehemu zote zinazohitajika.');
+                profileBtn.classList.remove('btn-loading-state');
                 return;
             }
 
@@ -4177,12 +4436,19 @@
             } catch (error) {
                 console.error('Profile update error:', error);
                 alert('Hitilafu ya mtandao. Tafadhali jaribu tena.');
+            } finally {
+                // Reset loading state
+                profileBtn.classList.remove('btn-loading-state');
             }
         });
 
-        // Change password form in profile
+        // Change password form in profile with loading state
         document.getElementById('change-password-form').addEventListener('submit', async function(e) {
             e.preventDefault();
+            const changePassBtn = document.getElementById('change-password-btn');
+            
+            // Set loading state
+            changePassBtn.classList.add('btn-loading-state');
             
             const currentPassword = document.getElementById('current-password').value;
             const newPassword = document.getElementById('new-password').value;
@@ -4190,11 +4456,13 @@
             
             if (!currentPassword || !newPassword || !confirmNewPassword) {
                 alert('Tafadhali jaza sehemu zote.');
+                changePassBtn.classList.remove('btn-loading-state');
                 return;
             }
 
             if (newPassword !== confirmNewPassword) {
                 alert('Nenosiri jipya halifanani. Tafadhali hakikisha nenosiri ni sawa.');
+                changePassBtn.classList.remove('btn-loading-state');
                 return;
             }
 
@@ -4223,6 +4491,9 @@
             } catch (error) {
                 console.error('Change password error:', error);
                 alert('Hitilafu ya mtandao. Tafadhali jaribu tena.');
+            } finally {
+                // Reset loading state
+                changePassBtn.classList.remove('btn-loading-state');
             }
         });
 
@@ -4321,19 +4592,25 @@
             }
         });
 
-        // Customer message form
+        // Customer message form with loading state
         document.getElementById('message-form').addEventListener('submit', async function(e) {
             e.preventDefault();
+            const messageBtn = document.getElementById('message-submit-btn');
+            
+            // Set loading state
+            messageBtn.classList.add('btn-loading-state');
             
             const messageContent = document.getElementById('message-content').value.trim();
             
             if (!messageContent) {
                 alert('Tafadhali andika ujumbe wako.');
+                messageBtn.classList.remove('btn-loading-state');
                 return;
             }
             
             if (!currentUser) {
                 alert('Tafadhali ingia kwenye akaunti yako kwanza.');
+                messageBtn.classList.remove('btn-loading-state');
                 return;
             }
             
@@ -4361,18 +4638,26 @@
             } catch (error) {
                 console.error('Message sending error:', error);
                 alert('Hitilafu ya mtandao. Tafadhali jaribu tena.');
+            } finally {
+                // Reset loading state
+                messageBtn.classList.remove('btn-loading-state');
             }
         });
 
-        // Password verification form for order confirmation
+        // Password verification form for order confirmation with loading state
         document.getElementById('password-verification-form').addEventListener('submit', async function(e) {
             e.preventDefault();
+            const verifyBtn = document.getElementById('password-verification-submit-btn');
+            
+            // Set loading state
+            verifyBtn.classList.add('btn-loading-state');
             
             const password = document.getElementById('verification-password').value;
             const orderId = document.getElementById('verification-order-id').value;
             
             if (!password) {
                 alert('Tafadhali ingiza nenosiri lako.');
+                verifyBtn.classList.remove('btn-loading-state');
                 return;
             }
 
@@ -4407,10 +4692,13 @@
             } catch (error) {
                 console.error('Order confirmation error:', error);
                 alert('Hitilafu ya mtandao. Tafadhali jaribu tena.');
+            } finally {
+                // Reset loading state
+                verifyBtn.classList.remove('btn-loading-state');
             }
         });
 
-        // ---------------------- STAR RATING ----------------------
+        // Enhanced Star Rating System
         const ratingComments = {
             1: "Mbaya sana",
             2: "Mbaya",
@@ -4421,7 +4709,6 @@
 
         // Handle star rating click, hover, and value/comment update
         document.querySelectorAll('.star-rating').forEach(ratingContainer => {
-
             // Click to set rating
             ratingContainer.addEventListener('click', function(e) {
                 if (e.target.classList.contains('star')) {
@@ -4474,9 +4761,13 @@
             });
         });
 
-        // ---------------------- RATING FORM SUBMIT ----------------------
+        // Rating form submit with loading state
         document.getElementById('rating-form').addEventListener('submit', async function(e) {
             e.preventDefault();
+            const ratingBtn = document.getElementById('rating-submit-btn');
+            
+            // Set loading state
+            ratingBtn.classList.add('btn-loading-state');
 
             const orderId = document.getElementById('rating-order-id').value;
             const packageRating = getRatingValue('package-rating');
@@ -4486,6 +4777,7 @@
 
             if (!packageRating || !deliveryRating || !productRating) {
                 alert('Tafadhali tathmini vipengele vyote vitatu.');
+                ratingBtn.classList.remove('btn-loading-state');
                 return;
             }
 
@@ -4526,12 +4818,19 @@
             } catch (error) {
                 console.error('Rating error:', error);
                 alert('Hitilafu ya mtandao. Tafadhali jaribu tena.');
+            } finally {
+                // Reset loading state
+                ratingBtn.classList.remove('btn-loading-state');
             }
         });
 
-        // ---------------------- RETURN ORDER FORM ----------------------
+        // Return order form with loading state
         document.getElementById('return-order-form').addEventListener('submit', async function(e) {
             e.preventDefault();
+            const returnBtn = document.getElementById('return-order-submit-btn');
+            
+            // Set loading state
+            returnBtn.classList.add('btn-loading-state');
 
             const orderId = document.getElementById('return-order-id').value;
             const selectedReason = document.querySelector('input[name="return-reason-type"]:checked');
@@ -4542,10 +4841,12 @@
 
             if (!selectedReason || !reasonDetails) {
                 alert('Tafadhali chagua sababu na uandike maelezo zaidi.');
+                returnBtn.classList.remove('btn-loading-state');
                 return;
             }
             if (!originalPackaging || !tagsAttached || !notUsed) {
                 alert('Bidhaa lazima iwe kwenye kifurushi chake asili, lebo ziwe zimeachwa, na haijatumika.');
+                returnBtn.classList.remove('btn-loading-state');
                 return;
             }
 
@@ -4581,12 +4882,19 @@
             } catch (error) {
                 console.error('Return order error:', error);
                 alert('Hitilafu ya mtandao. Tafadhali jaribu tena.');
+            } finally {
+                // Reset loading state
+                returnBtn.classList.remove('btn-loading-state');
             }
         });
 
-        // ---------------------- CANCEL ORDER FORM ----------------------
+        // Cancel order form with loading state
         document.getElementById('cancel-order-form').addEventListener('submit', async function(e) {
             e.preventDefault();
+            const cancelBtn = document.getElementById('cancel-order-submit-btn');
+            
+            // Set loading state
+            cancelBtn.classList.add('btn-loading-state');
             
             const orderId = document.getElementById('cancel-order-id').value;
             const selectedReason = document.querySelector('input[name="cancel-reason-type"]:checked');
@@ -4594,6 +4902,7 @@
             
             if (!selectedReason || !reasonDetails) {
                 alert('Tafadhali chagua sababu na uandike maelezo zaidi.');
+                cancelBtn.classList.remove('btn-loading-state');
                 return;
             }
 
@@ -4630,6 +4939,9 @@
             } catch (error) {
                 console.error('Cancel order error:', error);
                 alert('Hitilafu ya mtandao. Tafadhali jaribu tena.');
+            } finally {
+                // Reset loading state
+                cancelBtn.classList.remove('btn-loading-state');
             }
         });
 
@@ -4686,9 +4998,14 @@
             return product.total_stock || 0;
         }
         
-        const size = product.sizes.find(s => 
-            s.code === sizeCode || s.size_label === sizeCode || s.size_code === sizeCode
-        );
+        const cleanSizeCodeToFind = cleanSizeCode(sizeCode);
+        
+        const size = product.sizes.find(s => {
+            const sizeCodeToCheck = s.code || s.size_label;
+            const cleanSizeToCheck = cleanSizeCode(sizeCodeToCheck);
+            return cleanSizeToCheck === cleanSizeCodeToFind;
+        });
+        
         return size ? (size.stock || 0) : 0;
     }
 
@@ -4781,7 +5098,7 @@
         }
     }
 
-    // Show specific section - FIXED: Added scroll to top when showing sections
+    // Show specific section
     function showSection(sectionName) {
         homeSection.classList.add('hidden');
         productDetailSection.classList.add('hidden');
@@ -4792,13 +5109,11 @@
         switch(sectionName) {
             case 'home':
                 homeSection.classList.remove('hidden');
-                // Scroll to top when going home
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 break;
             case 'cart':
                 cartSection.classList.remove('hidden');
                 updateCartDisplay();
-                // Scroll to top of cart section
                 setTimeout(() => {
                     cartSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }, 100);
@@ -4811,7 +5126,6 @@
                 }
                 accountSection.classList.remove('hidden');
                 updateOrdersDisplay();
-                // Scroll to top of account section
                 setTimeout(() => {
                     accountSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }, 100);
@@ -4825,7 +5139,6 @@
                 checkoutSection.classList.remove('hidden');
                 updateAddressSelection();
                 updateCheckoutProgress(1);
-                // Scroll to top of checkout section
                 setTimeout(() => {
                     checkoutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }, 100);
@@ -4927,7 +5240,7 @@
         });
     }
 
-    // Show product detail with enhanced carousel - FIXED: Scroll to top when showing product detail
+    // Enhanced Show product detail with beautiful size selector and proper description display
     function showProductDetail(productId) {
         const product = products.find(p => p.id === productId);
         if (!product) {
@@ -5005,7 +5318,19 @@
         
         // Update product info
         document.getElementById('product-name').textContent = product.name;
-        document.getElementById('product-description').textContent = product.description || 'Hakuna maelezo ya ziada.';
+        
+        // Update product description - show properly formatted text
+        const descriptionElement = document.getElementById('product-description');
+        const placeholderElement = document.getElementById('description-placeholder');
+        
+        if (product.description && product.description.trim().length > 0) {
+            descriptionElement.textContent = product.description;
+            descriptionElement.classList.remove('hidden');
+            placeholderElement.classList.add('hidden');
+        } else {
+            descriptionElement.classList.add('hidden');
+            placeholderElement.classList.remove('hidden');
+        }
         
         // Update product rating display
         const productRating = getProductRating(product.id);
@@ -5027,29 +5352,35 @@
         }
         
         // Update stock info and badge
-        document.getElementById('stock-info').textContent = `(${product.total_stock} vitu vilivyobaki)`;
-        
+        const totalStock = product.sizes ? 
+            product.sizes.reduce((sum, size) => sum + (size.stock || 0), 0) : 0;
+            
+        document.getElementById('stock-info').textContent = `(${totalStock} vitu vilivyobaki)`;
+
         let stockBadge = '';
-        if (product.total_stock <= 0) {
+        if (totalStock <= 0) {
             stockBadge = '<span class="product-availability out-of-stock-badge">Hakuna Akiba</span>';
-        } else if (product.total_stock <= 5) {
-            stockBadge = `<span class="product-availability low-stock">Akiba kidogo (${product.total_stock})</span>`;
+        } else if (totalStock <= 5) {
+            stockBadge = `<span class="product-availability low-stock">Akiba kidogo (${totalStock})</span>`;
         } else {
-            stockBadge = `<span class="product-availability in-stock">Akiba (${product.total_stock})</span>`;
+            stockBadge = `<span class="product-availability in-stock">Akiba (${totalStock})</span>`;
         }
         document.getElementById('stock-badge').innerHTML = stockBadge;
         
-        // Update size options
+        // Update size options with enhanced design
         const sizeOptions = document.getElementById('size-options');
         sizeOptions.innerHTML = '';
-        
+
         // Get available sizes from product.sizes array
         const sizes = product.sizes || [];
         if (sizes.length === 0) {
             // Default size if no sizes available
             const sizeOption = document.createElement('div');
             sizeOption.className = 'size-option active';
-            sizeOption.textContent = 'M';
+            sizeOption.innerHTML = `
+                <span class="size-label">M</span>
+                <span class="size-stock">Akiba</span>
+            `;
             sizeOption.addEventListener('click', function() {
                 document.querySelectorAll('.size-option').forEach(opt => opt.classList.remove('active'));
                 this.classList.add('active');
@@ -5058,18 +5389,27 @@
         } else {
             sizes.forEach((size, index) => {
                 const sizeOption = document.createElement('div');
-                sizeOption.className = `size-option ${index === 0 ? 'active' : ''} ${size.stock <= 0 ? 'disabled' : ''}`;
-                sizeOption.textContent = size.code || size.size_label;
-                sizeOption.title = `Akiba: ${size.stock}`;
+                const sizeCode = size.code || size.size_label;
+                const sizeStock = size.stock || 0;
                 
-                if (size.stock > 0) {
+                // Clean the size code for display
+                const cleanSizeCodeDisplay = cleanSizeCode(sizeCode);
+                
+                sizeOption.className = `size-option ${index === 0 ? 'active' : ''} ${sizeStock <= 0 ? 'disabled' : ''}`;
+                sizeOption.innerHTML = `
+                    <span class="size-label">${cleanSizeCodeDisplay}</span>
+                    <span class="size-stock">${sizeStock}</span>
+                `;
+                
+                if (sizeStock > 0) {
                     sizeOption.addEventListener('click', function() {
                         document.querySelectorAll('.size-option').forEach(opt => opt.classList.remove('active'));
                         this.classList.add('active');
+                        
+                        // Reset quantity to 1 when changing size
+                        document.getElementById('quantity').textContent = '1';
                     });
                 } else {
-                    sizeOption.style.opacity = '0.5';
-                    sizeOption.style.cursor = 'not-allowed';
                     sizeOption.title = 'Hakuna akiba kwa saizi hii';
                 }
                 sizeOptions.appendChild(sizeOption);
@@ -5079,11 +5419,23 @@
         // Update product details tab
         const detailsTab = document.getElementById('details');
         detailsTab.innerHTML = `
-            <p><strong>Chapa:</strong> ${product.company || 'Hakuna chapa'}</p>
-            <p><strong>Rangi:</strong> ${product.color || 'Hakuna rangi maalum'}</p>
-            <p><strong>Aina:</strong> ${product.type || 'Hakuna aina maalum'}</p>
-            <p><strong>Ukubwa:</strong> ${sizes.map(s => `${s.code || s.size_label} (${s.stock})`).join(', ')}</p>
-            <p><strong>Kiwango cha Akiba:</strong> ${product.total_stock || 0} vitu vilivyobaki</p>
+            <h5>Maelezo ya Ziada</h5>
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Chapa:</strong> ${product.company || 'Hakuna chapa'}</p>
+                    <p><strong>Rangi:</strong> ${product.color || 'Hakuna rangi maalum'}</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Aina:</strong> ${product.type || 'Hakuna aina maalum'}</p>
+                    <p><strong>Ukubwa:</strong> ${sizes.map(s => `${cleanSizeCode(s.code || s.size_label)}`).join(', ')}</p>
+                </div>
+            </div>
+            ${product.description && product.description.trim().length > 0 ? `
+                <div class="mt-3">
+                    <h6>Maelezo Kamili:</h6>
+                    <p class="text-muted">${product.description}</p>
+                </div>
+            ` : ''}
         `;
         
         // Update reviews tab
@@ -5096,7 +5448,10 @@
             </div>
             ${productRating.total_ratings > 0 ? 
                 `<p>Wateja wamepata bidhaa hii kuwa ya ubora mzuri.</p>` : 
-                `<p>Bado hakuna tathmini za bidhaa hii. Kuwa wa kwanza kutathmini!</p>`
+                `<div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Bado hakuna tathmini za bidhaa hii. Kuwa wa kwanza kutathmini!
+                </div>`
             }
         `;
         
@@ -5125,37 +5480,40 @@
 
     // Add product to cart
     function addToCart(product, quantity, size) {
+        // Clean the size code to remove any extra text
+        const cleanSize = cleanSizeCode(size);
+        
         // Check if size has stock
         const sizeStock = getSizeStock(product, size);
         if (sizeStock <= 0) {
-            alert(`Samahani, saizi ${size} hana akiba.`);
+            alert(`Samahani, saizi ${cleanSize} hana akiba.`);
             return;
         }
         
         const existingItem = cart.find(item => 
-            item.product.id === product.id && item.size === size
+            item.product.id === product.id && cleanSizeCode(item.size) === cleanSize
         );
         
         if (existingItem) {
             if (existingItem.quantity + quantity > sizeStock) {
-                alert(`Samahani, kuna akiba ya ${sizeStock} tu kwa saizi ${size}. Huwezi kuongeza zaidi.`);
+                alert(`Samahani, kuna akiba ya ${sizeStock} tu kwa saizi ${cleanSize}. Huwezi kuongeza zaidi.`);
                 return;
             }
             existingItem.quantity += quantity;
         } else {
             if (quantity > sizeStock) {
-                alert(`Samahani, kuna akiba ya ${sizeStock} tu kwa saizi ${size}.`);
+                alert(`Samahani, kuna akiba ya ${sizeStock} tu kwa saizi ${cleanSize}.`);
                 return;
             }
             cart.push({
                 product,
                 quantity,
-                size
+                size: cleanSize
             });
         }
         
         updateCartDisplay();
-        alert(`${product.name} (Saizi: ${size}) imeongezwa kwenye karatasi!`);
+        alert(`${product.name} (Saizi: ${cleanSize}) imeongezwa kwenye karatasi!`);
     }
 
     // Update cart display
@@ -5325,7 +5683,6 @@
             return;
         }
 
-        
         // Sort orders by date (newest first)
         orders.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
         
@@ -5380,7 +5737,7 @@
                         }
                         ${order.status === 'Inasafirishwa' ? 
                             `<button class="btn btn-sm btn-outline-success confirm-order-btn" data-order-id="${order.id}">
-                                <i class="fas fa-check"></i> Thibitisha
+                                <i class="fas fa-check"></i> Nimepokea
                             </button>` : 
                             ''
                         }
@@ -5583,7 +5940,8 @@
                     { id: 1, code: "M", size_label: "Medium", stock: 5 },
                     { id: 2, code: "L", size_label: "Large", stock: 5 },
                     { id: 3, code: "XL", size_label: "Extra Large", stock: 5 }
-                ]
+                ],
+                description: "Viatu vya kukimbia vya Nike Air Max vilivyoundwa kwa ustadi. Vinatosha hewa, vinavyobana vizuri na vinakupa faraja siku nzima. Vinaunganishwa na teknolojia ya Air Max inayopunguza mshtuko wakati wa mkimbio."
             },
             {
                 id: 2,
@@ -5600,7 +5958,8 @@
                     { id: 4, code: "S", size_label: "Small", stock: 3 },
                     { id: 5, code: "M", size_label: "Medium", stock: 3 },
                     { id: 6, code: "L", size_label: "Large", stock: 2 }
-                ]
+                ],
+                description: "Viatu vya soka vya Adidas Predator vilivyoundwa kwa wachezaji wa kitaalamu. Vina ukombozi bora wa mpira, udhibiti, na usahihi wa kupiga pasi. Vimeundwa kwa ngozi ya ubora wa juu."
             },
             {
                 id: 3,
@@ -5616,7 +5975,8 @@
                 sizes: [
                     { id: 7, code: "L", size_label: "Large", stock: 3 },
                     { id: 8, code: "XL", size_label: "Extra Large", stock: 2 }
-                ]
+                ],
+                description: "Viatu vya mpira wa kikapu vya Jordan vilivyoundwa kwa usanifu wa kisasa. Vina msaada bora wa tumbo la mguu, udhibiti wa mwendo, na faraja wakati wa kuruka na kukanyaga. Vimeunganishwa na teknolojia ya Air cushioning."
             }
         ];
     }

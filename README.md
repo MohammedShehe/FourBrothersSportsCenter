@@ -1,6 +1,6 @@
 # Four Brothers Sports Center - E-Commerce Platform
 
-A complete full-stack e-commerce platform for a Tanzanian sports shoe store, featuring customer and admin interfaces with **password-based authentication**, real-time order tracking, and comprehensive product management.
+A complete full-stack e-commerce platform for a Tanzanian sports shoe store, featuring customer and admin interfaces with **password-based authentication**, real-time order tracking, and comprehensive product management with **size-based inventory**.
 
 ## 🚀 Live Applications
 
@@ -16,7 +16,8 @@ A complete full-stack e-commerce platform for a Tanzanian sports shoe store, fea
 
 ### 🛍️ Customer Features
 - **🔐 Password Authentication** - Secure registration and login with password verification
-- **🛒 Smart Shopping Cart** - Real-time quantity management with 10% discount for 3+ items
+- **🛒 Smart Shopping Cart** - Real-time quantity and size management
+- **📏 Size Selection** - Choose from available sizes with stock tracking
 - **💰 Cash on Delivery** - COD payment system optimized for Tanzania
 - **📊 Order Tracking** - Real-time status updates (Imewekwa → Imepokelewa)
 - **⭐ Product Ratings** - 5-star rating system with detailed feedback
@@ -24,13 +25,13 @@ A complete full-stack e-commerce platform for a Tanzanian sports shoe store, fea
 - **📢 Live Announcements** - In-app notifications from admin
 - **🌓 Dark/Light Mode** - Theme toggle for better UX
 - **🔍 Product Search** - Instant search with filtering
-- **🔐 Password Verification** - Required for first order confirmation
+- **🔐 Password Verification** - Required for order confirmation
 - **🔄 Password Reset** - Secure password and mobile number recovery
 
 ### 👨‍💼 Admin Features
 - **🔐 Secure Admin Login** - Multi-admin system with password authentication
 - **📈 Analytics Dashboard** - Sales charts, revenue tracking, customer insights
-- **📦 Product Management** - Full CRUD with Cloudinary image upload
+- **📦 Product Management** - Full CRUD with Cloudinary image upload and size inventory
 - **👥 Customer Management** - View, add, and manage customers
 - **📊 Order Management** - Update statuses, track shipments
 - **📢 Ad Management** - Upload promotional banners with clickable links
@@ -82,7 +83,7 @@ A complete full-stack e-commerce platform for a Tanzanian sports shoe store, fea
 ┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
 │                 │     │                 │     │                 │
 │    Customer     │     │  Cloudinary     │     │     Nodemailer  │
-│     Browser     │────▶│  (Images)       │     │     (Email)     │
+│     Browser     │────▶│  (Images)       │────▶│     (Email)     │
 │                 │     │                 │     │                 │
 └─────────────────┘     └─────────────────┘     └─────────────────┘
 ```
@@ -125,7 +126,236 @@ FourBrothersSportsCenter-Backend/
 ├── package.json                  # Dependencies
 ├── server.js                     # Express server
 ├── four_brothers.sql             # MySQL schema (for reference)
-└── railway_schema.sql           # PostgreSQL schema for production
+```
+
+## 🗄️ Database Schema
+
+### Core Tables Structure (Based on Actual Database Dump)
+
+```sql
+-- ==================== USERS (ADMINS) ====================
+CREATE TABLE `users` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(50) NOT NULL,
+  `last_name` varchar(50) NOT NULL,
+  `mobile` varchar(20) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `is_admin` tinyint(1) DEFAULT '0',
+  `can_manage_admins` tinyint(1) DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `mobile` (`mobile`)
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ==================== CUSTOMERS ====================
+CREATE TABLE `customers` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(100) NOT NULL,
+  `last_name` varchar(100) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `reset_token` varchar(100) DEFAULT NULL,
+  `reset_token_expires` datetime DEFAULT NULL,
+  `email` varchar(150) DEFAULT NULL,
+  `gender` enum('mwanaume','mwanamke','nyengine') NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `address` text,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `phone` (`phone`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ==================== PRODUCTS ====================
+CREATE TABLE `products` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `company` varchar(100) NOT NULL,
+  `color` varchar(50) DEFAULT NULL,
+  `discount_percent` int DEFAULT '0',
+  `type` enum('Njumu','Trainer','Njumu na Trainer') NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `description` text,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ==================== PRODUCT SIZES ====================
+CREATE TABLE `product_sizes` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `product_id` int NOT NULL,
+  `size_code` varchar(10) NOT NULL,
+  `size_label` varchar(50) NOT NULL,
+  `stock` int DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_product_size` (`product_id`,`size_code`),
+  CONSTRAINT `product_sizes_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ==================== PRODUCT IMAGES ====================
+CREATE TABLE `product_images` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `product_id` int NOT NULL,
+  `image_url` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ==================== ORDERS ====================
+CREATE TABLE `orders` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `customer_id` int NOT NULL,
+  `total_price` decimal(12,2) NOT NULL,
+  `status` enum('Imewekwa','Inasafirishwa','Imepokelewa','Imepokelewa_PENDING','Ghairishwa','Kurudishwa') NOT NULL DEFAULT 'Imewekwa',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `fk_orders_customer` (`customer_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ==================== ORDER ITEMS (WITH SIZES) ====================
+CREATE TABLE `order_items` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `order_id` int NOT NULL,
+  `product_id` int NOT NULL,
+  `size_id` int DEFAULT NULL,
+  `quantity` int NOT NULL DEFAULT '1',
+  `unit_price` decimal(12,2) NOT NULL,
+  `line_total` decimal(12,2) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_order_items_order` (`order_id`),
+  KEY `fk_order_items_product` (`product_id`),
+  CONSTRAINT `fk_oi_order` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ==================== ORDER RATINGS ====================
+CREATE TABLE `order_ratings` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `order_id` int NOT NULL,
+  `customer_id` int NOT NULL,
+  `package_rating` tinyint NOT NULL,
+  `delivery_rating` tinyint NOT NULL,
+  `product_rating` tinyint NOT NULL,
+  `overall_comment` text,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_order_customer` (`order_id`,`customer_id`),
+  UNIQUE KEY `unique_order_rating` (`order_id`,`customer_id`),
+  KEY `customer_id` (`customer_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ==================== ADS ====================
+CREATE TABLE `ads` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `image_url` varchar(255) NOT NULL,
+  `link` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ==================== ADMIN NOTIFICATIONS ====================
+CREATE TABLE `admin_notifications` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `content` text NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `type` enum('email','announcement') NOT NULL DEFAULT 'announcement',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ==================== CUSTOMER NOTIFICATIONS ====================
+CREATE TABLE `customer_notifications` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `customer_id` int NOT NULL,
+  `message` text NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `customer_id` (`customer_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ==================== ORDER NOTIFICATIONS ====================
+CREATE TABLE `order_notifications` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `order_id` int NOT NULL,
+  `admin_viewed` tinyint(1) DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `order_id` (`order_id`),
+  CONSTRAINT `order_notifications_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ==================== MESSAGES ====================
+CREATE TABLE `messages` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `content` text NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ==================== CUSTOMER NOTIFICATION LOGS ====================
+CREATE TABLE `customer_notification_logs` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `customer_notification_id` int NOT NULL,
+  `admin_viewed` tinyint(1) DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `customer_notification_id` (`customer_notification_id`),
+  CONSTRAINT `customer_notification_logs_ibfk_1` FOREIGN KEY (`customer_notification_id`) REFERENCES `customer_notifications` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+```
+
+## 🔄 Relationships Diagram
+
+```
+users (admins)
+    ↓
+    | (no direct foreign key to customers/orders)
+    |
+customers
+    ↓ (1:m)
+orders
+    ↓ (1:m)
+order_items
+    ├───→ products
+    └───→ product_sizes (via size_id)
+            ↑
+            | (belongs to)
+        product_sizes
+            ↑ (1:m)
+        products
+            ↓ (1:m)
+        product_images
+            └───→ product_sizes
+```
+
+## 📊 Sample Data Structure
+
+### Products with Sizes (Example from Database)
+```sql
+-- Product: Nike 2 (ID: 32)
+INSERT INTO products (name, company, color, type, price) 
+VALUES ('Nike 2', 'Nike', 'Nyeupe', 'Trainer', 65000.00);
+
+-- Product Sizes for Nike 2
+INSERT INTO product_sizes (product_id, size_code, size_label, stock) VALUES
+(32, '40', 'EU 40', 5),
+(32, '42', 'EU 42', 3);
+
+-- Product Images for Nike 2
+INSERT INTO product_images (product_id, image_url) VALUES
+(32, 'https://res.cloudinary.com/dmluieytq/image/upload/v1764871340/products/ubmlamsiwfhfjghkdfyf.jpg');
+```
+
+### Orders with Size Selection (Example)
+```sql
+-- Order with multiple items and sizes
+INSERT INTO orders (customer_id, total_price, status) 
+VALUES (17, 553500.00, 'Imepokelewa');
+
+-- Order Items with specific sizes
+INSERT INTO order_items (order_id, product_id, size_id, quantity, unit_price, line_total) VALUES
+(16, 32, 21, 7, 60000.00, 420000.00),  -- size_id 21 = EU 40
+(16, 33, 25, 3, 65000.00, 195000.00);  -- size_id 25 = EU 40 (from product 33)
 ```
 
 ## 🚀 Quick Start
@@ -134,12 +364,13 @@ FourBrothersSportsCenter-Backend/
 1. Visit **https://fourbrothers.online**
 2. Register with your phone number and password
 3. Login with phone and password
-4. Start shopping!
+4. Browse products, select sizes, add to cart
+5. Checkout and track orders
 
 ### For Admins
 1. Visit **https://fourbrothers.online/admin.html**
 2. Login with phone number and password
-3. Access dashboard
+3. Access dashboard, manage products, track orders
 
 ## 💻 Local Development Setup
 
@@ -171,7 +402,7 @@ npm install
 ### Step 3: Database Setup
 **Option A: Local MySQL (Development)**
 ```bash
-# Import the schema
+# Import the schema using the provided SQL dump
 mysql -u root -p < four_brothers.sql
 ```
 
@@ -209,7 +440,7 @@ CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 EMAIL_USER=your_email@gmail.com
 EMAIL_PASS=your_app_specific_password
 
-# Admin Default Credentials (first admin)
+# Admin Default Credentials
 DEFAULT_ADMIN_MOBILE=+255777730606
 DEFAULT_ADMIN_PASSWORD=admin123
 ```
@@ -217,12 +448,13 @@ DEFAULT_ADMIN_PASSWORD=admin123
 ### Step 5: Initialize Admin User
 After setting up the database, create the initial admin user:
 
-```bash
-# The first admin (ID: 1) will be created with can_manage_admins=1
-# You can also insert manually using SQL:
+```sql
+-- Insert initial admin (ID: 1 with can_manage_admins=1)
 INSERT INTO users (first_name, last_name, mobile, password, is_admin, can_manage_admins) 
-VALUES ('Mohammed', 'Shehe', '+255777730606', '$2b$10$YourHashedPassword', 1, 1);
+VALUES ('Mohammed', 'Shehe', '+255777730606', '$2b$10$jJTrGY8T0gXwUTq4oQasCuBNz4eZb4Fl.PXO819ssh0RjgGZ/Ha8S', 1, 1);
 ```
+
+**Note:** The password hash shown is for `admin123`. You can generate your own using bcrypt.
 
 ### Step 6: Frontend Configuration
 Update the API URL in the frontend files to point to your local backend:
@@ -253,77 +485,6 @@ Now access:
 - **Admin Panel:** http://localhost:8000/admin.html
 - **Backend API:** http://localhost:5000/api
 
-## 🗄️ Database Schema
-
-### Core Tables Structure
-```sql
--- Customers table (with password authentication)
-CREATE TABLE customers (
-    id SERIAL PRIMARY KEY,
-    first_name VARCHAR(100) NOT NULL,
-    last_name VARCHAR(100) NOT NULL,
-    phone VARCHAR(20) UNIQUE NOT NULL,
-    email VARCHAR(150),
-    gender VARCHAR(20),
-    address TEXT,
-    password VARCHAR(255) NOT NULL,
-    reset_token VARCHAR(100),
-    reset_token_expires TIMESTAMP,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- Users table (for admins)
-CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
-    mobile VARCHAR(20) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    is_admin BOOLEAN DEFAULT FALSE,
-    can_manage_admins BOOLEAN DEFAULT FALSE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- Products table
-CREATE TABLE products (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    company VARCHAR(100) NOT NULL,
-    color VARCHAR(50),
-    discount_percent INTEGER DEFAULT 0,
-    type VARCHAR(50),
-    size_us VARCHAR(10),
-    stock INTEGER DEFAULT 0,
-    price DECIMAL(10,2) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- Orders table (NO OTP column - using password verification)
-CREATE TABLE orders (
-    id SERIAL PRIMARY KEY,
-    customer_id INTEGER REFERENCES customers(id),
-    total_price DECIMAL(12,2) NOT NULL,
-    status VARCHAR(50) DEFAULT 'Imewekwa',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- Additional tables:
--- product_images, order_items, order_ratings, ads, admin_notifications, customer_notifications
-```
-
-### Order Status Flow
-```
-Imewekwa (Order Placed) 
-    ↓
-Inasafirishwa (Shipping in Progress) 
-    ↓
-Imepokelewa (Order Received & Confirmed via Password) 
-    ↓
-Ghairishwa (Cancelled) / Kurudishwa (Returned)
-```
-
-**Important Change:** The `Imepokelewa_PENDING` status has been removed. Customers now verify order receipt by entering their password instead of an OTP.
-
 ## 📚 API Documentation
 
 ### Base URL: `https://api.fourbrothers.online/api`
@@ -335,18 +496,10 @@ Ghairishwa (Cancelled) / Kurudishwa (Returned)
 | POST | `/register` | Register new customer with password | No |
 | POST | `/login` | Login with phone and password | No |
 | POST | `/refresh-token` | Refresh access token with refresh token | No |
-| POST | `/forgot-password` | Request password reset via name verification | No |
-| POST | `/reset-password` | Reset password with reset token | No |
-| POST | `/change-mobile` | Change phone number via name verification | No |
-| GET | `/me` | Get customer profile | Yes |
-| PUT | `/me/update` | Update customer profile | Yes |
-| POST | `/me/change-email` | Change email (requires current password) | Yes |
-| POST | `/me/change-phone` | Change phone (requires current password) | Yes |
-| POST | `/me/change-password` | Change password (requires current password) | Yes |
-| GET | `/products` | Get all products | No |
-| GET | `/products/:id` | Get specific product | No |
-| POST | `/orders` | Place new order | Yes |
-| GET | `/orders` | Get customer's orders | Yes |
+| GET | `/products` | Get all products with sizes and images | No |
+| GET | `/products/:id` | Get specific product with sizes and images | No |
+| POST | `/orders` | Place new order (with size selection) | Yes |
+| GET | `/orders` | Get customer's orders with items and sizes | Yes |
 | POST | `/orders/:id/cancel` | Cancel order with reason | Yes |
 | POST | `/orders/:id/return` | Request return (within 3 days) | Yes |
 | POST | `/orders/:id/rate` | Rate completed order | Yes |
@@ -362,30 +515,58 @@ Ghairishwa (Cancelled) / Kurudishwa (Returned)
 | Method | Endpoint | Description | Auth Required |
 |--------|----------|-------------|---------------|
 | POST | `/login` | Admin login with phone and password | No |
-| POST | `/forgot-password` | Request admin password reset | No |
-| POST | `/reset-password` | Reset admin password | No |
-| POST | `/change-mobile` | Change admin phone number | No |
 | GET | `/dashboard/stats` | Dashboard statistics | Yes |
 | GET | `/products` | Get all products | Yes |
-| POST | `/products` | Add new product with images | Yes |
+| POST | `/products` | Add new product with images and sizes | Yes |
 | PUT | `/products/:id` | Update product | Yes |
 | DELETE | `/products/:id` | Delete product | Yes |
+| POST | `/products/:id/sizes` | Add/update product sizes | Yes |
 | GET | `/customers` | Get all customers | Yes |
-| POST | `/customers` | Add customer | Yes |
-| PUT | `/customers/:id` | Update customer | Yes |
-| DELETE | `/customers/:id` | Delete customer | Yes |
+| GET | `/orders` | Get all orders | Yes |
+| PUT | `/orders/:order_id/status` | Update order status | Yes |
 | GET | `/ads` | Get all ads | Yes |
 | POST | `/ads` | Upload ad banner | Yes |
 | DELETE | `/ads/:id` | Delete ad | Yes |
-| GET | `/orders` | Get all orders | Yes |
-| PUT | `/orders/:order_id/status` | Update order status | Yes |
-| GET | `/notifications/customer` | View customer messages | Yes |
-| POST | `/notifications/send` | Send announcements via email | Yes |
-| POST | `/messages` | Post in-app announcements | Yes |
 | GET | `/admins` | Get all admins (main admin only) | Yes |
 | POST | `/admins` | Add new admin (main admin only) | Yes |
 | PUT | `/admins/:id` | Update admin (main admin only) | Yes |
 | DELETE | `/admins/:id` | Delete admin (main admin only) | Yes |
+
+## 🔍 Key Features Explained
+
+### Size-Based Inventory System
+- Each product can have multiple sizes (EU 40, EU 42, etc.)
+- Each size has its own stock count
+- When customers order, they select specific sizes
+- Stock is decremented per size when orders are placed
+- Admin can manage stock per size for each product
+
+### Order Status Flow with Password Verification
+```
+Imewekwa (Order Placed) 
+    ↓
+Inasafirishwa (Shipping in Progress) 
+    ↓
+Imepokelewa_PENDING (Delivered, awaiting customer confirmation)
+    ↓ (Customer enters password)
+Imepokelewa (Order Received & Confirmed) 
+    ↓
+Ghairishwa (Cancelled) / Kurudishwa (Returned)
+```
+
+**Important:** Customers confirm order receipt by entering their password, providing an extra security layer.
+
+### Rating System
+Customers can rate three aspects after receiving their order:
+1. **Package Rating** - Quality of packaging
+2. **Delivery Rating** - Delivery experience
+3. **Product Rating** - Product quality
+4. **Overall Comment** - General feedback
+
+### Product Types
+- **Njumu** - Formal/dress shoes
+- **Trainer** - Sports/sneakers
+- **Njumu na Trainer** - Both types available
 
 ## 🚀 Deployment Guide
 
@@ -410,7 +591,7 @@ Ghairishwa (Cancelled) / Kurudishwa (Returned)
 2. **Create new project**
 3. **Add PostgreSQL database**
 4. **Get connection string** from Overview tab
-5. **Initialize database** using the provided SQL schema
+5. **Initialize database** using the provided SQL dump
 6. **Update backend** environment variables with Railway connection details
 
 ### 3. Frontend Deployment (GitHub Pages)
@@ -428,236 +609,36 @@ Ghairishwa (Cancelled) / Kurudishwa (Returned)
    - **Folder:** `/` (root directory)
 5. **Save** - Your site will be available at `https://[username].github.io/FourBrothersSportsCenter/`
 
-### 4. Service Configuration
+### 4. Custom Domain Setup (Optional)
 
-#### Cloudinary Setup
-1. **Create account at [cloudinary.com](https://cloudinary.com)**
-2. **Get credentials** from Dashboard
-3. **Add to backend environment variables:**
-   - `CLOUDINARY_CLOUD_NAME`
-   - `CLOUDINARY_API_KEY`
-   - `CLOUDINARY_API_SECRET`
-
-#### Gmail Setup (for email notifications)
-1. **Use Gmail account**
-2. **Enable 2-factor authentication**
-3. **Generate app-specific password**
-4. **Add to backend environment variables:**
-   - `EMAIL_USER` (your Gmail address)
-   - `EMAIL_PASS` (app-specific password)
-
-### 5. Final Configuration
-
-1. **Configure CORS** in backend to allow your frontend domain:
-```javascript
-// In server.js
-app.use(cors({
-  origin: [
-    'https://your-username.github.io',
-    'https://fourbrothers.online' // Your custom domain if applicable
-  ],
-  credentials: true
-}));
-```
-
-2. **Custom Domain (Optional):**
-   - Purchase domain from registrar (e.g., Namecheap, GoDaddy)
-   - Add CNAME record pointing to `your-username.github.io`
-   - Configure in GitHub Pages settings
-
-3. **Test all connections:**
-   - Test customer registration and login
-   - Test admin login
-   - Test image upload
-   - Test order placement
-
-## 📱 Usage Guide
-
-### For Store Owners (Admin)
-
-1. **Access Admin Panel**
-   - Visit: `https://fourbrothers.online/admin.html`
-   - Login with registered admin phone and password
-
-2. **Main Admin vs Regular Admin**
-   - **Main Admin (ID: 1):** Can manage other admins (add/edit/delete)
-   - **Regular Admin:** Can manage products, customers, orders, but not other admins
-
-3. **Password Recovery Options**
-   - Forgot password: Enter first and last name → Get reset options
-   - Reset password or change phone number
-
-4. **Manage Products**
-   - Add new sports shoes with up to 5 images
-   - Set prices, sizes, stock levels
-   - Apply discounts
-   - Categorize by type (Njumu, Trainer, Njumu na Trainer)
-
-5. **Track Orders**
-   - View all customer orders
-   - Update order status (except "Imepokelewa" which requires customer password)
-   - Monitor order progress
-
-6. **Customer Management**
-   - View registered customers
-   - Add new customers manually
-   - Send announcements via email or in-app messages
-
-7. **Analytics & Dashboard**
-   - Monitor sales revenue (current year)
-   - Track total customers and products
-   - View monthly income charts
-
-### For Customers
-
-1. **Account Creation**
-   - Register with phone number and password
-   - Provide name, address, gender
-   - Email optional
-
-2. **Password Security Features**
-   - First order requires password verification for security
-   - Can change password, email, or phone (requires current password)
-   - Password reset via name verification
-
-3. **Shopping Experience**
-   - Browse products with images
-   - Filter by type, brand, color
-   - View stock availability
-   - See product ratings
-
-4. **Order Process**
-   - Add to cart, select quantity and size
-   - 10% discount automatically applied for 3+ items
-   - Checkout with delivery address
-   - First order: Password verification required
-   - COD payment upon delivery
-
-5. **Order Management**
-   - View order history
-   - Cancel orders (status: "Imewekwa" only)
-   - Return orders within 3 days of receipt
-   - Rate products after receiving
-
-6. **Communication**
-   - View announcements from store
-   - Send messages to admin via app
-   - Receive order updates
-
-### Order Status Meanings
-
-| Status | Meaning | Customer Action Required |
-|--------|---------|--------------------------|
-| **Imewekwa** | Order placed | None - waiting for processing |
-| **Inasafirishwa** | Order shipped | Prepare for delivery |
-| **Imepokelewa** | Order received | Enter password to confirm receipt |
-| **Ghairishwa** | Order cancelled | None |
-| **Kurudishwa** | Product returned | None |
-
-**Important:** Customers confirm order receipt by entering their password, not an OTP.
-
-## 🔍 Troubleshooting
-
-### Common Issues & Solutions
-
-#### 1. Login Issues
-**Symptoms:** Cannot login with correct credentials
-**Solutions:**
-- Verify password is correct
-- Check if account exists (customer or admin)
-- Try password reset if forgotten
-- Clear browser cache and cookies
-
-#### 2. Database Connection Issues
-**Symptoms:** "Cannot connect to database" errors
-**Solutions:**
-- Verify database credentials in `.env`
-- Check if Railway PostgreSQL instance is running
-- Ensure database tables are initialized
-- Test connection locally before deploying
-
-#### 3. Image Upload Failing
-**Symptoms:** Product images not uploading or displaying
-**Solutions:**
-- Verify Cloudinary credentials are correct
-- Check file size (max 5MB per image)
-- Ensure correct image formats (jpg, png, jpeg)
-- Test Cloudinary upload in development first
-
-#### 4. CORS Errors in Browser Console
-**Symptoms:** Frontend cannot connect to backend API
-**Solutions:**
-- Ensure CORS is configured in backend to allow frontend domain
-- Update `API_BASE_URL` in frontend to correct backend URL
-- Check if backend is running and accessible
-- Verify no typos in API endpoint URLs
-
-#### 5. Email Not Sending
-**Symptoms:** Admin announcements not reaching customers
-**Solutions:**
-- Verify Gmail credentials are correct
-- Ensure 2FA is enabled and app-specific password is used
-- Check if customer has email address in their profile
-- Test email functionality in development first
-
-### Development Debugging Tips
-
-1. **Check Server Logs:**
-```bash
-# For Render backend
-# View logs in Render dashboard
-
-# For local development
-cd FourBrothersSportsCenter-Backend
-npm run dev
-# Check console output for errors
-```
-
-2. **Test API Endpoints:**
-```bash
-# Using curl to test endpoints
-curl -X GET https://your-backend.onrender.com/api/customers/products
-curl -X POST https://your-backend.onrender.com/api/customers/login \
-  -H "Content-Type: application/json" \
-  -d '{"phone": "+255777730606", "password": "test123"}'
-```
-
-3. **Database Inspection:**
-```sql
--- Connect to Railway PostgreSQL
-psql $DATABASE_URL
-
--- Check tables
-\dt
-
--- Sample queries
-SELECT * FROM customers LIMIT 5;
-SELECT * FROM products WHERE stock > 0;
-SELECT status, COUNT(*) FROM orders GROUP BY status;
-```
+1. **Purchase domain** from registrar
+2. **Configure DNS:**
+   - Add CNAME record for `www` pointing to `[username].github.io`
+   - Add A records for root domain pointing to GitHub IPs
+3. **Configure GitHub Pages:**
+   - Add custom domain in repository settings
+   - Enable HTTPS enforcement
+4. **Update backend CORS** to allow custom domain
 
 ## 🔐 Security Features
 
 ### Password Security
 - **Bcrypt hashing** for all passwords
-- **Password verification** for first order confirmation
-- **Password reset tokens** with expiration
+- **Password verification** for order confirmation
+- **Password reset tokens** with expiration (1 hour)
 - **Current password required** for sensitive changes
 
 ### Authentication
-- **JWT tokens** for API authentication
+- **JWT tokens** with 7-day expiration
 - **Refresh tokens** for extended sessions
-- **Admin role-based access control**
+- **Role-based access control** for admins
 - **Main admin protection** (ID: 1 cannot be deleted)
 
 ### Data Protection
 - **Environment variables** for sensitive data
 - **Input validation** on all endpoints
 - **SQL injection prevention** via parameterized queries
-- **File upload restrictions** (size, type)
-
-
-
+- **File upload restrictions** (size: 5MB, types: jpg, png, jpeg)
 
 ## 👥 Team & Contact
 
@@ -681,8 +662,6 @@ We gratefully acknowledge the services and communities that made this project po
 - **Chart.js** for data visualization components
 - **Font Awesome** for comprehensive icon library
 
-Special thanks to the open-source community for the countless tools and libraries that power modern web development.
-
 ## 📞 Support
 
 For technical support or questions about the platform:
@@ -691,17 +670,12 @@ For technical support or questions about the platform:
    - Frontend issues: [FourBrothersSportsCenter Issues](https://github.com/MohammedShehe/FourBrothersSportsCenter/issues)
    - Backend issues: [FourBrothersSportsCenter-Backend Issues](https://github.com/MohammedShehe/FourBrothersSportsCenter-Backend/issues)
 
-2. **Documentation:** Refer to this README and code comments
-
-3. **Community:** Share experiences and solutions with other users
-
-### Support Guidelines
-- **Bug Reports:** Include steps to reproduce, expected vs actual behavior
-- **Feature Requests:** Describe the need and potential implementation
-- **Questions:** Check documentation first, then ask specific questions
-- **Response Time:** Allow 2-3 business days for responses
+   **All rights reserved © 2025 Four Brothers Sports Center**
 
 ---
+
+## 🤝 Contributing
+While this is primarily a commercial project, bug reports and suggestions are welcome through GitHub Issues.
 
 **Made with ❤️ in Tanzania 🇹🇿**  
 *Empowering local businesses through technology*  
@@ -710,109 +684,28 @@ For technical support or questions about the platform:
 
 ---
 
-## 🔄 Update Log
+## 🔄 Version History
 
-### Version 2.0.0 (December 2025) - **PASSWORD-BASED AUTHENTICATION UPDATE**
-**Major Security Update - Replaced OTP with Password System**
+### Version 1.0.0 (December 2025) - **PRODUCTION RELEASE**
+**Complete E-commerce Platform with Password-Based Authentication & Size Inventory**
 
-#### ✅ Major Changes from Version 1.0.0
-- **🔐 Authentication Overhaul**
-  - **REMOVED:** Twilio SMS OTP system completely
-  - **ADDED:** Password-based registration and login for customers
-  - **ADDED:** Password-based admin authentication
-  - **ADDED:** Password verification for first order security
-  - **ADDED:** Secure password reset via name verification
-
-- **🔄 Token System Enhancement**
-  - **ADDED:** JWT refresh token system for customers
-  - **IMPROVED:** Token expiration and renewal process
-  - **ENHANCED:** Security middleware for both customer and admin routes
-
-- **👑 Admin Management System**
-  - **ADDED:** Multi-admin support with role hierarchy
-  - **ADDED:** Main admin (can_manage_admins=1) with full privileges
-  - **ADDED:** Regular admin with limited privileges
-  - **ADDED:** Admin management interface (add/edit/delete)
-
-- **📱 Customer Experience Improvements**
-  - **ADDED:** Profile management with password-protected changes
-  - **ADDED:** Change email/phone with current password verification
-  - **ADDED:** Password strength indicator during registration
-  - **IMPROVED:** Password reset flow with name verification
-
-- **📧 Enhanced Communication**
-  - **ADDED:** Bulk email announcements from admin panel
-  - **ADDED:** In-app messaging system
-  - **ADDED:** Customer-to-admin message support
-  - **IMPROVED:** Announcement display system
-
-- **💾 Database Schema Updates**
-  - **REMOVED:** OTP-related columns from orders table
-  - **ADDED:** Password columns to customers and users tables
-  - **ADDED:** Reset token system for password recovery
-  - **ADDED:** Admin management columns in users table
+#### ✅ Key Features
+- **🔐 Password-Based Authentication System**
+- **📏 Size-Based Inventory Management**
+- **🛒 Complete Shopping Experience with Size Selection**
+- **📊 Comprehensive Admin Dashboard**
+- **🔧 Full Technical Implementation with PostgreSQL**
 
 #### 🚀 Deployment Status
-- **Frontend:** ✅ Updated with new authentication flows
-- **Backend:** ✅ Completely rewritten authentication system
-- **Database:** ✅ Schema updated for password system
-- **Services:** ✅ Removed Twilio dependency, added email support
+- **Frontend:** ✅ Deployed to GitHub Pages (https://fourbrothers.online)
+- **Backend:** ✅ Deployed to Render (https://api.fourbrothers.online)
+- **Database:** ✅ PostgreSQL on Railway
+- **Authentication:** ✅ Password-based system
 
-### Version 1.0.0 (November 2025) - Initial Release
-- Complete e-commerce platform with OTP authentication
-- Admin panel with dashboard
-- Product management system
-- Order tracking with OTP delivery confirmation
-
-### Planned Features (Future Releases)
-
-#### Version 2.1.0 (Q1 2026)
-- [ ] Mobile application (React Native/Flutter)
-- [ ] Push notifications for order updates
-- [ ] Advanced product filtering and sorting
-- [ ] Wishlist functionality
-- [ ] Customer loyalty program
-
-#### Version 2.2.0 (Q2 2026)
-- [ ] Payment gateway integration (M-Pesa, Airtel Money)
-- [ ] Inventory management with alerts
-- [ ] Sales analytics with advanced reports
-- [ ] Multi-language support (Swahili, English)
-
-#### Version 2.3.0 (Q3 2026)
-- [ ] Multi-vendor support
-- [ ] Advanced search with AI recommendations
-- [ ] Social media integration
-- [ ] Customer referral program
-
-#### Version 3.0.0 (Q4 2026)
-- [ ] Progressive Web App (PWA) features
-- [ ] Offline functionality
-- [ ] Advanced shipping and logistics integration
-- [ ] API documentation portal
-
-### Version History
-
-| Version | Date | Key Changes | Status |
-|---------|------|-------------|--------|
-| 2.0.0 | Dec 2025 | Password-based authentication | ✅ Current |
-| 1.0.0 | Nov 2025 | Initial production release with OTP | ✅ Completed |
-| 0.9.0 | Oct 2025 | Beta testing and bug fixes | ✅ Completed |
-| 0.8.0 | Sep 2025 | Admin panel development | ✅ Completed |
-| 0.7.0 | Aug 2025 | Customer portal development | ✅ Completed |
-| 0.6.0 | Jul 2025 | Backend API development | ✅ Completed |
-| 0.5.0 | Jun 2025 | Database design and setup | ✅ Completed |
-| 0.1.0 | May 2025 | Project initialization and planning | ✅ Completed |
-
----
-
-**Last Updated:** December 3, 2025  
-**Version:** 2.0.0  
+**Last Updated:** December 5, 2025  
+**Version:** 1.0.0  
 **Status:** Production Ready  
-**Next Release:** Version 2.1.0 (Q1 2026)
 
 ---
 
 *This platform represents a significant step forward in digitizing retail commerce in Tanzania, providing local businesses with tools previously available only to large corporations. By making e-commerce accessible and affordable, we're helping Tanzanian entrepreneurs compete in the digital economy.*
-
-**Key Security Note:** Version 2.0.0 replaces the SMS OTP system with a more secure and reliable password-based authentication system, reducing operational costs while improving user experience and security.

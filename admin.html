@@ -1331,11 +1331,11 @@
           </a>
           <a class="nav-link" data-section="notifications" href="#" id="notificationsNavLink">
             <i class="fa fa-envelope me-2"></i>Arifa & Ujumbe
-            <!-- Badge will be added dynamically -->
+            <span class="badge bg-danger notification-badge" style="display: none;">0</span>
           </a>
           <a class="nav-link" data-section="orders" href="#" id="ordersNavLink">
             <i class="fa fa-shopping-cart me-2"></i>Maagizo Yaliyowekwa
-            <!-- Badge will be added dynamically -->
+            <span class="badge bg-warning notification-badge" style="display: none;">0</span>
           </a>
           <a class="nav-link" data-section="admins" href="#" id="adminsNavLink" style="display: none;">
             <i class="fa fa-user-shield me-2"></i>Wasimamizi
@@ -1614,7 +1614,7 @@
                     <th>Bidhaa</th>
                     <th>Jumla</th>
                     <th>Hali</th>
-                    <th>Kitendo</th>
+                    <th>Vitendo</th>
                   </tr>
                 </thead>
                 <tbody id="ordersTableBody"></tbody>
@@ -2128,7 +2128,7 @@
     };
 
     // ===============================
-    // NOTIFICATION COUNTS SYSTEM
+    // NOTIFICATION COUNTS SYSTEM - FIXED
     // ===============================
     async function loadNotificationCounts() {
       try {
@@ -2193,6 +2193,8 @@
           method: 'PUT'
         });
         
+        // Reload notifications after marking as read
+        await loadNotifications();
         await loadNotificationCounts();
       } catch (error) {
         console.error('Error marking notification as read:', error);
@@ -2829,6 +2831,7 @@
           
           if (!code) {
             codeInput.classList.add('is-invalid');
+            codeInput.nextElementSibling.textContent = 'Kifupi cha saizi kinahitajika';
             isValid = false;
           } else {
             codeInput.classList.remove('is-invalid');
@@ -2836,13 +2839,15 @@
           
           if (!label) {
             labelInput.classList.add('is-invalid');
+            labelInput.nextElementSibling.textContent = 'Jina kamili la saizi linahitajika';
             isValid = false;
           } else {
             labelInput.classList.remove('is-invalid');
           }
           
-          if (stock < 0) {
+          if (isNaN(stock) || stock < 0) {
             stockInput.classList.add('is-invalid');
+            stockInput.nextElementSibling.textContent = 'Akiba inahitajika (nambari pekee)';
             isValid = false;
           } else {
             stockInput.classList.remove('is-invalid');
@@ -2887,11 +2892,32 @@
           return false;
         }
         
-        let hasValidSize = false;
         const sizes = this.getSizesData();
         
         if (sizes.length === 0) {
           showAlert('Tafadhali angalau ongeza saizi moja', 'warning');
+          return false;
+        }
+        
+        // Check for empty size codes or labels
+        const emptyFields = sizes.some(size => !size.code.trim() || !size.label.trim());
+        if (emptyFields) {
+          showAlert('Tafadhali jaza kifupi na jina kamili la saizi zote', 'warning');
+          return false;
+        }
+        
+        // Check for duplicate size codes
+        const sizeCodes = sizes.map(s => s.code.toLowerCase().trim());
+        const uniqueCodes = [...new Set(sizeCodes)];
+        if (sizeCodes.length !== uniqueCodes.length) {
+          showAlert('Kuna saizi zilizorudiwa! Tafadhali angalia kifupi cha saizi.', 'warning');
+          return false;
+        }
+        
+        // Check stock values
+        const invalidStock = sizes.some(size => isNaN(size.stock) || size.stock < 0);
+        if (invalidStock) {
+          showAlert('Akiba ya saizi lazima iwe nambari nzuri', 'warning');
           return false;
         }
         
@@ -2914,22 +2940,22 @@
       return `https://api.fourbrothers.online/${path}`;
     }
 
-        // LOAD PRODUCTS
-        async function loadProducts() {
-          try {
-            products = await apiCall('/products');
-            renderProductsTable();
-            renderProductsMobileCards();
-          } catch (error) {
-            console.error('Error loading products:', error);
-            showAlert('Hitilafu katika kupakia bidhaa', 'danger');
-            products = [];
-            renderProductsTable();
-            renderProductsMobileCards();
-          }
-        }
+    // LOAD PRODUCTS
+    async function loadProducts() {
+      try {
+        products = await apiCall('/products');
+        renderProductsTable();
+        renderProductsMobileCards();
+      } catch (error) {
+        console.error('Error loading products:', error);
+        showAlert('Hitilafu katika kupakia bidhaa', 'danger');
+        products = [];
+        renderProductsTable();
+        renderProductsMobileCards();
+      }
+    }
 
-    // ADD / EDIT PRODUCT FORM SUBMIT
+    // ADD / EDIT PRODUCT FORM SUBMIT - FIXED FOR BACKEND
     document.getElementById('productForm').addEventListener('submit', async function(e) {
       e.preventDefault();
 
@@ -2976,51 +3002,97 @@
       }
 
       const productId = document.getElementById('editingProductId').value;
-      const formData = new FormData();
-
-      formData.append('name', document.getElementById('prodTitle').value);
-      formData.append('company', document.getElementById('prodBrand').value);
-      formData.append('color', document.getElementById('prodColor').value);
-      formData.append('discount_percent', document.getElementById('prodOffer').value || 0);
-      formData.append('type', document.getElementById('prodType').value);
-      formData.append('price', document.getElementById('prodPrice').value);
-      formData.append('description', document.getElementById('prodDescription').value || '');
-
       const sizesData = sizeManager.getSizesData();
-      formData.append('sizes', JSON.stringify(sizesData));
+      
+      // Prepare sizes array in EXACT format backend expects
+      const transformedSizes = sizesData.map(size => ({
+        code: size.code,
+        label: size.label,
+        stock: parseInt(size.stock) || 0
+      }));
 
-      const imageFiles = document.getElementById('prodImages').files;
-      for (let i = 0; i < imageFiles.length; i++) {
-        formData.append('images', imageFiles[i]);
-      }
+      // Prepare the product data object
+      const productData = {
+        name: document.getElementById('prodTitle').value,
+        company: document.getElementById('prodBrand').value,
+        color: document.getElementById('prodColor').value,  
+        discount_percent: parseInt(document.getElementById('prodOffer').value) || 0,
+        type: document.getElementById('prodType').value,
+        price: parseFloat(document.getElementById('prodPrice').value), // Convert to number
+        description: document.getElementById('prodDescription').value.trim() || null,
+        sizes: transformedSizes
+      };
+
+      console.log('Product Data to send:', JSON.stringify(productData, null, 2));
 
       document.getElementById('productBtnText').style.display = 'none';
       document.getElementById('productSpinner').style.display = 'inline-block';
 
       try {
-        let result;
         if (productId) {
-          result = await apiCallWithFormData(`/products/${productId}`, formData, 'PUT');
+          // UPDATE EXISTING PRODUCT
+          // For updates, we need to handle images differently
+          const formData = new FormData();
+          
+          // Append all product data to formData
+          Object.keys(productData).forEach(key => {
+            if (key === 'sizes') {
+              formData.append(key, JSON.stringify(productData[key]));
+            } else {
+              formData.append(key, productData[key]);
+            }
+          });
+          
+          // Append new images if selected
+          const imageFiles = document.getElementById('prodImages').files;
+          for (let i = 0; i < imageFiles.length; i++) {
+            formData.append('images', imageFiles[i]);
+          }
+          
+          // Send the update
+          const result = await apiCallWithFormData(`/products/${productId}`, formData, 'PUT');
           showAlert('Bidhaa imesasishwa kikamilifu', 'success');
         } else {
-          result = await apiCallWithFormData('/products', formData);
+          // CREATE NEW PRODUCT
+          const formData = new FormData();
+          const imageFiles = document.getElementById('prodImages').files;
+          
+          // Append product data
+          Object.keys(productData).forEach(key => {
+            if (key === 'sizes') {
+              formData.append(key, JSON.stringify(productData[key]));
+            } else {
+              formData.append(key, productData[key]);
+            }
+          });
+          
+          // Append images if any
+          for (let i = 0; i < imageFiles.length; i++) {
+            formData.append('images', imageFiles[i]);
+          }
+          
+          const result = await apiCallWithFormData('/products', formData);
           showAlert('Bidhaa imeongezwa kikamilifu', 'success');
         }
 
+        // Reset form
         this.reset();
         document.getElementById('prodPreview').innerHTML = '';
         document.getElementById('editingProductId').value = '';
         sizeManager.setSizesData([]);
         
+        // Close modal
         const productModal = bootstrap.Modal.getInstance(document.getElementById('modalAddProduct'));
         if (productModal) {
           productModal.hide();
         }
 
+        // Reload products list
         await loadProducts();
         
-        // Reload the products array with fresh data
-        products = await apiCall('/products');
+        // Update modal title back to default
+        document.querySelector('#modalAddProduct .modal-title').textContent = 'Ongeza / Hariri Bidhaa';
+        
       } catch (error) {
         console.error('Error saving product:', error);
         showAlert(error.message || 'Hitilafu katika kuhifadhi bidhaa', 'danger');
@@ -3159,76 +3231,78 @@
       });
     }
 
-        // EDIT PRODUCT
-        async function editProduct(id) {
-          try {
-            // Load fresh product data from API
-            const product = await apiCall(`/products/${id}`);
-            
-            if (!product) {
-              showAlert('Bidhaa haijapatikana', 'danger');
-              return;
-            }
-
-            document.getElementById('editingProductId').value = product.id;
-            
-            // Fill basic product info
-            document.getElementById('prodTitle').value = product.name || '';
-            document.getElementById('prodBrand').value = product.company || '';
-            document.getElementById('prodColor').value = product.color || '';
-            document.getElementById('prodOffer').value = product.discount_percent || 0;
-            document.getElementById('prodType').value = product.type || '';
-            document.getElementById('prodPrice').value = product.price || 0;
-            document.getElementById('prodDescription').value = product.description || '';
-
-            // Load sizes - handle both property naming conventions
-            if (product.sizes && product.sizes.length > 0) {
-              sizeManager.setSizesData(product.sizes.map(size => ({
-                code: size.size_code || size.code || '',
-                label: size.size_label || size.label || '',
-                stock: size.stock || 0
-              })));
-            } else {
-              // Fallback for old products with single size
-              sizeManager.setSizesData([{
-                code: product.size_us || '',
-                label: product.size_us || '',
-                stock: product.stock || 0
-              }]);
-            }
-
-            const preview = document.getElementById('prodPreview');
-            preview.innerHTML = '';
-
-            if (product.images && product.images.length > 0) {
-              product.images.forEach(imgPath => {
-                const img = document.createElement('img');
-                img.src = fixImagePath(imgPath);
-                img.onerror = function () {
-                  this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCI+PHJlY3Qgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNDAiIHk9IjQwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkVycm9yPC90ZXh0Pjwvc3ZnPg==';
-                };
-                img.style.width = '80px';
-                img.style.height = '80px';
-                img.style.objectFit = 'cover';
-                img.style.margin = '5px';
-                img.style.borderRadius = '5px';
-                img.style.border = '2px solid #e1e8ed';
-                preview.appendChild(img);
-              });
-            }
-
-            // Show modal
-            const modal = new bootstrap.Modal(document.getElementById('modalAddProduct'));
-            modal.show();
-            
-            // Update modal title for editing
-            document.querySelector('#modalAddProduct .modal-title').textContent = 'Hariri Bidhaa';
-            
-          } catch (error) {
-            console.error('Error loading product for editing:', error);
-            showAlert('Hitilafu katika kupakia taarifa za bidhaa', 'danger');
-          }
+    // EDIT PRODUCT - FIXED
+    async function editProduct(id) {
+      try {
+        // Load fresh product data from API
+        const product = await apiCall(`/products/${id}`);
+        
+        if (!product) {
+          showAlert('Bidhaa haijapatikana', 'danger');
+          return;
         }
+
+        console.log('=== DEBUG: Product data for editing ===');
+        console.log('Full product:', JSON.stringify(product, null, 2));
+        console.log('======================================');
+
+        document.getElementById('editingProductId').value = product.id;
+        
+        // Fill basic product info
+        document.getElementById('prodTitle').value = product.name || '';
+        document.getElementById('prodBrand').value = product.company || '';
+        document.getElementById('prodColor').value = product.color || '';
+        document.getElementById('prodOffer').value = product.discount_percent || 0;
+        document.getElementById('prodType').value = product.type || '';
+        document.getElementById('prodPrice').value = product.price || 0;
+        document.getElementById('prodDescription').value = product.description || '';
+
+        // Load sizes - preserve the original data exactly
+        if (product.sizes && product.sizes.length > 0) {
+          const transformedSizes = product.sizes.map(size => ({
+            code: size.size_code || '',
+            label: size.size_label || '',
+            stock: size.stock || 0
+          }));
+          
+          sizeManager.setSizesData(transformedSizes);
+        } else {
+          // Add one empty row if no sizes
+          sizeManager.addDefaultSizeRow();
+        }
+
+        const preview = document.getElementById('prodPreview');
+        preview.innerHTML = '';
+
+        if (product.images && product.images.length > 0) {
+          product.images.forEach(imgPath => {
+            const img = document.createElement('img');
+            img.src = fixImagePath(imgPath);
+            img.onerror = function () {
+              this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCI+PHJlY3Qgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNDAiIHk9IjQwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkVycm9yPC90ZXh0Pjwvc3ZnPg==';
+            };
+            img.style.width = '80px';
+            img.style.height = '80px';
+            img.style.objectFit = 'cover';
+            img.style.margin = '5px';
+            img.style.borderRadius = '5px';
+            img.style.border = '2px solid #e1e8ed';
+            preview.appendChild(img);
+          });
+        }
+
+        // Show modal
+        const modal = new bootstrap.Modal(document.getElementById('modalAddProduct'));
+        modal.show();
+        
+        // Update modal title for editing
+        document.querySelector('#modalAddProduct .modal-title').textContent = 'Hariri Bidhaa';
+        
+      } catch (error) {
+        console.error('Error loading product for editing:', error);
+        showAlert('Hitilafu katika kupakia taarifa za bidhaa: ' + error.message, 'danger');
+      }
+      }
 
     // DELETE PRODUCT
     async function deleteProduct(id) {
@@ -3280,15 +3354,14 @@
       });
     });
 
-        // Reset product form when modal is closed
-        document.getElementById('modalAddProduct').addEventListener('hidden.bs.modal', function() {
-          document.getElementById('productForm').reset();
-          document.getElementById('editingProductId').value = '';
-          document.getElementById('prodPreview').innerHTML = '';
-          sizeManager.setSizesData([]);
-          document.querySelector('#modalAddProduct .modal-title').textContent = 'Ongeza / Hariri Bidhaa';
-        });
-    
+    // Reset product form when modal is closed
+    document.getElementById('modalAddProduct').addEventListener('hidden.bs.modal', function() {
+      document.getElementById('productForm').reset();
+      document.getElementById('editingProductId').value = '';
+      document.getElementById('prodPreview').innerHTML = '';
+      sizeManager.setSizesData([]);
+      document.querySelector('#modalAddProduct .modal-title').textContent = 'Ongeza / Hariri Bidhaa';
+    });
 
     // ===============================
     // CUSTOMERS MANAGEMENT
@@ -3687,92 +3760,103 @@
       }
     });
 
-        // ===============================
-        // NOTIFICATIONS
-        // ===============================
-        let notifications = [];
+    // ===============================
+    // NOTIFICATIONS - FIXED
+    // ===============================
+    let notifications = [];
 
-        // Helper function to update notification count display
-        function updateNotificationCount(count) {
-          const titleBadge = document.getElementById('notificationCountTitle');
-          if (titleBadge) {
-            titleBadge.textContent = count;
-          }
-          
-          // Update quick action button
-          const quickCount = document.getElementById('quickMessageCount');
-          if (quickCount) {
-            if (count > 0) {
-              quickCount.textContent = count;
-              quickCount.style.display = 'inline-block';
-            } else {
-              quickCount.style.display = 'none';
-            }
-          }
-        }
+    async function loadNotifications() {
+      try {
+        notifications = await apiCall('/notifications/customer');
+        renderNotifications();
+        
+        // Mark all notifications as read when viewing the section
+        await markAllNotificationsAsRead();
+        
+      } catch (error) {
+        console.error('Error loading notifications:', error);
+        updateNotificationCount(0);
+        showAlert('Hitilafu katika kupakia arifa', 'danger');
+      }
+    }
 
-        async function loadNotifications() {
-          try {
-            notifications = await apiCall('/notifications/customer');
-            renderNotifications();
-            
-            const unreadCount = notifications.length;
-            updateNotificationCount(unreadCount);
-          } catch (error) {
-            console.error('Error loading notifications:', error);
-            updateNotificationCount(0);
-            showAlert('Hitilafu katika kupakia arifa', 'danger');
-          }
+    async function markAllNotificationsAsRead() {
+      try {
+        const unreadNotifications = notifications.filter(n => !n.admin_viewed);
+        
+        for (const notification of unreadNotifications) {
+          await markNotificationRead(notification.id);
         }
+        
+        await loadNotificationCounts();
+      } catch (error) {
+        console.error('Error marking all notifications as read:', error);
+      }
+    }
 
-        function renderNotifications() {
-          const list = document.getElementById('messagesList');
-          list.innerHTML = '';
-          
-          if (notifications.length === 0) {
-            list.innerHTML = '<div class="text-center py-4 text-muted">Hakuna ujumbe uliopokelewa</div>';
-            return;
-          }
-          
-          notifications.forEach(notification => {
-            const el = document.createElement('div');
-            el.className = 'list-group-item d-flex justify-content-between align-items-start border-0 mb-2 rounded';
-            el.style.borderLeft = '4px solid var(--primary-light)';
-            el.innerHTML = `
-              <div class="flex-grow-1">
-                <div class="d-flex justify-content-between align-items-center mb-1">
-                  <strong>${notification.first_name} ${notification.last_name}</strong>
-                  <small class="text-muted">${new Date(notification.created_at).toLocaleDateString('sw-TZ')}</small>
-                </div>
-                <div class="text-muted mb-2">${notification.message}</div>
-                <div class="d-flex gap-2">
-                  <span class="badge bg-light text-dark"><i class="fa fa-phone me-1"></i>${notification.phone}</span>
-                  ${notification.email ? `<span class="badge bg-light text-dark"><i class="fa fa-envelope me-1"></i>${notification.email}</span>` : ''}
-                </div>
-              </div>
-              <div class="ms-3">
-                <button class="btn btn-sm btn-outline-primary" onclick="replyToCustomer('${notification.id}')">
-                  <i class="fa fa-reply me-1"></i>Jibu
-                </button>
-              </div>
-            `;
-            list.appendChild(el);
-          });
-        }
+    function renderNotifications() {
+      const list = document.getElementById('messagesList');
+      list.innerHTML = '';
+      
+      if (notifications.length === 0) {
+        list.innerHTML = '<div class="text-center py-4 text-muted">Hakuna ujumbe uliopokelewa</div>';
+        return;
+      }
+      
+      notifications.forEach(notification => {
+        const el = document.createElement('div');
+        el.className = 'list-group-item d-flex justify-content-between align-items-start border-0 mb-2 rounded';
+        el.style.borderLeft = notification.admin_viewed ? '4px solid #6c757d' : '4px solid var(--primary-light)';
+        el.innerHTML = `
+          <div class="flex-grow-1">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <strong>${notification.first_name} ${notification.last_name}</strong>
+              <small class="text-muted">${new Date(notification.created_at).toLocaleDateString('sw-TZ')}</small>
+            </div>
+            <div class="text-muted mb-2">${notification.message}</div>
+            <div class="d-flex gap-2">
+              <span class="badge bg-light text-dark"><i class="fa fa-phone me-1"></i>${notification.phone}</span>
+              ${notification.email ? `<span class="badge bg-light text-dark"><i class="fa fa-envelope me-1"></i>${notification.email}</span>` : ''}
+              ${notification.admin_viewed ? '<span class="badge bg-success">Imesomwa</span>' : '<span class="badge bg-warning">Hajasomwa</span>'}
+            </div>
+          </div>
+          <div class="ms-3">
+            <button class="btn btn-sm btn-outline-primary" onclick="replyToCustomer('${notification.id}')">
+              <i class="fa fa-reply me-1"></i>Jibu
+            </button>
+            ${!notification.admin_viewed ? `
+              <button class="btn btn-sm btn-success mt-1" onclick="markSingleNotificationRead('${notification.id}')">
+                <i class="fa fa-check me-1"></i>Weka kama Imesomwa
+              </button>
+            ` : ''}
+          </div>
+        `;
+        list.appendChild(el);
+      });
+    }
 
-        function replyToCustomer(notificationId) {
-          const notification = notifications.find(n => n.id == notificationId);
-          if (!notification) return;
-          
-          document.getElementById('selectCustomerMsg').value = notification.customer_id || '';
-          document.getElementById('msgBody').value = `Jibu kwa ${notification.first_name}:\n\n`;
-          
-          const modal = new bootstrap.Modal(document.getElementById('modalSendMessage'));
-          modal.show();
-        }
+    async function markSingleNotificationRead(notificationId) {
+      try {
+        await markNotificationRead(notificationId);
+        showAlert('Ujumbe umewekwa kama uliosomwa', 'success');
+      } catch (error) {
+        console.error('Error marking single notification as read:', error);
+      }
+    }
+
+    function replyToCustomer(notificationId) {
+      const notification = notifications.find(n => n.id == notificationId);
+      if (!notification) return;
+      
+      document.getElementById('selectCustomerMsg').value = notification.customer_id || '';
+      document.getElementById('msgBody').value = `Jibu kwa ${notification.first_name}:\n\n`;
+      
+      const modal = new bootstrap.Modal(document.getElementById('modalSendMessage'));
+      modal.show();
+    }
 
     // ===============================
-    // ORDERS MANAGEMENT
+    // ORDERS MANAGEMENT - FIXED
     // ===============================
     let orders = [];
 
@@ -3798,7 +3882,7 @@
     // Function to mark all orders as viewed
     async function markAllOrdersAsViewed() {
       try {
-        const unviewedOrders = orders.filter(order => !order.admin_viewed);
+        const unviewedOrders = orders.filter(order => !order.admin_viewed || order.admin_viewed === 0);
         
         for (const order of unviewedOrders) {
           await markOrderViewed(order.order_id);
@@ -3926,12 +4010,20 @@
       });
     }
 
-    // Update normal statuses
+    // Update normal statuses - FIXED FOR BACKEND
     async function updateOrderStatus(orderId, status) {
       try {
+        let requestBody = { status };
+        
+        // If status is 'Imepokelewa', we need customer password (handled separately)
+        if (status === 'Imepokelewa') {
+          markAsReceived(orderId);
+          return;
+        }
+        
         const response = await apiCall(`/orders/${orderId}/status`, {
           method: 'PUT',
-          body: JSON.stringify({ status })
+          body: JSON.stringify(requestBody)
         });
 
         showAlert(`Hali ya agizo imesasishwa kuwa: ${status}`);
@@ -3953,6 +4045,13 @@
     // Mark as received (opens password modal)
     async function markAsReceived(orderId) {
       try {
+        // First update status to 'Inasafirishwa' (backend allows this without password)
+        await apiCall(`/orders/${orderId}/status`, {
+          method: 'PUT',
+          body: JSON.stringify({ status: 'Inasafirishwa' })
+        });
+        
+        // Then open password modal for customer confirmation
         openPasswordModal(orderId);
       } catch (err) {
         console.error('Error marking as received:', err);
@@ -3967,13 +4066,13 @@
       new bootstrap.Modal(document.getElementById('modalConfirmPassword')).show();
     }
 
-    // Confirm Password for order reception
+    // Confirm Password for order reception - FIXED FOR BACKEND
     document.getElementById('confirmPasswordBtn').addEventListener('click', async function() {
       const orderId = document.getElementById('passwordOrderId').value;
       const password = document.getElementById('passwordInput').value.trim();
 
       if (!password) {
-        showAlert('Tafadhali ingiza nenosiri');
+        showAlert('Tafadhali ingiza nenosiri la mteja');
         return;
       }
 
@@ -3981,18 +4080,22 @@
       document.getElementById('passwordSpinner').style.display = 'inline-block';
 
       try {
+        // Update order status to 'Imepokelewa' with customer password
         await apiCall(`/orders/${orderId}/status`, {
           method: 'PUT',
-          body: JSON.stringify({ status: 'Inasafirishwa' })
+          body: JSON.stringify({ 
+            status: 'Imepokelewa',
+            customer_password: password 
+          })
         });
 
-        showAlert('Agizo limewekwa kwenye hali ya usafirishaji. Mteja atahitaji kuthibitisha kwa nenosiri lake.');
+        showAlert('Agizo limewekwa kwenye hali ya kupokelewa kikamilifu.');
 
         bootstrap.Modal.getInstance(document.getElementById('modalConfirmPassword')).hide();
 
         const statusElement = document.getElementById(`status_${orderId}`);
         if (statusElement) {
-          statusElement.innerHTML = `<span class="status-badge status-Inasafirishwa">Inasafirishwa</span>`;
+          statusElement.innerHTML = `<span class="status-badge status-Imepokelewa">Imepokelewa</span>`;
         }
 
         await loadOrders();
@@ -4019,25 +4122,30 @@
     });
 
     // ===============================
-    // SIDEBAR NAVIGATION
+    // SIDEBAR NAVIGATION - FIXED SECTION DISPLAY
     // ===============================
     document.querySelectorAll('.nav-link').forEach(link => {
       link.addEventListener('click', function(e) {
         e.preventDefault();
         
+        // Remove active class from all links
         document.querySelectorAll('.nav-link').forEach(x => x.classList.remove('active'));
+        // Add active class to clicked link
         this.classList.add('active');
         
-        const sectionId = this.getAttribute('data-section');
+        // Hide all sections
         document.querySelectorAll('.section').forEach(s => s.classList.add('d-none'));
+        
+        const sectionId = this.getAttribute('data-section');
         const targetSection = document.getElementById(sectionId);
         
+        // Check permissions for admin section
         if (sectionId === 'admins') {
           if (!currentAdmin || !currentAdmin.can_manage_admins) {
             showAlert('Huna ruhusa ya kupata ukurasa huu!', 'danger');
+            // Reset to dashboard
             document.querySelectorAll('.nav-link').forEach(x => x.classList.remove('active'));
             document.querySelector('[data-section="dashboard"]').classList.add('active');
-            document.querySelectorAll('.section').forEach(s => s.classList.add('d-none'));
             document.getElementById('dashboard').classList.remove('d-none');
             document.getElementById('sectionTitle').textContent = 'Dashibodi ya Msimamizi';
             document.getElementById('mobileSectionTitle').textContent = 'Dashibodi';
@@ -4045,8 +4153,10 @@
           }
         }
         
+        // Show the target section
         targetSection.classList.remove('d-none');
         
+        // Update titles
         const titleMap = {
           dashboard: 'Dashibodi ya Msimamizi',
           products: 'Usimamizi wa Bidhaa',
@@ -4059,6 +4169,7 @@
         document.getElementById('sectionTitle').textContent = titleMap[sectionId] || 'Dashibodi ya Msimamizi';
         document.getElementById('mobileSectionTitle').textContent = titleMap[sectionId] || 'Dashibodi';
         
+        // Load section-specific data
         if (sectionId === 'products') {
           loadProducts();
         } else if (sectionId === 'customers') {
@@ -4073,11 +4184,13 @@
           loadAdmins();
         }
         
+        // Close sidebar on mobile
         if (window.innerWidth < 992) {
           document.getElementById('sidebar').classList.remove('show');
           document.getElementById('sidebarOverlay').classList.remove('show');
         }
         
+        // Scroll to top
         window.scrollTo(0, 0);
       });
     });
@@ -4131,16 +4244,6 @@
       document.getElementById('sidebarOverlay').classList.remove('show');
     });
 
-    // Close sidebar when clicking on a link in mobile view
-    document.querySelectorAll('.nav-link').forEach(link => {
-      link.addEventListener('click', () => {
-        if (window.innerWidth < 992) {
-          document.getElementById('sidebar').classList.remove('show');
-          document.getElementById('sidebarOverlay').classList.remove('show');
-        }
-      });
-    });
-
     // REFRESH ORDERS BUTTON
     document.getElementById('refreshOrdersBtn').addEventListener('click', async () => {
       await loadOrders();
@@ -4189,7 +4292,6 @@
     async function loadAdmins() {
       if (!currentAdmin || !currentAdmin.can_manage_admins) {
         console.log('Not authorized to view admins');
-        document.getElementById('admins').classList.add('d-none');
         return;
       }
       
@@ -4197,10 +4299,8 @@
         admins = await apiCall('/admins');
         renderAdminsTable();
         renderAdminsMobileCards();
-        document.getElementById('admins').classList.remove('d-none');
       } catch (error) {
         console.error('Error loading admins:', error);
-        document.getElementById('admins').classList.add('d-none');
         showAlert('Hitilafu katika kupakia wasimamizi', 'danger');
       }
     }
@@ -4304,6 +4404,7 @@
       document.getElementById('adminLname').value = admin.last_name;
       document.getElementById('adminMobile').value = admin.mobile;
       
+      // For editing, password is optional
       document.getElementById('adminNewPassword').value = '';
       document.getElementById('adminConfirmPassword').value = '';
       document.getElementById('adminNewPassword').placeholder = 'Nenosiri jipya (hiari)';
