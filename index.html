@@ -62,12 +62,245 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            overflow-x: hidden;
         }
         
         .main-content {
             flex: 1;
         }
         
+        /* ==================== LOADING SCREEN ==================== */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-color), var(--body-bg));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        
+        .loading-container {
+            text-align: center;
+            padding: 40px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 90%;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .logo-animation {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+            position: relative;
+        }
+        
+        .logo-circle {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            position: relative;
+            overflow: hidden;
+            animation: rotate 3s linear infinite;
+            box-shadow: 0 0 30px rgba(26, 115, 232, 0.3);
+        }
+        
+        .logo-circle::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(45deg);
+            animation: shine 2s linear infinite;
+        }
+        
+        .logo-inner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2.5rem;
+            color: white;
+            font-weight: bold;
+            z-index: 2;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        .loading-text {
+            margin-top: 20px;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .loading-subtext {
+            color: var(--light-text);
+            margin-bottom: 30px;
+            font-size: 1rem;
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            width: 0%;
+            border-radius: 3px;
+            transition: width 0.3s ease;
+            animation: progressAnimation 2s ease-in-out infinite;
+        }
+        
+        @keyframes progressAnimation {
+            0% { width: 0%; left: 0; }
+            50% { width: 100%; left: 0; }
+            100% { width: 0%; left: 100%; }
+        }
+        
+        .loading-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 20px;
+        }
+        
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            animation: dotPulse 1.5s ease-in-out infinite;
+        }
+        
+        .dot:nth-child(2) {
+            animation-delay: 0.2s;
+            background: var(--accent-color);
+        }
+        
+        .dot:nth-child(3) {
+            animation-delay: 0.4s;
+            background: var(--success-color);
+        }
+        
+        @keyframes dotPulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.5); opacity: 1; }
+        }
+        
+        .loading-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--light-text);
+        }
+        
+        .loading-error {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(220, 53, 69, 0.1);
+            border-radius: var(--radius);
+            border-left: 4px solid var(--danger-color);
+            animation: shake 0.5s ease-in-out;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
+        .retry-button {
+            margin-top: 15px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: var(--radius);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .retry-button:hover {
+            background: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .loading-success {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(40, 167, 69, 0.1);
+            border-radius: var(--radius);
+            border-left: 4px solid var(--success-color);
+            animation: bounceIn 0.5s ease-out;
+        }
+        
+        @keyframes bounceIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            60% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+        
+        /* Main app content - initially hidden */
+        #app-content {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        /* Rest of your existing CSS styles remain the same */
         .navbar {
             background-color: var(--header-bg) !important;
             box-shadow: var(--shadow);
@@ -759,6 +992,14 @@
             }
             .size-options-grid {
                 grid-template-columns: repeat(auto-fill, minmax(55px, 1fr));
+            }
+            .loading-container {
+                padding: 20px;
+                width: 95%;
+            }
+            .logo-animation {
+                width: 80px;
+                height: 80px;
             }
         }
 
@@ -1732,319 +1973,292 @@
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light shadow-sm desktop-nav">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <img src="images/FBSC.png" alt="Four Brothers Sports Center Logo">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#" data-section="home">Nyumbani</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link cart-badge" href="#" data-section="cart">
-                            Karatasi
-                            <span id="cart-badge" class="notification-badge" style="display: none;">0</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" data-section="account">Akaunti</a>
-                    </li>
-                </ul>
-                <div class="d-flex align-items-center">
-                    <div class="search-bar me-3">
-                        <input type="text" class="form-control" placeholder="Tafuta bidhaa..." id="search-input">
-                        <i class="fas fa-search"></i>
-                        <div class="search-results" id="search-results"></div>
-                    </div>
-                    <button class="theme-toggle" id="theme-toggle">
-                        <i class="fas fa-moon"></i>
-                    </button>
-                    <!-- Admin Button for Desktop -->
-                    <a href="admin.html" class="btn btn-admin desktop-admin-btn">
-                        <i class="fas fa-user-shield me-2"></i>Admin
-                    </a>
-                    <div id="auth-section">
-                        <!-- Will be populated by JavaScript -->
-                    </div>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loading-container">
+            <div class="logo-animation">
+                <div class="logo-circle"></div>
+                <div class="logo-inner">FBSC</div>
+            </div>
+            
+            <h3 class="loading-text">Four Brothers Sports Center</h3>
+            <p class="loading-subtext">Inapakua programu yako...</p>
+            
+            <div class="progress-container">
+                <div class="progress-bar"></div>
+            </div>
+            
+            <div class="loading-dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+            
+            <div class="loading-stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="loading-products">0</div>
+                    <div class="stat-label">Bidhaa</div>
                 </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="loading-users">0</div>
+                    <div class="stat-label">Wateja</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="loading-orders">0</div>
+                    <div class="stat-label">Maagizo</div>
+                </div>
+            </div>
+            
+            <div class="loading-error" id="loading-error">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                <strong>Hitilafu ya Mtandao:</strong> Haijaweza kuunganishwa na seva. 
+                <p class="mb-0 mt-2">Programu itatumia data ya mfano kwa sasa. Unaweza kujaribu tena baadaye.</p>
+                <button class="retry-button" id="retry-loading">
+                    <i class="fas fa-redo me-2"></i>Jaribu Tena
+                </button>
+            </div>
+            
+            <div class="loading-success" id="loading-success">
+                <i class="fas fa-check-circle me-2"></i>
+                <strong>Imefanikiwa!</strong> Programu imepakuliwa na ina tayari kutumika.
+                <p class="mb-0 mt-2">Tunaongoza kwenye ukurasa wa nyumbani...</p>
             </div>
         </div>
-    </nav>
-
-    <!-- Admin Button for Mobile -->
-    <a href="admin.html" class="mobile-admin-btn">
-        <i class="fas fa-user-shield"></i>
-    </a>
-
-    <!-- Mobile Navigation -->
-    <div class="mobile-nav">
-        <a href="#" class="mobile-nav-item active" data-section="home">
-            <i class="fas fa-home"></i>
-            <span>Nyumbani</span>
-        </a>
-        <a href="#" class="mobile-nav-item cart-badge" data-section="cart">
-            <i class="fas fa-shopping-cart"></i>
-            <span>Karatasi</span>
-            <span id="mobile-cart-badge" class="notification-badge" style="display: none;">0</span>
-        </a>
-        <a href="#" class="mobile-nav-item" data-section="account">
-            <i class="fas fa-user"></i>
-            <span>Akaunti</span>
-        </a>
     </div>
+    
+    <!-- Main App Content (Initially Hidden) -->
+    <div id="app-content" style="opacity: 0;">
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-light shadow-sm desktop-nav">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="images/FBSC.png" alt="Four Brothers Sports Center Logo">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#" data-section="home">Nyumbani</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link cart-badge" href="#" data-section="cart">
+                                Karatasi
+                                <span id="cart-badge" class="notification-badge" style="display: none;">0</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-section="account">Akaunti</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex align-items-center">
+                        <div class="search-bar me-3">
+                            <input type="text" class="form-control" placeholder="Tafuta bidhaa..." id="search-input">
+                            <i class="fas fa-search"></i>
+                            <div class="search-results" id="search-results"></div>
+                        </div>
+                        <button class="theme-toggle" id="theme-toggle">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                        <!-- Admin Button for Desktop -->
+                        <a href="admin.html" class="btn btn-admin desktop-admin-btn">
+                            <i class="fas fa-user-shield me-2"></i>Admin
+                        </a>
+                        <div id="auth-section">
+                            <!-- Will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
 
-    <!-- Main Content -->
-    <div class="container mt-4 mb-5 main-content">
-        <!-- Home Section -->
-        <section id="home-section">
-            <!-- Ads Container -->
-            <div class="ads-container">
-                <div id="adsCarousel" class="carousel slide h-100" data-bs-ride="carousel">
-                    <div class="carousel-inner h-100">
-                        <!-- Ads will be dynamically loaded -->
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#adsCarousel" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon"></span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#adsCarousel" data-bs-slide="next">
-                        <span class="carousel-control-next-icon"></span>
-                    </button>
-                </div>
-            </div>
+        <!-- Admin Button for Mobile -->
+        <a href="admin.html" class="mobile-admin-btn">
+            <i class="fas fa-user-shield"></i>
+        </a>
 
-            <!-- Announcements -->
-            <div class="announcements" id="announcements-container" style="display: none;">
-                <i class="fas fa-bullhorn me-2"></i>
-                <strong>Tangazo:</strong> 
-                <marquee behavior="scroll" direction="left" id="announcement-text">Inapakuliwa...</marquee>
-            </div>
+        <!-- Mobile Navigation -->
+        <div class="mobile-nav">
+            <a href="#" class="mobile-nav-item active" data-section="home">
+                <i class="fas fa-home"></i>
+                <span>Nyumbani</span>
+            </a>
+            <a href="#" class="mobile-nav-item cart-badge" data-section="cart">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Karatasi</span>
+                <span id="mobile-cart-badge" class="notification-badge" style="display: none;">0</span>
+            </a>
+            <a href="#" class="mobile-nav-item" data-section="account">
+                <i class="fas fa-user"></i>
+                <span>Akaunti</span>
+            </a>
+        </div>
 
-            <!-- Products Grid -->
-            <h3 class="section-title">Bidhaa Zetu</h3>
-            <div class="row" id="products-grid">
-                <!-- Products will be loaded here -->
-            </div>
-        </section>
+        <!-- Main Content -->
+        <div class="container mt-4 mb-5 main-content">
+            <!-- Home Section -->
+            <section id="home-section">
+                <!-- Ads Container -->
+                <div class="ads-container">
+                    <div id="adsCarousel" class="carousel slide h-100" data-bs-ride="carousel">
+                        <div class="carousel-inner h-100">
+                            <!-- Ads will be dynamically loaded -->
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#adsCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#adsCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                        </button>
+                    </div>
+                </div>
 
-        <!-- Product Detail Section -->
-        <section id="product-detail-section" class="hidden">
-            <button class="btn btn-outline-secondary mb-3" id="back-to-products">
-                <i class="fas fa-arrow-left me-2"></i>Rudi kwenye bidhaa
-            </button>
-            
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="product-carousel-container">
-                        <div id="productImagesCarousel" class="carousel slide" data-bs-ride="carousel">
-                            <div class="carousel-inner" id="product-carousel-inner">
-                                <!-- Product images will be loaded here -->
-                            </div>
-                            <button class="carousel-control-prev" type="button" data-bs-target="#productImagesCarousel" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon"></span>
-                            </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#productImagesCarousel" data-bs-slide="next">
-                                <span class="carousel-control-next-icon"></span>
-                            </button>
-                            <div class="product-carousel-indicators" id="product-carousel-indicators">
-                                <!-- Indicators will be loaded here -->
-                            </div>
-                        </div>
-                        <div class="product-carousel-thumbnails" id="product-carousel-thumbnails">
-                            <!-- Thumbnails will be loaded here -->
-                        </div>
-                    </div>
+                <!-- Announcements -->
+                <div class="announcements" id="announcements-container" style="display: none;">
+                    <i class="fas fa-bullhorn me-2"></i>
+                    <strong>Tangazo:</strong> 
+                    <marquee behavior="scroll" direction="left" id="announcement-text">Inapakuliwa...</marquee>
                 </div>
-                <div class="col-md-6">
-                    <h2 id="product-name">Jina la Bidhaa</h2>
-                    <div class="product-rating-display" id="product-rating-display">
-                        <div class="stars" id="product-rating-stars-display">
-                            <!-- Stars will be loaded here -->
-                        </div>
-                        <div class="rating-text" id="product-rating-text">(0 tathmini)</div>
-                    </div>
-                    
-                    <div class="mb-3">
-                        <span class="price-old" id="old-price"></span>
-                        <span class="price-new" id="current-price">TZS 0</span>
-                        <span class="offer-badge discount-pulse" id="offer-badge" style="display: none;">0% OFF</span>
-                    </div>
-                    
-                    <!-- Enhanced Product Description Section -->
-                    <div class="product-description-container">
-                        <h4>Maelezo ya Bidhaa</h4>
-                        <div class="product-description-text" id="product-description">
-                            Maelezo ya bidhaa yataonyeshwa hapa.
-                        </div>
-                        <div id="description-placeholder" class="description-placeholder hidden">
-                            Bidhaa haina maelezo ya ziada.
-                        </div>
-                    </div>
-                    
-                    <!-- Enhanced Size Selection -->
-                    <div class="size-options-container">
-                        <h5>Chagua Saizi (EU)</h5>
-                        <div class="size-options-grid" id="size-options">
-                            <!-- Size options will be loaded here -->
-                        </div>
-                        <div class="mt-2">
-                            <small class="text-muted">Nambari ndani ya mabano inaonyesha idadi ya akiba kwa kila saizi</small>
-                        </div>
-                    </div>
-                    
-                    <div class="d-flex align-items-center mb-4">
-                        <span class="me-3"><strong>Idadi:</strong></span>
-                        <div class="quantity-selector">
-                            <div class="quantity-btn" id="decrease-qty">-</div>
-                            <span id="quantity">1</span>
-                            <div class="quantity-btn" id="increase-qty">+</div>
-                        </div>
-                        <span class="ms-3 text-muted" id="stock-info"></span>
-                        <span id="stock-badge" class="product-availability in-stock"></span>
-                    </div>
-                    
-                    <div class="delivery-estimation">
-                        <h5><i class="fas fa-truck"></i> Makadirio ya Uwasilishaji</h5>
-                        <p class="mb-0">Utapokea Bidhaa Hii: <strong id="delivery-date">Jumamosi ijayo</strong></p>
-                    </div>
-                    
-                    <button class="btn btn-primary btn-lg w-100 floating-action" id="add-to-cart">
-                        <i class="fas fa-shopping-cart me-2"></i>Weka kwenye Karatasi
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Product Details Tabs -->
-            <div class="mt-5">
-                <ul class="nav nav-tabs" id="productDetailsTabs">
-                    <li class="nav-item">
-                        <a class="nav-link active" data-bs-toggle="tab" href="#details">Maelezo Zaidi</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="tab" href="#reviews">Tathmini</a>
-                    </li>
-                </ul>
-                <div class="tab-content p-3 border border-top-0">
-                    <div class="tab-pane fade show active" id="details">
-                        <!-- Additional product details will be loaded here -->
-                    </div>
-                    <div class="tab-pane fade" id="reviews">
-                        <!-- Reviews will be loaded here -->
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <!-- Cart Section -->
-        <section id="cart-section" class="hidden">
-            <h2 class="section-title">Karatasi Yangu</h2>
-            
-            <div class="row">
-                <div class="col-md-8">
-                    <div id="cart-items">
-                        <!-- Cart items will be loaded here -->
-                    </div>
+                <!-- Products Grid -->
+                <h3 class="section-title">Bidhaa Zetu</h3>
+                <div class="row" id="products-grid">
+                    <!-- Products will be loaded here -->
                 </div>
-                <div class="col-md-4">
-                    <div class="card slide-in">
-                        <div class="card-header bg-primary text-white">
-                            <h5 class="mb-0">Muhtasari wa Agizo</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between mb-2">
-                                <span>Jumla ya Bidhaa:</span>
-                                <span id="cart-items-count">0 </span>
-                            </div>
-                            <div class="d-flex justify-content-between mb-2">
-                                <span>Jumla ya Bei:</span>
-                                <span id="cart-subtotal">TZS 0</span>
-                            </div>
-                            <div class="d-flex justify-content-between mb-2">
-                                <span>Usafirishaji:</span>
-                                <span>TZS 0</span>
-                            </div>
-                            <div class="d-flex justify-content-between mb-2">
-                                <span>Punguzo:</span>
-                                <span id="cart-discount">TZS 0</span>
-                            </div>
-                            <hr>
-                            <div class="d-flex justify-content-between mb-3">
-                                <strong>Jumla:</strong>
-                                <strong id="cart-total">TZS 0</strong>
-                            </div>
-                            <button class="btn btn-primary w-100 pulse" id="proceed-to-checkout">
-                                Endelea kwa Malipo
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Checkout Section -->
-        <section id="checkout-section" class="hidden">
-            <h2 class="section-title">Malipo</h2>
-            
-            <!-- Enhanced Checkout Progress -->
-            <div class="checkout-progress">
-                <div class="progress-step active" id="step-address">
-                    <div class="step-circle">1</div>
-                    <div class="step-label">Anwani</div>
-                </div>
-                <div class="progress-step" id="step-summary">
-                    <div class="step-circle">2</div>
-                    <div class="step-label">Muhtasari</div>
-                </div>
-                <div class="progress-step" id="step-payment">
-                    <div class="step-circle">3</div>
-                    <div class="step-label">Malipo</div>
-                </div>
-            </div>
-            
-            <div class="row">
-                <div class="col-md-8">
-                    <!-- Step 1: Address Selection -->
-                    <div id="checkout-step-1" class="fade-in">
-                        <h4>Chagua Anwani ya Mshipisho</h4>
-                        <div id="address-selection">
-                            <!-- Saved addresses will be loaded here -->
-                        </div>
-                        <div class="mt-3">
-                            <button class="btn btn-outline-primary" id="add-new-address-checkout">Ongeza Anwani Mpya</button>
-                        </div>
-                        <div class="mt-3" id="new-address-form" style="display: none;">
-                            <div class="mb-3">
-                                <label for="new-shipping-address" class="form-label">Anwani Mpya Kamili</label>
-                                <textarea class="form-control" id="new-shipping-address" rows="3"></textarea>
-                            </div>
-                            <button class="btn btn-primary" id="save-new-address">Hifadhi Anwani Mpya</button>
-                        </div>
-                        <div class="mt-3">
-                            <button class="btn btn-primary" id="continue-to-summary" style="display: none;">Endelea kwa Muhtasari</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Step 2: Order Summary -->
-                    <div id="checkout-step-2" class="hidden">
-                        <h4>Muhtasari wa Agizo</h4>
-                        <div class="card slide-in">
-                            <div class="card-body">
-                                <div id="checkout-items">
-                                    <!-- Order items will be loaded here -->
+            <!-- Product Detail Section -->
+            <section id="product-detail-section" class="hidden">
+                <button class="btn btn-outline-secondary mb-3" id="back-to-products">
+                    <i class="fas fa-arrow-left me-2"></i>Rudi kwenye bidhaa
+                </button>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="product-carousel-container">
+                            <div id="productImagesCarousel" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner" id="product-carousel-inner">
+                                    <!-- Product images will be loaded here -->
                                 </div>
-                                <hr>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#productImagesCarousel" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon"></span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#productImagesCarousel" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon"></span>
+                                </button>
+                                <div class="product-carousel-indicators" id="product-carousel-indicators">
+                                    <!-- Indicators will be loaded here -->
+                                </div>
+                            </div>
+                            <div class="product-carousel-thumbnails" id="product-carousel-thumbnails">
+                                <!-- Thumbnails will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h2 id="product-name">Jina la Bidhaa</h2>
+                        <div class="product-rating-display" id="product-rating-display">
+                            <div class="stars" id="product-rating-stars-display">
+                                <!-- Stars will be loaded here -->
+                            </div>
+                            <div class="rating-text" id="product-rating-text">(0 tathmini)</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <span class="price-old" id="old-price"></span>
+                            <span class="price-new" id="current-price">TZS 0</span>
+                            <span class="offer-badge discount-pulse" id="offer-badge" style="display: none;">0% OFF</span>
+                        </div>
+                        
+                        <!-- Enhanced Product Description Section -->
+                        <div class="product-description-container">
+                            <h4>Maelezo ya Bidhaa</h4>
+                            <div class="product-description-text" id="product-description">
+                                Maelezo ya bidhaa yataonyeshwa hapa.
+                            </div>
+                            <div id="description-placeholder" class="description-placeholder hidden">
+                                Bidhaa haina maelezo ya ziada.
+                            </div>
+                        </div>
+                        
+                        <!-- Enhanced Size Selection -->
+                        <div class="size-options-container">
+                            <h5>Chagua Saizi (EU)</h5>
+                            <div class="size-options-grid" id="size-options">
+                                <!-- Size options will be loaded here -->
+                            </div>
+                            <div class="mt-2">
+                                <small class="text-muted">Nambari ndani ya mabano inaonyesha idadi ya akiba kwa kila saizi</small>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex align-items-center mb-4">
+                            <span class="me-3"><strong>Idadi:</strong></span>
+                            <div class="quantity-selector">
+                                <div class="quantity-btn" id="decrease-qty">-</div>
+                                <span id="quantity">1</span>
+                                <div class="quantity-btn" id="increase-qty">+</div>
+                            </div>
+                            <span class="ms-3 text-muted" id="stock-info"></span>
+                            <span id="stock-badge" class="product-availability in-stock"></span>
+                        </div>
+                        
+                        <div class="delivery-estimation">
+                            <h5><i class="fas fa-truck"></i> Makadirio ya Uwasilishaji</h5>
+                            <p class="mb-0">Utapokea Bidhaa Hii: <strong id="delivery-date">Jumamosi ijayo</strong></p>
+                        </div>
+                        
+                        <button class="btn btn-primary btn-lg w-100 floating-action" id="add-to-cart">
+                            <i class="fas fa-shopping-cart me-2"></i>Weka kwenye Karatasi
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Product Details Tabs -->
+                <div class="mt-5">
+                    <ul class="nav nav-tabs" id="productDetailsTabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-bs-toggle="tab" href="#details">Maelezo Zaidi</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#reviews">Tathmini</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content p-3 border border-top-0">
+                        <div class="tab-pane fade show active" id="details">
+                            <!-- Additional product details will be loaded here -->
+                        </div>
+                        <div class="tab-pane fade" id="reviews">
+                            <!-- Reviews will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Cart Section -->
+            <section id="cart-section" class="hidden">
+                <h2 class="section-title">Karatasi Yangu</h2>
+                
+                <div class="row">
+                    <div class="col-md-8">
+                        <div id="cart-items">
+                            <!-- Cart items will be loaded here -->
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card slide-in">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0">Muhtasari wa Agizo</h5>
+                            </div>
+                            <div class="card-body">
                                 <div class="d-flex justify-content-between mb-2">
                                     <span>Jumla ya Bidhaa:</span>
-                                    <span id="checkout-items-count">0 </span>
+                                    <span id="cart-items-count">0 </span>
                                 </div>
                                 <div class="d-flex justify-content-between mb-2">
                                     <span>Jumla ya Bei:</span>
-                                    <span id="checkout-subtotal">TZS 0</span>
+                                    <span id="cart-subtotal">TZS 0</span>
                                 </div>
                                 <div class="d-flex justify-content-between mb-2">
                                     <span>Usafirishaji:</span>
@@ -2052,901 +2266,974 @@
                                 </div>
                                 <div class="d-flex justify-content-between mb-2">
                                     <span>Punguzo:</span>
-                                    <span id="checkout-discount">TZS 0</span>
+                                    <span id="cart-discount">TZS 0</span>
                                 </div>
                                 <hr>
                                 <div class="d-flex justify-content-between mb-3">
                                     <strong>Jumla:</strong>
-                                    <strong id="checkout-total">TZS 0</strong>
+                                    <strong id="cart-total">TZS 0</strong>
                                 </div>
+                                <button class="btn btn-primary w-100 pulse" id="proceed-to-checkout">
+                                    Endelea kwa Malipo
+                                </button>
                             </div>
                         </div>
-                        <button class="btn btn-primary mt-3 pulse" id="proceed-to-payment">Endelea kwa Malipo</button>
                     </div>
-                    
-                    <!-- Step 3: Payment -->
-                    <div id="checkout-step-3" class="hidden">
-                        <h4>Malipo</h4>
-                        <div class="card slide-in">
-                            <div class="card-body">
-                                <p class="mb-3">Malipo yanafanyika kwa pesa taslimu (COD) unapopokea bidhaa.</p>
-                                
-                                <!-- Password Verification for First Order -->
-                                <div class="mb-3" id="password-verification-section" style="display: none;">
-                                    <div class="alert alert-info">
-                                        <i class="fas fa-info-circle me-2"></i>
-                                        Kwa ajili ya usalama, tafadhali ingiza nenosiri lako kuthibitisha agizo lako la kwanza.
+                </div>
+            </section>
+
+            <!-- Checkout Section -->
+            <section id="checkout-section" class="hidden">
+                <h2 class="section-title">Malipo</h2>
+                
+                <!-- Enhanced Checkout Progress -->
+                <div class="checkout-progress">
+                    <div class="progress-step active" id="step-address">
+                        <div class="step-circle">1</div>
+                        <div class="step-label">Anwani</div>
+                    </div>
+                    <div class="progress-step" id="step-summary">
+                        <div class="step-circle">2</div>
+                        <div class="step-label">Muhtasari</div>
+                    </div>
+                    <div class="progress-step" id="step-payment">
+                        <div class="step-circle">3</div>
+                        <div class="step-label">Malipo</div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-8">
+                        <!-- Step 1: Address Selection -->
+                        <div id="checkout-step-1" class="fade-in">
+                            <h4>Chagua Anwani ya Mshipisho</h4>
+                            <div id="address-selection">
+                                <!-- Saved addresses will be loaded here -->
+                            </div>
+                            <div class="mt-3">
+                                <button class="btn btn-outline-primary" id="add-new-address-checkout">Ongeza Anwani Mpya</button>
+                            </div>
+                            <div class="mt-3" id="new-address-form" style="display: none;">
+                                <div class="mb-3">
+                                    <label for="new-shipping-address" class="form-label">Anwani Mpya Kamili</label>
+                                    <textarea class="form-control" id="new-shipping-address" rows="3"></textarea>
+                                </div>
+                                <button class="btn btn-primary" id="save-new-address">Hifadhi Anwani Mpya</button>
+                            </div>
+                            <div class="mt-3">
+                                <button class="btn btn-primary" id="continue-to-summary" style="display: none;">Endelea kwa Muhtasari</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 2: Order Summary -->
+                        <div id="checkout-step-2" class="hidden">
+                            <h4>Muhtasari wa Agizo</h4>
+                            <div class="card slide-in">
+                                <div class="card-body">
+                                    <div id="checkout-items">
+                                        <!-- Order items will be loaded here -->
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="password-verification" class="form-label">Nenosiri lako</label>
-                                        <input type="password" class="form-control" id="password-verification" placeholder="Ingiza nenosiri lako">
-                                        <div class="form-text">
-                                            <span class="forgot-password-link" id="forgot-password-checkout">Umesahau nenosiri?</span>
+                                    <hr>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span>Jumla ya Bidhaa:</span>
+                                        <span id="checkout-items-count">0 </span>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span>Jumla ya Bei:</span>
+                                        <span id="checkout-subtotal">TZS 0</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span>Usafirishaji:</span>
+                                        <span>TZS 0</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span>Punguzo:</span>
+                                        <span id="checkout-discount">TZS 0</span>
+                                    </div>
+                                    <hr>
+                                    <div class="d-flex justify-content-between mb-3">
+                                        <strong>Jumla:</strong>
+                                        <strong id="checkout-total">TZS 0</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary mt-3 pulse" id="proceed-to-payment">Endelea kwa Malipo</button>
+                        </div>
+                        
+                        <!-- Step 3: Payment -->
+                        <div id="checkout-step-3" class="hidden">
+                            <h4>Malipo</h4>
+                            <div class="card slide-in">
+                                <div class="card-body">
+                                    <p class="mb-3">Malipo yanafanyika kwa pesa taslimu (COD) unapopokea bidhaa.</p>
+                                    
+                                    <!-- Password Verification for First Order -->
+                                    <div class="mb-3" id="password-verification-section" style="display: none;">
+                                        <div class="alert alert-info">
+                                            <i class="fas fa-info-circle me-2"></i>
+                                            Kwa ajili ya usalama, tafadhali ingiza nenosiri lako kuthibitisha agizo lako la kwanza.
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="password-verification" class="form-label">Nenosiri lako</label>
+                                            <input type="password" class="form-control" id="password-verification" placeholder="Ingiza nenosiri lako">
+                                            <div class="form-text">
+                                                <span class="forgot-password-link" id="forgot-password-checkout">Umesahau nenosiri?</span>
+                                            </div>
                                         </div>
                                     </div>
+                                    
+                                    <button class="btn btn-success w-100 btn-lg btn-confirm-order" id="confirm-order">
+                                        <span class="btn-text">Thibitisha Agizo</span>
+                                        <i class="fas fa-truck truck-icon"></i>
+                                    </button>
                                 </div>
-                                
-                                <button class="btn btn-success w-100 btn-lg btn-confirm-order" id="confirm-order">
-                                    <span class="btn-text">Thibitisha Agizo</span>
-                                    <i class="fas fa-truck truck-icon"></i>
-                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Account Section -->
-        <section id="account-section" class="hidden">
-            <h2 class="section-title">Akaunti Yangu</h2>
-            
-            <div class="row">
-                <div class="col-md-3">
-                    <ul class="account-menu">
-                        <li class="active" data-account-tab="orders">Agizo Zangu</li>
-                        <li data-account-tab="contact">Mawasiliano</li>
-                        <li data-account-tab="addresses">Anwani Zilizohifadhiwa</li>
-                        <li data-account-tab="profile">Hariri Profaili</li>
-                        <li id="logout-btn">Toka</li>
-                    </ul>
-                </div>
-                <div class="col-md-9">
-                    <!-- Orders Tab -->
-                    <div id="account-orders">
-                        <h4>Historia ya Maagizo</h4>
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Namba ya Agizo</th>
-                                        <th>Jumla</th>
-                                        <th>Hali</th>
-                                        <th>Tarehe</th>
-                                        <th>Vitendo</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="orders-table-body">
-                                    <!-- Orders will be loaded here -->
-                                </tbody>
-                            </table>
-                        </div>
+            <!-- Account Section -->
+            <section id="account-section" class="hidden">
+                <h2 class="section-title">Akaunti Yangu</h2>
+                
+                <div class="row">
+                    <div class="col-md-3">
+                        <ul class="account-menu">
+                            <li class="active" data-account-tab="orders">Agizo Zangu</li>
+                            <li data-account-tab="contact">Mawasiliano</li>
+                            <li data-account-tab="addresses">Anwani Zilizohifadhiwa</li>
+                            <li data-account-tab="profile">Hariri Profaili</li>
+                            <li id="logout-btn">Toka</li>
+                        </ul>
                     </div>
-                    
-                    <!-- Contact Tab -->
-                    <div id="account-contact" class="hidden">
-                        <h4>Mawasiliano</h4>
-                        <div class="contact-links">
-                            <a href="https://wa.me/255777730606" target="_blank">
-                                <i class="fab fa-whatsapp me-2"></i>WhatsApp: +255 777 730 606
-                            </a>
-                            <a href="https://www.instagram.com/four_brothers_sports_center?igsh=d20xYno3dmlwcnJ4" target="_blank">
-                                <i class="fab fa-instagram me-2"></i>Instagram: @four_brothers_sports_center
-                            </a>
-                            <a href="mailto:fourbrothers10112627@gmail.com">
-                                <i class="fas fa-envelope me-2"></i>Email: fourbrothers10112627@gmail.com
-                            </a>
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#messageModal">
-                                <i class="fas fa-comment me-2"></i>Tuma Ujumbe Ndani ya Programu
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <!-- Addresses Tab -->
-                    <div id="account-addresses" class="hidden">
-                        <h4>Anwani Zilizohifadhiwa</h4>
-                        <div id="saved-addresses">
-                            <!-- Saved addresses will be loaded here -->
-                        </div>
-                        <button class="btn btn-primary mt-3" id="add-new-address">Ongeza Anwani Mpya</button>
-                    </div>
-                    
-                    <!-- Profile Tab -->
-                    <div id="account-profile" class="hidden">
-                        <h4>Hariri Profaili</h4>
-                        <form id="profile-form">
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="first-name" class="form-label">Jina la Kwanza</label>
-                                    <input type="text" class="form-control" id="first-name">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="last-name" class="form-label">Jina la Mwisho</label>
-                                    <input type="text" class="form-control" id="last-name">
-                                </div>
+                    <div class="col-md-9">
+                        <!-- Orders Tab -->
+                        <div id="account-orders">
+                            <h4>Historia ya Maagizo</h4>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Namba ya Agizo</th>
+                                            <th>Jumla</th>
+                                            <th>Hali</th>
+                                            <th>Tarehe</th>
+                                            <th>Vitendo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="orders-table-body">
+                                        <!-- Orders will be loaded here -->
+                                    </tbody>
+                                </table>
                             </div>
-                            <div class="mb-3">
-                                <label for="mobile" class="form-label">Nambari ya Simu</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="mobile" readonly>
-                                    <button class="btn btn-outline-secondary" type="button" id="change-mobile-btn">Badilisha</button>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Barua Pepe</label>
-                                <div class="input-group">
-                                    <input type="email" class="form-control" id="email">
-                                    <button class="btn btn-outline-secondary" type="button" id="change-email-btn">Badilisha</button>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="address" class="form-label">Anwani</label>
-                                <textarea class="form-control" id="address" rows="3"></textarea>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Jinsia</label>
-                                <div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="gender" id="male" value="mwanaume">
-                                        <label class="form-check-label" for="male">Mwanaume</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="gender" id="female" value="mwanamke">
-                                        <label class="form-check-label" for="female">Mwanamke</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="gender" id="other" value="nyengine">
-                                        <label class="form-check-label" for="other">Nyengine</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary" id="profile-save-btn">
-                                <span class="btn-text">Hifadhi Mabadiliko</span>
-                            </button>
-                        </form>
-                        
-                        <!-- Change Password Section -->
-                        <div class="mt-5">
-                            <h5>Badilisha Nenosiri</h5>
-                            <form id="change-password-form">
-                                <div class="mb-3">
-                                    <label for="current-password" class="form-label">Nenosiri la Sasa</label>
-                                    <input type="password" class="form-control" id="current-password" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="new-password" class="form-label">Nenosiri Jipya</label>
-                                    <input type="password" class="form-control" id="new-password" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="confirm-new-password" class="form-label">Rudia Nenosiri Jipya</label>
-                                    <input type="password" class="form-control" id="confirm-new-password" required>
-                                </div>
-                                <button type="submit" class="btn btn-primary" id="change-password-btn">
-                                    <span class="btn-text">Badilisha Nenosiri</span>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Login Modal with Professional Styling -->
-        <div class="modal fade" id="loginModal" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Ingia kwenye Akaunti Yako</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="text-center mb-4">
-                            <div class="profile-icon d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 1.5rem; background: var(--primary-color);">
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <h4 class="mt-3">Karibu Tena</h4>
-                            <p class="text-muted">Ingia kwenye akaunti yako ili kuendelea</p>
                         </div>
                         
-                        <form id="login-form" class="modal-form">
-                            <div class="mb-3">
-                                <label for="login-mobile" class="form-label">Nambari ya Simu</label>
-                                <div class="form-field-with-icon">
-                                    <i class="fas fa-phone"></i>
-                                    <input type="text" class="form-control form-control-lg" id="login-mobile" placeholder="07XX XXX XXX" required>
-                                </div>
+                        <!-- Contact Tab -->
+                        <div id="account-contact" class="hidden">
+                            <h4>Mawasiliano</h4>
+                            <div class="contact-links">
+                                <a href="https://wa.me/255777730606" target="_blank">
+                                    <i class="fab fa-whatsapp me-2"></i>WhatsApp: +255 777 730 606
+                                </a>
+                                <a href="https://www.instagram.com/four_brothers_sports_center?igsh=d20xYno3dmlwcnJ4" target="_blank">
+                                    <i class="fab fa-instagram me-2"></i>Instagram: @four_brothers_sports_center
+                                </a>
+                                <a href="mailto:fourbrothers10112627@gmail.com">
+                                    <i class="fas fa-envelope me-2"></i>Email: fourbrothers10112627@gmail.com
+                                </a>
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#messageModal">
+                                    <i class="fas fa-comment me-2"></i>Tuma Ujumbe Ndani ya Programu
+                                </a>
                             </div>
-                            <div class="mb-3">
-                                <label for="login-password" class="form-label">Nenosiri</label>
-                                <div class="form-field-with-icon">
-                                    <i class="fas fa-lock"></i>
-                                    <input type="password" class="form-control form-control-lg" id="login-password" placeholder="Ingiza nenosiri lako" required>
-                                </div>
-                                <div class="form-text text-end">
-                                    <span class="forgot-password-link" id="forgot-password-login">Umesahau nenosiri?</span>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary w-100 btn-lg mt-3" id="login-submit-btn">
-                                <i class="fas fa-sign-in-alt me-2"></i>
-                                <span class="btn-text">Ingia</span>
-                            </button>
-                        </form>
-                        
-                        <div class="form-divider">
-                            <span>Ama</span>
                         </div>
                         
-                        <div class="text-center mt-4">
-                            <p class="mb-0">Huna akaunti? 
-                                <a href="#" class="auth-switch-link" id="show-register">Jiandikishe hapa</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Registration Modal with Professional Styling -->
-        <div class="modal fade" id="registerModal" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Jiandikishe Sasa</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="text-center mb-4">
-                            <div class="profile-icon d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 1.5rem; background: var(--accent-color);">
-                                <i class="fas fa-user-plus"></i>
+                        <!-- Addresses Tab -->
+                        <div id="account-addresses" class="hidden">
+                            <h4>Anwani Zilizohifadhiwa</h4>
+                            <div id="saved-addresses">
+                                <!-- Saved addresses will be loaded here -->
                             </div>
-                            <h4 class="mt-3">Uanze Safari Yako</h4>
-                            <p class="text-muted">Unda akaunti yako kwa dakika chache tu</p>
+                            <button class="btn btn-primary mt-3" id="add-new-address">Ongeza Anwani Mpya</button>
                         </div>
                         
-                        <form id="register-form" class="modal-form">
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="reg-first-name" class="form-label">Jina la Kwanza</label>
-                                    <div class="form-field-with-icon">
-                                        <i class="fas fa-user"></i>
-                                        <input type="text" class="form-control" id="reg-first-name" placeholder="Mohammed" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="reg-last-name" class="form-label">Jina la Mwisho</label>
-                                    <div class="form-field-with-icon">
-                                        <i class="fas fa-user"></i>
-                                        <input type="text" class="form-control" id="reg-last-name" placeholder="Shehe" required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="reg-mobile" class="form-label">Nambari ya Simu</label>
-                                <div class="form-field-with-icon">
-                                    <i class="fas fa-phone"></i>
-                                    <input type="text" class="form-control" id="reg-mobile" placeholder="07XX XXX XXX" required>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="reg-password" class="form-label">Nenosiri</label>
-                                <div class="form-field-with-icon">
-                                    <i class="fas fa-lock"></i>
-                                    <input type="password" class="form-control" id="reg-password" placeholder="Chagua nenosiri lenye nguvu" required>
-                                </div>
-                                <div class="password-strength">
-                                    <div class="password-strength-meter" id="password-strength-meter"></div>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="reg-confirm-password" class="form-label">Rudia Nenosiri</label>
-                                <div class="form-field-with-icon">
-                                    <i class="fas fa-lock"></i>
-                                    <input type="password" class="form-control" id="reg-confirm-password" placeholder="Rudia nenosiri lako" required>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="reg-email" class="form-label">Barua Pepe (Hiari)</label>
-                                <div class="form-field-with-icon">
-                                    <i class="fas fa-envelope"></i>
-                                    <input type="email" class="form-control" id="reg-email" placeholder="jina@mfano.com">
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="reg-address" class="form-label">Anwani Kamili</label>
-                                <div class="form-field-with-icon">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    <textarea class="form-control" id="reg-address" rows="2" placeholder="Andika anwani yako kamili" required></textarea>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Jinsia</label>
-                                <div class="d-flex gap-3">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="reg-gender" id="reg-male" value="mwanaume" required>
-                                        <label class="form-check-label" for="reg-male">
-                                            <i class="fas fa-male me-1"></i> Mwanaume
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="reg-gender" id="reg-female" value="mwanamke">
-                                        <label class="form-check-label" for="reg-female">
-                                            <i class="fas fa-female me-1"></i> Mwanamke
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="reg-gender" id="reg-other" value="nyengine">
-                                        <label class="form-check-label" for="reg-other">
-                                            <i class="fas fa-user me-1"></i> Nyengine
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="agree-terms" required>
-                                <label class="form-check-label" for="agree-terms">
-                                    Nimekubaliana na 
-                                    <a href="regulations.html" target="_blank" class="terms-link" id="terms-link">Masharti ya Huduma</a>
-                                </label>
-                            </div>
-                            <button type="submit" class="btn btn-primary w-100 btn-lg" id="register-submit-btn">
-                                <i class="fas fa-user-plus me-2"></i>
-                                <span class="btn-text">Jiandikishe</span>
-                            </button>
-                        </form>
-                        
-                        <div class="text-center mt-4">
-                            <p class="mb-0">Tayari una akaunti? 
-                                <a href="#" class="auth-switch-link" id="show-login">Ingia hapa</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Forgot Password Modal with Professional Styling -->
-        <div class="modal fade" id="forgotPasswordModal" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Umesahau Nenosiri?</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="text-center mb-4">
-                            <div class="profile-icon d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 1.5rem; background: var(--warning-color);">
-                                <i class="fas fa-key"></i>
-                            </div>
-                            <h4 class="mt-3">Pata Upya Nenosiri Lako</h4>
-                            <p class="text-muted">Tutakusaidia kupata nenosiri lako upya kwa urahisi</p>
-                        </div>
-                        
-                        <div id="forgot-password-step-1">
-                            <form id="forgot-password-form">
-                                <div class="mb-4">
-                                    <p class="mb-3">Weka jina lako la kwanza na jina la mwisho kuthibitisha utambulisho wako.</p>
-                                </div>
+                        <!-- Profile Tab -->
+                        <div id="account-profile" class="hidden">
+                            <h4>Hariri Profaili</h4>
+                            <form id="profile-form">
                                 <div class="row mb-3">
                                     <div class="col-md-6">
-                                        <label for="forgot-first-name" class="form-label">Jina la Kwanza</label>
+                                        <label for="first-name" class="form-label">Jina la Kwanza</label>
+                                        <input type="text" class="form-control" id="first-name">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="last-name" class="form-label">Jina la Mwisho</label>
+                                        <input type="text" class="form-control" id="last-name">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="mobile" class="form-label">Nambari ya Simu</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="mobile" readonly>
+                                        <button class="btn btn-outline-secondary" type="button" id="change-mobile-btn">Badilisha</button>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Barua Pepe</label>
+                                    <div class="input-group">
+                                        <input type="email" class="form-control" id="email">
+                                        <button class="btn btn-outline-secondary" type="button" id="change-email-btn">Badilisha</button>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="address" class="form-label">Anwani</label>
+                                    <textarea class="form-control" id="address" rows="3"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Jinsia</label>
+                                    <div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="gender" id="male" value="mwanaume">
+                                            <label class="form-check-label" for="male">Mwanaume</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="gender" id="female" value="mwanamke">
+                                            <label class="form-check-label" for="female">Mwanamke</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary" id="profile-save-btn">
+                                    <span class="btn-text">Hifadhi Mabadiliko</span>
+                                </button>
+                            </form>
+                            
+                            <!-- Change Password Section -->
+                            <div class="mt-5">
+                                <h5>Badilisha Nenosiri</h5>
+                                <form id="change-password-form">
+                                    <div class="mb-3">
+                                        <label for="current-password" class="form-label">Nenosiri la Sasa</label>
+                                        <input type="password" class="form-control" id="current-password" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="new-password" class="form-label">Nenosiri Jipya</label>
+                                        <input type="password" class="form-control" id="new-password" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="confirm-new-password" class="form-label">Rudia Nenosiri Jipya</label>
+                                        <input type="password" class="form-control" id="confirm-new-password" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary" id="change-password-btn">
+                                        <span class="btn-text">Badilisha Nenosiri</span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Login Modal with Professional Styling -->
+            <div class="modal fade" id="loginModal" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Ingia kwenye Akaunti Yako</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center mb-4">
+                                <div class="profile-icon d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 1.5rem; background: var(--primary-color);">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <h4 class="mt-3">Karibu Tena</h4>
+                                <p class="text-muted">Ingia kwenye akaunti yako ili kuendelea</p>
+                            </div>
+                            
+                            <form id="login-form" class="modal-form">
+                                <div class="mb-3">
+                                    <label for="login-mobile" class="form-label">Nambari ya Simu</label>
+                                    <div class="form-field-with-icon">
+                                        <i class="fas fa-phone"></i>
+                                        <input type="text" class="form-control form-control-lg" id="login-mobile" placeholder="07XX XXX XXX" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="login-password" class="form-label">Nenosiri</label>
+                                    <div class="form-field-with-icon">
+                                        <i class="fas fa-lock"></i>
+                                        <input type="password" class="form-control form-control-lg" id="login-password" placeholder="Ingiza nenosiri lako" required>
+                                    </div>
+                                    <div class="form-text text-end">
+                                        <span class="forgot-password-link" id="forgot-password-login">Umesahau nenosiri?</span>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100 btn-lg mt-3" id="login-submit-btn">
+                                    <i class="fas fa-sign-in-alt me-2"></i>
+                                    <span class="btn-text">Ingia</span>
+                                </button>
+                            </form>
+                            
+                            <div class="form-divider">
+                                <span>Ama</span>
+                            </div>
+                            
+                            <div class="text-center mt-4">
+                                <p class="mb-0">Huna akaunti? 
+                                    <a href="#" class="auth-switch-link" id="show-register">Jiandikishe hapa</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Registration Modal with Professional Styling -->
+            <div class="modal fade" id="registerModal" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Jiandikishe Sasa</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center mb-4">
+                                <div class="profile-icon d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 1.5rem; background: var(--accent-color);">
+                                    <i class="fas fa-user-plus"></i>
+                                </div>
+                                <h4 class="mt-3">Uanze Safari Yako</h4>
+                                <p class="text-muted">Unda akaunti yako kwa dakika chache tu</p>
+                            </div>
+                            
+                            <form id="register-form" class="modal-form">
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="reg-first-name" class="form-label">Jina la Kwanza</label>
                                         <div class="form-field-with-icon">
                                             <i class="fas fa-user"></i>
-                                            <input type="text" class="form-control" id="forgot-first-name" placeholder="Mohammed" required>
+                                            <input type="text" class="form-control" id="reg-first-name" placeholder="Mohammed" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="forgot-last-name" class="form-label">Jina la Mwisho</label>
+                                        <label for="reg-last-name" class="form-label">Jina la Mwisho</label>
                                         <div class="form-field-with-icon">
                                             <i class="fas fa-user"></i>
-                                            <input type="text" class="form-control" id="forgot-last-name" placeholder="Shehe" required>
+                                            <input type="text" class="form-control" id="reg-last-name" placeholder="Shehe" required>
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary w-100" id="forgot-password-submit-btn">
-                                    <i class="fas fa-arrow-right me-2"></i>
-                                    <span class="btn-text">Endelea</span>
-                                </button>
-                            </form>
-                        </div>
-                        
-                        <div id="forgot-password-step-2" class="hidden">
-                            <div class="text-center mb-4">
-                                <p class="mb-3">Chagua kile unachotaka kubadilisha:</p>
-                            </div>
-                            <div class="reset-options">
-                                <button class="btn btn-outline-primary btn-lg mb-3" id="reset-password-btn">
-                                    <i class="fas fa-lock me-2"></i>Badilisha Nenosiri
-                                </button>
-                                <button class="btn btn-outline-secondary btn-lg" id="reset-mobile-btn">
-                                    <i class="fas fa-phone me-2"></i>Badilisha Nambari ya Simu
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <!-- Reset Password Form -->
-                        <div id="reset-password-form" class="hidden">
-                            <div class="text-center mb-4">
-                                <p class="mb-3">Weka nenosiri jipya lako:</p>
-                            </div>
-                            <form id="new-password-form">
                                 <div class="mb-3">
-                                    <label for="new-password-reset" class="form-label">Nenosiri Jipya</label>
-                                    <div class="form-field-with-icon">
-                                        <i class="fas fa-lock"></i>
-                                        <input type="password" class="form-control" id="new-password-reset" placeholder="Nenosiri jipya" required>
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="confirm-new-password-reset" class="form-label">Rudia Nenosiri Jipya</label>
-                                    <div class="form-field-with-icon">
-                                        <i class="fas fa-lock"></i>
-                                        <input type="password" class="form-control" id="confirm-new-password-reset" placeholder="Rudia nenosiri jipya" required>
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-primary w-100" id="reset-password-submit-btn">
-                                    <i class="fas fa-check me-2"></i>
-                                    <span class="btn-text">Weka Nenosiri Jipya</span>
-                                </button>
-                            </form>
-                        </div>
-                        
-                        <!-- Reset Mobile Form -->
-                        <div id="reset-mobile-form" class="hidden">
-                            <div class="text-center mb-4">
-                                <p class="mb-3">Weka nambari mpya ya simu:</p>
-                            </div>
-                            <form id="new-mobile-form">
-                                <div class="mb-3">
-                                    <label for="new-mobile" class="form-label">Nambari Mpya ya Simu</label>
+                                    <label for="reg-mobile" class="form-label">Nambari ya Simu</label>
                                     <div class="form-field-with-icon">
                                         <i class="fas fa-phone"></i>
-                                        <input type="text" class="form-control" id="new-mobile" placeholder="07XX XXX XXX" required>
+                                        <input type="text" class="form-control" id="reg-mobile" placeholder="07XX XXX XXX" required>
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="confirm-new-mobile" class="form-label">Rudia Nambari ya Simu</label>
+                                    <label for="reg-password" class="form-label">Nenosiri</label>
                                     <div class="form-field-with-icon">
-                                        <i class="fas fa-phone"></i>
-                                        <input type="text" class="form-control" id="confirm-new-mobile" placeholder="Rudia nambari ya simu" required>
+                                        <i class="fas fa-lock"></i>
+                                        <input type="password" class="form-control" id="reg-password" placeholder="Chagua nenosiri lenye nguvu" required>
+                                    </div>
+                                    <div class="password-strength">
+                                        <div class="password-strength-meter" id="password-strength-meter"></div>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary w-100" id="reset-mobile-submit-btn">
-                                    <i class="fas fa-check me-2"></i>
-                                    <span class="btn-text">Weka Nambari Mpya</span>
+                                <div class="mb-3">
+                                    <label for="reg-confirm-password" class="form-label">Rudia Nenosiri</label>
+                                    <div class="form-field-with-icon">
+                                        <i class="fas fa-lock"></i>
+                                        <input type="password" class="form-control" id="reg-confirm-password" placeholder="Rudia nenosiri lako" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="reg-email" class="form-label">Barua Pepe (Hiari)</label>
+                                    <div class="form-field-with-icon">
+                                        <i class="fas fa-envelope"></i>
+                                        <input type="email" class="form-control" id="reg-email" placeholder="jina@mfano.com">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="reg-address" class="form-label">Anwani Kamili</label>
+                                    <div class="form-field-with-icon">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <textarea class="form-control" id="reg-address" rows="2" placeholder="Andika anwani yako kamili" required></textarea>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Jinsia</label>
+                                    <div class="d-flex gap-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="reg-gender" id="reg-male" value="mwanaume" required>
+                                            <label class="form-check-label" for="reg-male">
+                                                <i class="fas fa-male me-1"></i> Mwanaume
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="reg-gender" id="reg-female" value="mwanamke">
+                                            <label class="form-check-label" for="reg-female">
+                                                <i class="fas fa-female me-1"></i> Mwanamke
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="agree-terms" required>
+                                    <label class="form-check-label" for="agree-terms">
+                                        Nimekubaliana na 
+                                        <a href="regulations.html" target="_blank" class="terms-link" id="terms-link">Masharti ya Huduma</a>
+                                    </label>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100 btn-lg" id="register-submit-btn">
+                                    <i class="fas fa-user-plus me-2"></i>
+                                    <span class="btn-text">Jiandikishe</span>
+                                </button>
+                            </form>
+                            
+                            <div class="text-center mt-4">
+                                <p class="mb-0">Tayari una akaunti? 
+                                    <a href="#" class="auth-switch-link" id="show-login">Ingia hapa</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Forgot Password Modal with Professional Styling -->
+            <div class="modal fade" id="forgotPasswordModal" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Umesahau Nenosiri?</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center mb-4">
+                                <div class="profile-icon d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 1.5rem; background: var(--warning-color);">
+                                    <i class="fas fa-key"></i>
+                                </div>
+                                <h4 class="mt-3">Pata Upya Nenosiri Lako</h4>
+                                <p class="text-muted">Tutakusaidia kupata nenosiri lako upya kwa urahisi</p>
+                            </div>
+                            
+                            <div id="forgot-password-step-1">
+                                <form id="forgot-password-form">
+                                    <div class="mb-4">
+                                        <p class="mb-3">Weka jina lako la kwanza na jina la mwisho kuthibitisha utambulisho wako.</p>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="forgot-first-name" class="form-label">Jina la Kwanza</label>
+                                            <div class="form-field-with-icon">
+                                                <i class="fas fa-user"></i>
+                                                <input type="text" class="form-control" id="forgot-first-name" placeholder="Mohammed" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="forgot-last-name" class="form-label">Jina la Mwisho</label>
+                                            <div class="form-field-with-icon">
+                                                <i class="fas fa-user"></i>
+                                                <input type="text" class="form-control" id="forgot-last-name" placeholder="Shehe" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary w-100" id="forgot-password-submit-btn">
+                                        <i class="fas fa-arrow-right me-2"></i>
+                                        <span class="btn-text">Endelea</span>
+                                    </button>
+                                </form>
+                            </div>
+                            
+                            <div id="forgot-password-step-2" class="hidden">
+                                <div class="text-center mb-4">
+                                    <p class="mb-3">Chagua kile unachotaka kubadilisha:</p>
+                                </div>
+                                <div class="reset-options">
+                                    <button class="btn btn-outline-primary btn-lg mb-3" id="reset-password-btn">
+                                        <i class="fas fa-lock me-2"></i>Badilisha Nenosiri
+                                    </button>
+                                    <button class="btn btn-outline-secondary btn-lg" id="reset-mobile-btn">
+                                        <i class="fas fa-phone me-2"></i>Badilisha Nambari ya Simu
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Reset Password Form -->
+                            <div id="reset-password-form" class="hidden">
+                                <div class="text-center mb-4">
+                                    <p class="mb-3">Weka nenosiri jipya lako:</p>
+                                </div>
+                                <form id="new-password-form">
+                                    <div class="mb-3">
+                                        <label for="new-password-reset" class="form-label">Nenosiri Jipya</label>
+                                        <div class="form-field-with-icon">
+                                            <i class="fas fa-lock"></i>
+                                            <input type="password" class="form-control" id="new-password-reset" placeholder="Nenosiri jipya" required>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="confirm-new-password-reset" class="form-label">Rudia Nenosiri Jipya</label>
+                                        <div class="form-field-with-icon">
+                                            <i class="fas fa-lock"></i>
+                                            <input type="password" class="form-control" id="confirm-new-password-reset" placeholder="Rudia nenosiri jipya" required>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary w-100" id="reset-password-submit-btn">
+                                        <i class="fas fa-check me-2"></i>
+                                        <span class="btn-text">Weka Nenosiri Jipya</span>
+                                    </button>
+                                </form>
+                            </div>
+                            
+                            <!-- Reset Mobile Form -->
+                            <div id="reset-mobile-form" class="hidden">
+                                <div class="text-center mb-4">
+                                    <p class="mb-3">Weka nambari mpya ya simu:</p>
+                                </div>
+                                <form id="new-mobile-form">
+                                    <div class="mb-3">
+                                        <label for="new-mobile" class="form-label">Nambari Mpya ya Simu</label>
+                                        <div class="form-field-with-icon">
+                                            <i class="fas fa-phone"></i>
+                                            <input type="text" class="form-control" id="new-mobile" placeholder="07XX XXX XXX" required>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="confirm-new-mobile" class="form-label">Rudia Nambari ya Simu</label>
+                                        <div class="form-field-with-icon">
+                                            <i class="fas fa-phone"></i>
+                                            <input type="text" class="form-control" id="confirm-new-mobile" placeholder="Rudia nambari ya simu" required>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary w-100" id="reset-mobile-submit-btn">
+                                        <i class="fas fa-check me-2"></i>
+                                        <span class="btn-text">Weka Nambari Mpya</span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Password Verification Modal for Order Confirmation -->
+            <div class="modal fade" id="passwordVerificationModal" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Thibitisha kwa Nenosiri</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body password-verification text-center">
+                            <div class="profile-icon d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; font-size: 1.5rem; background: var(--success-color);">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <p class="mb-3">Tafadhali ingiza nenosiri lako kuthibitisha agizo:</p>
+                            <form id="password-verification-form">
+                                <input type="hidden" id="verification-order-id">
+                                <div class="mb-3">
+                                    <label for="verification-password" class="form-label">Nenosiri lako</label>
+                                    <div class="form-field-with-icon">
+                                        <i class="fas fa-lock"></i>
+                                        <input type="password" class="form-control form-control-lg" id="verification-password" placeholder="Ingiza nenosiri lako" required>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100 btn-lg" id="password-verification-submit-btn">
+                                    <i class="fas fa-check-circle me-2"></i>
+                                    <span class="btn-text">Nimepokea</span>
                                 </button>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Password Verification Modal for Order Confirmation -->
-        <div class="modal fade" id="passwordVerificationModal" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Thibitisha kwa Nenosiri</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body password-verification text-center">
-                        <div class="profile-icon d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; font-size: 1.5rem; background: var(--success-color);">
-                            <i class="fas fa-shield-alt"></i>
+            <!-- Message Modal with Professional Styling -->
+            <div class="modal fade" id="messageModal" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Tuma Ujumbe</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
-                        <p class="mb-3">Tafadhali ingiza nenosiri lako kuthibitisha agizo:</p>
-                        <form id="password-verification-form">
-                            <input type="hidden" id="verification-order-id">
-                            <div class="mb-3">
-                                <label for="verification-password" class="form-label">Nenosiri lako</label>
-                                <div class="form-field-with-icon">
-                                    <i class="fas fa-lock"></i>
-                                    <input type="password" class="form-control form-control-lg" id="verification-password" placeholder="Ingiza nenosiri lako" required>
+                        <div class="modal-body">
+                            <div class="text-center mb-4">
+                                <div class="profile-icon d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 1.5rem; background: var(--accent-color);">
+                                    <i class="fas fa-comment-alt"></i>
                                 </div>
+                                <h4 class="mt-3">Wasiliana Nasi</h4>
+                                <p class="text-muted">Tuma ujumbe wako na tutakujibu kwa haraka</p>
                             </div>
-                            <button type="submit" class="btn btn-primary w-100 btn-lg" id="password-verification-submit-btn">
-                                <i class="fas fa-check-circle me-2"></i>
-                                <span class="btn-text">Nimepokea</span>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Message Modal with Professional Styling -->
-        <div class="modal fade" id="messageModal" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Tuma Ujumbe</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="text-center mb-4">
-                            <div class="profile-icon d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 1.5rem; background: var(--accent-color);">
-                                <i class="fas fa-comment-alt"></i>
-                            </div>
-                            <h4 class="mt-3">Wasiliana Nasi</h4>
-                            <p class="text-muted">Tuma ujumbe wako na tutakujibu kwa haraka</p>
+                            <form id="message-form">
+                                <div class="mb-3">
+                                    <label for="message-content" class="form-label">Ujumbe Wako</label>
+                                    <div class="form-field-with-icon">
+                                        <i class="fas fa-edit"></i>
+                                        <textarea class="form-control" id="message-content" rows="4" placeholder="Andika ujumbe wako hapa..." required></textarea>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100 btn-lg" id="message-submit-btn">
+                                    <i class="fas fa-paper-plane me-2"></i>
+                                    <span class="btn-text">Tuma Ujumbe</span>
+                                </button>
+                            </form>
                         </div>
-                        <form id="message-form">
-                            <div class="mb-3">
-                                <label for="message-content" class="form-label">Ujumbe Wako</label>
-                                <div class="form-field-with-icon">
-                                    <i class="fas fa-edit"></i>
-                                    <textarea class="form-control" id="message-content" rows="4" placeholder="Andika ujumbe wako hapa..." required></textarea>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary w-100 btn-lg" id="message-submit-btn">
-                                <i class="fas fa-paper-plane me-2"></i>
-                                <span class="btn-text">Tuma Ujumbe</span>
-                            </button>
-                        </form>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Enhanced Order Success Modal -->
-        <div class="modal fade" id="orderSuccessModal" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-body text-center py-5 order-success-animation">
-                        <i class="fas fa-check-circle success-icon"></i>
-                        <h3>Agizo Limefanikiwa!</h3>
-                        <p class="mb-4">Ahsante kwa ununuzi wako. Tutawasiliana nawe kuhusu mshipisho.</p>
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Endelea na Ununuzi</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Enhanced Rating Modal -->
-        <div class="modal fade" id="ratingModal" tabindex="-1">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Tathmini Agizo</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="text-center mb-4">
-                            <div class="profile-icon d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 1.5rem; background: var(--warning-color);">
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <h4 class="mt-3">Tathmini Uzoefu Wako</h4>
-                            <p class="text-muted">Shiriki maoni yako na tusaidie kuboresha huduma zetu</p>
+            <!-- Enhanced Order Success Modal -->
+            <div class="modal fade" id="orderSuccessModal" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-body text-center py-5 order-success-animation">
+                            <i class="fas fa-check-circle success-icon"></i>
+                            <h3>Agizo Limefanikiwa!</h3>
+                            <p class="mb-4">Ahsante kwa ununuzi wako. Tutawasiliana nawe kuhusu mshipisho.</p>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Endelea na Ununuzi</button>
                         </div>
-                        
-                        <form id="rating-form">
-                            <input type="hidden" id="rating-order-id">
-                            
-                            <div class="rating-section">
-                                <div class="rating-label">Tathmini ya Kifurushi</div>
-                                <div class="enhanced-rating">
-                                    <div class="star-rating" id="package-rating">
-                                        <span class="star" data-rating="1">★</span>
-                                        <span class="star" data-rating="2">★</span>
-                                        <span class="star" data-rating="3">★</span>
-                                        <span class="star" data-rating="4">★</span>
-                                        <span class="star" data-rating="5">★</span>
-                                    </div>
-                                    <div class="rating-value" id="package-rating-value">0</div>
-                                </div>
-                                <div class="rating-comment" id="package-comment">Bonyeza nyota kuweka tathmini</div>
-                            </div>
-                            
-                            <div class="rating-section">
-                                <div class="rating-label">Tathmini ya Usafirishaji</div>
-                                <div class="enhanced-rating">
-                                    <div class="star-rating" id="delivery-rating">
-                                        <span class="star" data-rating="1">★</span>
-                                        <span class="star" data-rating="2">★</span>
-                                        <span class="star" data-rating="3">★</span>
-                                        <span class="star" data-rating="4">★</span>
-                                        <span class="star" data-rating="5">★</span>
-                                    </div>
-                                    <div class="rating-value" id="delivery-rating-value">0</div>
-                                </div>
-                                <div class="rating-comment" id="delivery-comment">Bonyeza nyota kuweka tathmini</div>
-                            </div>
-                            
-                            <div class="rating-section">
-                                <div class="rating-label">Tathmini ya Bidhaa</div>
-                                <div class="enhanced-rating">
-                                    <div class="star-rating" id="product-rating-stars">
-                                        <span class="star" data-rating="1">★</span>
-                                        <span class="star" data-rating="2">★</span>
-                                        <span class="star" data-rating="3">★</span>
-                                        <span class="star" data-rating="4">★</span>
-                                        <span class="star" data-rating="5">★</span>
-                                    </div>
-                                    <div class="rating-value" id="product-rating-value">0</div>
-                                </div>
-                                <div class="rating-comment" id="product-comment">Bonyeza nyota kuweka tathmini</div>
-                            </div>
-                            
-                            <div class="mb-4">
-                                <label for="overall-comment" class="form-label">Maoni Yako (Hiari)</label>
-                                <div class="form-field-with-icon">
-                                    <i class="fas fa-comment"></i>
-                                    <textarea class="form-control" id="overall-comment" rows="3" placeholder="Andika maoni yako kuhusu agizo lako..."></textarea>
-                                </div>
-                            </div>
-                            
-                            <button type="submit" class="btn btn-primary w-100 btn-lg" id="rating-submit-btn">
-                                <i class="fas fa-paper-plane me-2"></i>
-                                <span class="btn-text">Wasilisha Tathmini Yako</span>
-                            </button>
-                        </form>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Enhanced Return Order Modal -->
-        <div class="modal fade" id="returnOrderModal" tabindex="-1">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Omba Kurudisha Agizo</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="return-period-info">
-                            <i class="fas fa-info-circle me-2"></i>
-                            <strong>Muhimu:</strong> Unaweza kurudisha bidhaa ndani ya siku 3 baada ya kupokea agizo. Tafadhali hakikisha bidhaa ziko katika hali yake ya awali.
+            <!-- Enhanced Rating Modal -->
+            <div class="modal fade" id="ratingModal" tabindex="-1">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Tathmini Agizo</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
-                        
-                        <form id="return-order-form">
-                            <input type="hidden" id="return-order-id">
+                        <div class="modal-body">
+                            <div class="text-center mb-4">
+                                <div class="profile-icon d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 1.5rem; background: var(--warning-color);">
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <h4 class="mt-3">Tathmini Uzoefu Wako</h4>
+                                <p class="text-muted">Shiriki maoni yako na tusaidie kuboresha huduma zetu</p>
+                            </div>
                             
-                            <div class="mb-4">
-                                <label class="form-label">Chagua Sababu ya Kurudisha</label>
-                                <div class="mb-2">
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="radio" name="return-reason-type" id="reason-size" value="Saizi haifai">
-                                        <label class="form-check-label" for="reason-size">
-                                            <i class="fas fa-ruler me-2"></i>Saizi haifai
-                                        </label>
+                            <form id="rating-form">
+                                <input type="hidden" id="rating-order-id">
+                                
+                                <div class="rating-section">
+                                    <div class="rating-label">Tathmini ya Kifurushi</div>
+                                    <div class="enhanced-rating">
+                                        <div class="star-rating" id="package-rating">
+                                            <span class="star" data-rating="1">★</span>
+                                            <span class="star" data-rating="2">★</span>
+                                            <span class="star" data-rating="3">★</span>
+                                            <span class="star" data-rating="4">★</span>
+                                            <span class="star" data-rating="5">★</span>
+                                        </div>
+                                        <div class="rating-value" id="package-rating-value">0</div>
                                     </div>
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="radio" name="return-reason-type" id="reason-color" value="Rangi si sahihi">
-                                        <label class="form-check-label" for="reason-color">
-                                            <i class="fas fa-palette me-2"></i>Rangi si sahihi
-                                        </label>
+                                    <div class="rating-comment" id="package-comment">Bonyeza nyota kuweka tathmini</div>
+                                </div>
+                                
+                                <div class="rating-section">
+                                    <div class="rating-label">Tathmini ya Usafirishaji</div>
+                                    <div class="enhanced-rating">
+                                        <div class="star-rating" id="delivery-rating">
+                                            <span class="star" data-rating="1">★</span>
+                                            <span class="star" data-rating="2">★</span>
+                                            <span class="star" data-rating="3">★</span>
+                                            <span class="star" data-rating="4">★</span>
+                                            <span class="star" data-rating="5">★</span>
+                                        </div>
+                                        <div class="rating-value" id="delivery-rating-value">0</div>
                                     </div>
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="radio" name="return-reason-type" id="reason-damaged" value="Bidhaa imeharibika">
-                                        <label class="form-check-label" for="reason-damaged">
-                                            <i class="fas fa-exclamation-triangle me-2"></i>Bidhaa imeharibika
-                                        </label>
+                                    <div class="rating-comment" id="delivery-comment">Bonyeza nyota kuweka tathmini</div>
+                                </div>
+                                
+                                <div class="rating-section">
+                                    <div class="rating-label">Tathmini ya Bidhaa</div>
+                                    <div class="enhanced-rating">
+                                        <div class="star-rating" id="product-rating-stars">
+                                            <span class="star" data-rating="1">★</span>
+                                            <span class="star" data-rating="2">★</span>
+                                            <span class="star" data-rating="3">★</span>
+                                            <span class="star" data-rating="4">★</span>
+                                            <span class="star" data-rating="5">★</span>
+                                        </div>
+                                        <div class="rating-value" id="product-rating-value">0</div>
                                     </div>
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="radio" name="return-reason-type" id="reason-wrong" value="Bidhaa nyingine tofauti">
-                                        <label class="form-check-label" for="reason-wrong">
-                                            <i class="fas fa-exchange-alt me-2"></i>Bidhaa nyingine tofauti
-                                        </label>
-                                    </div>
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="radio" name="return-reason-type" id="reason-other" value="Nyingine">
-                                        <label class="form-check-label" for="reason-other">
-                                            <i class="fas fa-ellipsis-h me-2"></i>Nyingine
-                                        </label>
+                                    <div class="rating-comment" id="product-comment">Bonyeza nyota kuweka tathmini</div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label for="overall-comment" class="form-label">Maoni Yako (Hiari)</label>
+                                    <div class="form-field-with-icon">
+                                        <i class="fas fa-comment"></i>
+                                        <textarea class="form-control" id="overall-comment" rows="3" placeholder="Andika maoni yako kuhusu agizo lako..."></textarea>
                                     </div>
                                 </div>
-                            </div>
-                            
-                            <div class="mb-4">
-                                <label for="return-reason-details" class="form-label">Maelezo Zaidi (Inahitajika)</label>
-                                <div class="form-field-with-icon">
-                                    <i class="fas fa-edit"></i>
-                                    <textarea class="form-control" id="return-reason-details" rows="3" placeholder="Eleza kwa undani kwa nini unataka kurudisha bidhaa hii..." required></textarea>
-                                </div>
-                            </div>
-                            
-                            <div class="mb-4">
-                                <label class="form-label">Hali ya Bidhaa</label>
-                                <div>
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="checkbox" id="original-packaging">
-                                        <label class="form-check-label" for="original-packaging">
-                                            Bidhaa iko kwenye kifurushi chake asili
-                                        </label>
-                                    </div>
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="checkbox" id="tags-attached">
-                                        <label class="form-check-label" for="tags-attached">
-                                            Lebo na vitambulisho vimeachwa
-                                        </label>
-                                    </div>
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="checkbox" id="not-used">
-                                        <label class="form-check-label" for="not-used">
-                                            Bidhaa haijatumika
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <button type="submit" class="btn btn-primary w-100 btn-lg" id="return-order-submit-btn">
-                                <i class="fas fa-undo me-2"></i>
-                                <span class="btn-text">Wasilisha Ombi la Kurudisha</span>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Cancel Order Modal -->
-        <div class="modal fade" id="cancelOrderModal" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Batilisha Agizo</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="cancel-order-form">
-                            <input type="hidden" id="cancel-order-id">
-                            
-                            <div class="mb-4">
-                                <label class="form-label">Chagua Sababu ya Kughairi</label>
-                                <div class="mb-2">
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="radio" name="cancel-reason-type" id="cancel-change-mind" value="Nimebadilisha nia">
-                                        <label class="form-check-label" for="cancel-change-mind">
-                                            Nimebadilisha nia
-                                        </label>
-                                    </div>
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="radio" name="cancel-reason-type" id="cancel-price" value="Bei sio sahihi">
-                                        <label class="form-check-label" for="cancel-price">
-                                            Bei sio sahihi
-                                        </label>
-                                    </div>
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="radio" name="cancel-reason-type" id="cancel-delivery" value="Muda wa usafirishaji mrefu">
-                                        <label class="form-check-label" for="cancel-delivery">
-                                            Muda wa usafirishaji mrefu
-                                        </label>
-                                    </div>
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="radio" name="cancel-reason-type" id="cancel-other" value="Nyingine">
-                                        <label class="form-check-label" for="cancel-other">
-                                            Nyingine
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="mb-4">
-                                <label for="cancel-reason-details" class="form-label">Maelezo Zaidi (Inahitajika)</label>
-                                <div class="form-field-with-icon">
-                                    <i class="fas fa-edit"></i>
-                                    <textarea class="form-control" id="cancel-reason-details" rows="3" placeholder="Tafadhali andika sababu ya kughairi agizo hili..." required></textarea>
-                                </div>
-                            </div>
-                            
-                            <div class="alert alert-warning mb-4">
-                                <i class="fas fa-exclamation-triangle me-2"></i>
-                                <strong>Angalishi:</strong> Agizo linaweza kughairiwa tu ikiwa bado halijaanza kusafirishwa.
-                            </div>
-                            
-                            <button type="submit" class="btn btn-danger w-100 btn-lg" id="cancel-order-submit-btn">
-                                <i class="fas fa-times me-2"></i>
-                                <span class="btn-text">Thibitisha Kughairi Agizo</span>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Order Details Modal -->
-        <div class="modal fade" id="orderDetailsModal" tabindex="-1">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Maelezo ya Agizo #<span id="order-details-id"></span></h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="order-items mb-4">
-                            <div id="order-items-list">
-                                <!-- Order items will be loaded here -->
-                            </div>
+                                
+                                <button type="submit" class="btn btn-primary w-100 btn-lg" id="rating-submit-btn">
+                                    <i class="fas fa-paper-plane me-2"></i>
+                                    <span class="btn-text">Wasilisha Tathmini Yako</span>
+                                </button>
+                            </form>
                         </div>
-                        
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h6>Maelezo ya Agizo</h6>
-                                <p><strong>Jumla ya Bei:</strong> TZS <span id="order-details-total"></span></p>
-                                <p><strong>Hali:</strong> <span id="order-details-status"></span></p>
-                                <p><strong>Tarehe ya Agizo:</strong> <span id="order-details-date"></span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enhanced Return Order Modal -->
+            <div class="modal fade" id="returnOrderModal" tabindex="-1">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Omba Kurudisha Agizo</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="return-period-info">
+                                <i class="fas fa-info-circle me-2"></i>
+                                <strong>Muhimu:</strong> Unaweza kurudisha bidhaa ndani ya siku 3 baada ya kupokea agizo. Tafadhali hakikisha bidhaa ziko katika hali yake ya awali.
                             </div>
-                            <div class="col-md-6">
-                                <h6>Maelezo ya Mteja</h6>
-                                <p id="order-details-customer"></p>
-                                <p id="order-details-address"></p>
+                            
+                            <form id="return-order-form">
+                                <input type="hidden" id="return-order-id">
+                                
+                                <div class="mb-4">
+                                    <label class="form-label">Chagua Sababu ya Kurudisha</label>
+                                    <div class="mb-2">
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" name="return-reason-type" id="reason-size" value="Saizi haifai">
+                                            <label class="form-check-label" for="reason-size">
+                                                <i class="fas fa-ruler me-2"></i>Saizi haifai
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" name="return-reason-type" id="reason-color" value="Rangi si sahihi">
+                                            <label class="form-check-label" for="reason-color">
+                                                <i class="fas fa-palette me-2"></i>Rangi si sahihi
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" name="return-reason-type" id="reason-damaged" value="Bidhaa imeharibika">
+                                            <label class="form-check-label" for="reason-damaged">
+                                                <i class="fas fa-exclamation-triangle me-2"></i>Bidhaa imeharibika
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" name="return-reason-type" id="reason-wrong" value="Bidhaa nyingine tofauti">
+                                            <label class="form-check-label" for="reason-wrong">
+                                                <i class="fas fa-exchange-alt me-2"></i>Bidhaa nyingine tofauti
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" name="return-reason-type" id="reason-other" value="Nyingine">
+                                            <label class="form-check-label" for="reason-other">
+                                                <i class="fas fa-ellipsis-h me-2"></i>Nyingine
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label for="return-reason-details" class="form-label">Maelezo Zaidi (Inahitajika)</label>
+                                    <div class="form-field-with-icon">
+                                        <i class="fas fa-edit"></i>
+                                        <textarea class="form-control" id="return-reason-details" rows="3" placeholder="Eleza kwa undani kwa nini unataka kurudisha bidhaa hii..." required></textarea>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="form-label">Hali ya Bidhaa</label>
+                                    <div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="original-packaging">
+                                            <label class="form-check-label" for="original-packaging">
+                                                Bidhaa iko kwenye kifurushi chake asili
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="tags-attached">
+                                            <label class="form-check-label" for="tags-attached">
+                                                Lebo na vitambulisho vimeachwa
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="not-used">
+                                            <label class="form-check-label" for="not-used">
+                                                Bidhaa haijatumika
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary w-100 btn-lg" id="return-order-submit-btn">
+                                    <i class="fas fa-undo me-2"></i>
+                                    <span class="btn-text">Wasilisha Ombi la Kurudisha</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cancel Order Modal -->
+            <div class="modal fade" id="cancelOrderModal" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Batilisha Agizo</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="cancel-order-form">
+                                <input type="hidden" id="cancel-order-id">
+                                
+                                <div class="mb-4">
+                                    <label class="form-label">Chagua Sababu ya Kughairi</label>
+                                    <div class="mb-2">
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" name="cancel-reason-type" id="cancel-change-mind" value="Nimebadilisha nia">
+                                            <label class="form-check-label" for="cancel-change-mind">
+                                                Nimebadilisha nia
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" name="cancel-reason-type" id="cancel-price" value="Bei sio sahihi">
+                                            <label class="form-check-label" for="cancel-price">
+                                                Bei sio sahihi
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" name="cancel-reason-type" id="cancel-delivery" value="Muda wa usafirishaji mrefu">
+                                            <label class="form-check-label" for="cancel-delivery">
+                                                Muda wa usafirishaji mrefu
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" name="cancel-reason-type" id="cancel-other" value="Nyingine">
+                                            <label class="form-check-label" for="cancel-other">
+                                                Nyingine
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label for="cancel-reason-details" class="form-label">Maelezo Zaidi (Inahitajika)</label>
+                                    <div class="form-field-with-icon">
+                                        <i class="fas fa-edit"></i>
+                                        <textarea class="form-control" id="cancel-reason-details" rows="3" placeholder="Tafadhali andika sababu ya kughairi agizo hili..." required></textarea>
+                                    </div>
+                                </div>
+                                
+                                <div class="alert alert-warning mb-4">
+                                    <i class="fas fa-exclamation-triangle me-2"></i>
+                                    <strong>Angalishi:</strong> Agizo linaweza kughairiwa tu ikiwa bado halijaanza kusafirishwa.
+                                </div>
+                                
+                                <button type="submit" class="btn btn-danger w-100 btn-lg" id="cancel-order-submit-btn">
+                                    <i class="fas fa-times me-2"></i>
+                                    <span class="btn-text">Thibitisha Kughairi Agizo</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Details Modal -->
+            <div class="modal fade" id="orderDetailsModal" tabindex="-1">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Maelezo ya Agizo #<span id="order-details-id"></span></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="order-items mb-4">
+                                <div id="order-items-list">
+                                    <!-- Order items will be loaded here -->
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6>Maelezo ya Agizo</h6>
+                                    <p><strong>Jumla ya Bei:</strong> TZS <span id="order-details-total"></span></p>
+                                    <p><strong>Hali:</strong> <span id="order-details-status"></span></p>
+                                    <p><strong>Tarehe ya Agizo:</strong> <span id="order-details-date"></span></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6>Maelezo ya Mteja</h6>
+                                    <p id="order-details-customer"></p>
+                                    <p id="order-details-address"></p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 footer-content">
-                    <h5>Four Brothers Sports Center</h5>
-                    <p>Wauzaji na wasambazaji wa viatu bora vya michezo nchini Tanzania. Tunatoa huduma bora kwa wateja wetu kwa bei nafuu.</p>
-                    <div class="social-links">
-                        <a href="https://chat.whatsapp.com/I8qaaMkm8EU2V77eJBkZ8g" target="_blank">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
-                        <a href="https://www.instagram.com/four_brothers_sports_center?igsh=d20xYno3dmlwcnJ4" target="_blank">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="mailto:fourbrothers10112627@gmail.com">
-                            <i class="fas fa-envelope"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-md-4 footer-content">
-                    <h5>Mawasiliano</h5>
-                    <ul class="footer-links">
-                        <li>
-                            <a href="https://wa.me/255777730606" target="_blank">
-                                <i class="fab fa-whatsapp"></i>WhatsApp: +255 777 730 606
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 footer-content">
+                        <h5>Four Brothers Sports Center</h5>
+                        <p>Wauzaji na wasambazaji wa viatu bora vya michezo nchini Tanzania. Tunatoa huduma bora kwa wateja wetu kwa bei nafuu.</p>
+                        <div class="social-links">
+                            <a href="https://chat.whatsapp.com/I8qaaMkm8EU2V77eJBkZ8g" target="_blank">
+                                <i class="fab fa-whatsapp"></i>
                             </a>
-                        </li>
-                        <li>
                             <a href="https://www.instagram.com/four_brothers_sports_center?igsh=d20xYno3dmlwcnJ4" target="_blank">
-                                <i class="fab fa-instagram"></i>Instagram: @four_brothers_sports_center
+                                <i class="fab fa-instagram"></i>
                             </a>
-                        </li>
-                        <li>
                             <a href="mailto:fourbrothers10112627@gmail.com">
-                                <i class="fas fa-envelope"></i>Email: fourbrothers10112627@gmail.com
+                                <i class="fas fa-envelope"></i>
                             </a>
-                        </li>
-                        <li>
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#messageModal">
-                                <i class="fas fa-comment"></i>Tuma Ujumbe Ndani ya Programu
-                            </a>
-                        </li>
-                    </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4 footer-content">
+                        <h5>Mawasiliano</h5>
+                        <ul class="footer-links">
+                            <li>
+                                <a href="https://wa.me/255777730606" target="_blank">
+                                    <i class="fab fa-whatsapp"></i>WhatsApp: +255 777 730 606
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/four_brothers_sports_center?igsh=d20xYno3dmlwcnJ4" target="_blank">
+                                    <i class="fab fa-instagram"></i>Instagram: @four_brothers_sports_center
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailto:fourbrothers10112627@gmail.com">
+                                    <i class="fas fa-envelope"></i>Email: fourbrothers10112627@gmail.com
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#messageModal">
+                                    <i class="fas fa-comment"></i>Tuma Ujumbe Ndani ya Programu
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 footer-content">
+                        <h5>Huduma</h5>
+                        <ul class="footer-links">
+                            <li><a href="#" data-section="home"><i class="fas fa-home"></i>Nyumbani</a></li>
+                            <li><a href="#" data-section="cart"><i class="fas fa-shopping-cart"></i>Karatasi</a></li>
+                            <li><a href="#" data-section="account"><i class="fas fa-user"></i>Akaunti Yangu</a></li>
+                            <li><a href="#" data-bs-toggle="modal" data-bs-target="#loginModal"><i class="fas fa-sign-in-alt"></i>Ingia</a></li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="col-md-4 footer-content">
-                    <h5>Huduma</h5>
-                    <ul class="footer-links">
-                        <li><a href="#" data-section="home"><i class="fas fa-home"></i>Nyumbani</a></li>
-                        <li><a href="#" data-section="cart"><i class="fas fa-shopping-cart"></i>Karatasi</a></li>
-                        <li><a href="#" data-section="account"><i class="fas fa-user"></i>Akaunti Yangu</a></li>
-                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#loginModal"><i class="fas fa-sign-in-alt"></i>Ingia</a></li>
-                    </ul>
+                <div class="footer-bottom">
+                    <p>&copy; 2025 Four Brothers Sports Center. Haki zote zimehifadhiwa.</p>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Four Brothers Sports Center. Haki zote zimehifadhiwa.</p>
-            </div>
-        </div>
-    </footer>
+        </footer>
+    </div>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
@@ -2971,8 +3258,18 @@
     let productRatings = [];
     let resetToken = null;
     let registrationFormData = JSON.parse(localStorage.getItem('registrationFormData')) || {};
+    let loadingProgress = 0;
+    let loadingInterval;
 
     // DOM Elements
+    const loadingScreen = document.getElementById('loading-screen');
+    const loadingProducts = document.getElementById('loading-products');
+    const loadingUsers = document.getElementById('loading-users');
+    const loadingOrders = document.getElementById('loading-orders');
+    const loadingError = document.getElementById('loading-error');
+    const loadingSuccess = document.getElementById('loading-success');
+    const retryLoadingBtn = document.getElementById('retry-loading');
+    const appContent = document.getElementById('app-content');
     const homeSection = document.getElementById('home-section');
     const productDetailSection = document.getElementById('product-detail-section');
     const cartSection = document.getElementById('cart-section');
@@ -2995,32 +3292,150 @@
     const searchResults = document.getElementById('search-results');
     const confirmOrderBtn = document.getElementById('confirm-order');
     
-    // Initialize the application
+    // Initialize the application with loading screen
     document.addEventListener('DOMContentLoaded', function() {
-        console.log('Initializing application...');
+        console.log('Initializing application with loading screen...');
+        
+        // Start loading animation
+        startLoadingAnimation();
         
         // Check if coming from terms page
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get('from') === 'terms') {
-            // Show registration modal with saved data
-            loadRegistrationFormData();
-            registerModal.show();
+            // Save this to show registration modal later
+            window.fromTermsPage = true;
             
             // Clear the parameter from URL without refreshing
             window.history.replaceState({}, document.title, window.location.pathname);
         }
         
-        checkAuthStatus();
-        loadInitialData();
-        setupEventListeners();
-        
-        // Load theme
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-            currentTheme = savedTheme;
-            applyTheme(currentTheme);
-        }
+        // Start loading data
+        initializeApp();
     });
+
+    // Start loading animation
+    function startLoadingAnimation() {
+        loadingProgress = 0;
+        
+        // Animate loading stats
+        loadingInterval = setInterval(() => {
+            if (loadingProgress < 95) {
+                loadingProgress += 5;
+                
+                // Update stats with random but realistic numbers
+                if (loadingProgress < 30) {
+                    loadingProducts.textContent = Math.floor(Math.random() * 5);
+                } else if (loadingProgress < 60) {
+                    loadingProducts.textContent = Math.floor(Math.random() * 20);
+                    loadingUsers.textContent = Math.floor(Math.random() * 10);
+                } else {
+                    loadingProducts.textContent = Math.floor(Math.random() * 50);
+                    loadingUsers.textContent = Math.floor(Math.random() * 25);
+                    loadingOrders.textContent = Math.floor(Math.random() * 15);
+                }
+            }
+        }, 200);
+    }
+
+    // Stop loading animation
+    function stopLoadingAnimation() {
+        clearInterval(loadingInterval);
+        
+        // Set final stats
+        setTimeout(() => {
+            loadingProducts.textContent = products.length;
+            loadingUsers.textContent = currentUser ? 1 : 0;
+            loadingOrders.textContent = orders.length;
+            loadingProgress = 100;
+        }, 500);
+    }
+
+    // Initialize the application
+    async function initializeApp() {
+        try {
+            // Check theme first
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                currentTheme = savedTheme;
+                applyTheme(currentTheme);
+            }
+            
+            // Update progress
+            updateLoadingProgress(10);
+            
+            // Check authentication status
+            await checkAuthStatus();
+            updateLoadingProgress(30);
+            
+            // Load initial data
+            await loadInitialData();
+            updateLoadingProgress(70);
+            
+            // Setup event listeners
+            setupEventListeners();
+            updateLoadingProgress(90);
+            
+            // Show app content
+            setTimeout(() => {
+                showAppContent();
+                
+                // Show registration modal if coming from terms page
+                if (window.fromTermsPage) {
+                    setTimeout(() => {
+                        loadRegistrationFormData();
+                        registerModal.show();
+                        window.fromTermsPage = false;
+                    }, 1000);
+                }
+            }, 1000);
+            
+        } catch (error) {
+            console.error('Initialization error:', error);
+            showLoadingError();
+        }
+    }
+
+    // Update loading progress
+    function updateLoadingProgress(progress) {
+        loadingProgress = progress;
+    }
+
+    // Show app content
+    function showAppContent() {
+        stopLoadingAnimation();
+        
+        // Show success message
+        loadingSuccess.style.display = 'block';
+        
+        // Hide loading screen and show app content after delay
+        setTimeout(() => {
+            loadingScreen.style.opacity = '0';
+            loadingScreen.style.visibility = 'hidden';
+            
+            appContent.style.opacity = '1';
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 1500);
+    }
+
+    // Show loading error
+    function showLoadingError() {
+        stopLoadingAnimation();
+        loadingError.style.display = 'block';
+        
+        // Set retry button event
+        retryLoadingBtn.onclick = function() {
+            loadingError.style.display = 'none';
+            startLoadingAnimation();
+            initializeApp();
+        };
+        
+        // Show app with sample data after timeout
+        setTimeout(() => {
+            showAppContent();
+        }, 3000);
+    }
 
     // Save registration form data
     function saveRegistrationFormData() {
@@ -3482,14 +3897,14 @@
             
             // Get the first image
             const productImage = product.images && product.images.length > 0 ? 
-                product.images[0] : 'https://via.placeholder.com/300x300?text=Bidhaa';
+                product.images[0] : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDMwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzMDAiIGZpbGw9IiNFNUU1RTUiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmaWxsPSIjOTk5Ij5CaWRoYWE8L3RleHQ+PC9zdmc+';
             
             productCard.innerHTML = `
                 <div class="card product-card h-100" data-product-id="${product.id}">
                     ${product.discount_percent > 0 ? `<div class="offer-badge discount-pulse">${product.discount_percent}% OFF</div>` : ''}
                     <img src="${productImage}" 
                         class="card-img-top product-img" alt="${product.name}"
-                        onerror="this.src='https://via.placeholder.com/300x300?text=Bidhaa'">
+                        onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDMwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzMDAiIGZpbGw9IiNFNUU1RTUiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmaWxsPSIjOTk5Ij5CaWRoYWE8L3RleHQ+PC9zdmc+'">
                     <div class="card-body d-flex flex-column">
                         <h6 class="card-title">${product.name}</h6>
                         <div class="mb-2">
@@ -5726,7 +6141,7 @@
                 <td>${orderDate}</td>
                 <td>
                     <div class="order-actions">
-                        <button class="btn btn-sm btn-outline-info view-order" data-order-id="${order.id}">
+                        <button class="btn btn-sm btn-outline-info view-order-details" data-order-id="${order.id}">
                             <i class="fas fa-eye"></i>
                         </button>
                         ${order.status === 'Imewekwa' ? 

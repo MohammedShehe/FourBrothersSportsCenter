@@ -233,27 +233,6 @@
       transform: translateY(0);
     }
 
-    .forgot-password {
-      text-align: center;
-      margin-top: 1.5rem;
-    }
-
-    .forgot-password-btn {
-      background: none;
-      border: none;
-      color: var(--primary-light);
-      font-size: 0.9rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: color 0.3s ease;
-      padding: 0.5rem;
-    }
-
-    .forgot-password-btn:hover {
-      color: var(--primary);
-      text-decoration: underline;
-    }
-
     .terms-section {
       margin-top: 2rem;
       padding: 1.5rem;
@@ -643,6 +622,11 @@
     
     .status-Imepokelewa {
       background: var(--gradient-success);
+      color: white;
+    }
+    
+    .status-Inaandaliwa {
+      background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
       color: white;
     }
     
@@ -1137,7 +1121,7 @@
       </div>
       
       <div class="login-header">
-        <h4>Admin Panel Ingia</h4>
+        <h4>Admin Panel - Ingia</h4>
         <p>Ingia kwenye dashibodi ya usimamizi</p>
       </div>
       
@@ -1158,12 +1142,6 @@
           <span id="loginBtnText">Ingia kwenye Mfumo</span>
           <span id="loginSpinner" class="spinner-border spinner-border-sm" style="display: none;"></span>
         </button>
-        
-        <div class="forgot-password">
-          <button type="button" class="forgot-password-btn" id="forgotPasswordBtn">
-            <i class="fa fa-key me-1"></i>Umesahau nenosiri?
-          </button>
-        </div>
       </form>
       
       <!-- Terms Section -->
@@ -1182,102 +1160,7 @@
             <li>Ripoti matatizo yoyote ya usalama mara moja</li>
           </ul>
         </div>
-      </div>
-      
-      <!-- Forgot Password Section -->
-      <div id="forgotPasswordSection" style="display: none;" class="mt-4 animate-slide-up">
-        <h5 class="login-header"><i class="fa fa-unlock-alt me-2"></i>Usaidizi wa Nenosiri</h5>
-        <form id="forgotPasswordForm">
-          <div class="form-group">
-            <label class="form-label">Jina la Kwanza</label>
-            <input type="text" class="form-control" id="forgotFirstName" required placeholder="Ingiza jina la kwanza">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Jina la Mwisho</label>
-            <input type="text" class="form-control" id="forgotLastName" required placeholder="Ingiza jina la mwisho">
-          </div>
-          
-          <button type="submit" class="login-btn btn-warning" style="background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);" id="resetPasswordBtn">
-            <span id="resetBtnText">Thibitisha Utambulisho</span>
-            <span id="resetSpinner" class="spinner-border spinner-border-sm" style="display: none;"></span>
-          </button>
-          
-          <div class="text-center mt-3">
-            <button type="button" class="forgot-password-btn" id="backToLoginBtn">
-              <i class="fa fa-arrow-left me-1"></i>Rudi kwenye kuingia
-            </button>
-          </div>
-        </form>
-      </div>
-      
-      <!-- Reset Options Section -->
-      <div id="resetOptionsSection" style="display: none;" class="mt-4 animate-slide-up">
-        <h5 class="login-header"><i class="fa fa-cogs me-2"></i>Chagua Kitendo</h5>
-        <div class="d-grid gap-3">
-          <button type="button" class="login-btn" style="background: var(--gradient-primary);" id="resetPasswordOptionBtn">
-            <i class="fa fa-key me-2"></i>Badilisha Nenosiri
-          </button>
-          <button type="button" class="login-btn" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);" id="resetMobileOptionBtn">
-            <i class="fa fa-mobile-alt me-2"></i>Badilisha Nambari ya Simu
-          </button>
-          <button type="button" class="login-btn" style="background: var(--secondary); border: none;" id="backToForgotBtn">
-            <i class="fa fa-arrow-left me-2"></i>Rudi Nyuma
-          </button>
-        </div>
-      </div>
-      
-      <!-- Reset Password Form -->
-      <div id="resetPasswordFormSection" style="display: none;" class="mt-4 animate-slide-up">
-        <h5 class="login-header"><i class="fa fa-key me-2"></i>Weka Nenosiri Jipya</h5>
-        <form id="newPasswordForm">
-          <div class="form-group">
-            <label class="form-label">Nenosiri Jipya</label>
-            <input type="password" class="form-control" id="newPassword" required placeholder="Ingiza nenosiri jipya">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Rudia Nenosiri Jipya</label>
-            <input type="password" class="form-control" id="confirmNewPassword" required placeholder="Rudia nenosiri jipya">
-          </div>
-          
-          <button type="submit" class="login-btn" style="background: var(--gradient-success);" id="submitNewPasswordBtn">
-            <span id="newPasswordBtnText">Weka Nenosiri Jipya</span>
-            <span id="newPasswordSpinner" class="spinner-border spinner-border-sm" style="display: none;"></span>
-          </button>
-          
-          <div class="text-center mt-3">
-            <button type="button" class="forgot-password-btn" id="backToOptionsBtn">
-              <i class="fa fa-arrow-left me-1"></i>Rudi Nyuma
-            </button>
-          </div>
-        </form>
-      </div>
-      
-      <!-- Reset Mobile Form -->
-      <div id="resetMobileFormSection" style="display: none;" class="mt-4 animate-slide-up">
-        <h5 class="login-header"><i class="fa fa-mobile-alt me-2"></i>Badilisha Nambari ya Simu</h5>
-        <form id="newMobileForm">
-          <div class="form-group">
-            <label class="form-label">Nambari Mpya ya Simu</label>
-            <input type="text" class="form-control" id="newMobile" required placeholder="Ingiza nambari mpya ya simu">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Rudia Nambari ya Simu</label>
-            <input type="text" class="form-control" id="confirmNewMobile" required placeholder="Rudia nambari ya simu">
-          </div>
-          
-          <button type="submit" class="login-btn" style="background: var(--gradient-success);" id="submitNewMobileBtn">
-            <span id="newMobileBtnText">Weka Nambari Mpya</span>
-            <span id="newMobileSpinner" class="spinner-border spinner-border-sm" style="display: none;"></span>
-          </button>
-          
-          <div class="text-center mt-3">
-            <button type="button" class="forgot-password-btn" id="backToOptionsBtn2">
-              <i class="fa fa-arrow-left me-1"></i>Rudi Nyuma
-            </button>
-          </div>
-        </form>
-      </div>
-      
+      </div>      
       <div id="loginAlert" class="alert alert-danger mt-3" style="display: none;"></div>
     </div>
   </div>
@@ -2098,7 +1981,13 @@
       alertDiv.className = `alert alert-${type} animate__animated animate__fadeIn`;
       alertDiv.style.display = 'block';
       
-      setTimeout(() => {
+      // Clear any existing timeout
+      if (window.alertTimeout) {
+        clearTimeout(window.alertTimeout);
+      }
+      
+      // Set new timeout
+      window.alertTimeout = setTimeout(() => {
         alertDiv.classList.add('animate__fadeOut');
         setTimeout(() => {
           alertDiv.style.display = 'none';
@@ -2189,27 +2078,30 @@
 
     async function markNotificationRead(notificationId) {
       try {
-        await apiCall(`/notifications/mark-read/${notificationId}`, {
+        const result = await apiCall(`/notifications/mark-read/${notificationId}`, {
           method: 'PUT'
         });
         
-        // Reload notifications after marking as read
-        await loadNotifications();
-        await loadNotificationCounts();
+        console.log('Notification marked as read:', result);
+        return result;
       } catch (error) {
         console.error('Error marking notification as read:', error);
+        throw error;
       }
     }
 
+
     async function markOrderViewed(orderId) {
       try {
-        await apiCall(`/orders/mark-viewed/${orderId}`, {
+        const result = await apiCall(`/orders/mark-viewed/${orderId}`, {
           method: 'PUT'
         });
         
-        await loadNotificationCounts();
+        console.log('Order marked as viewed:', result);
+        return result;
       } catch (error) {
         console.error('Error marking order as viewed:', error);
+        throw error;
       }
     }
 
@@ -2350,229 +2242,6 @@
       }
     });
     
-    // Forgot Password Button
-    document.getElementById('forgotPasswordBtn').addEventListener('click', function() {
-      document.getElementById('adminLoginForm').style.display = 'none';
-      document.getElementById('forgotPasswordSection').style.display = 'block';
-      hideLoginAlert();
-    });
-    
-    // Back to Login Button
-    document.getElementById('backToLoginBtn').addEventListener('click', function() {
-      document.getElementById('forgotPasswordSection').style.display = 'none';
-      document.getElementById('resetOptionsSection').style.display = 'none';
-      document.getElementById('resetPasswordFormSection').style.display = 'none';
-      document.getElementById('resetMobileFormSection').style.display = 'none';
-      document.getElementById('adminLoginForm').style.display = 'block';
-      hideLoginAlert();
-    });
-    
-    // Back to Forgot Button
-    document.getElementById('backToForgotBtn').addEventListener('click', function() {
-      document.getElementById('resetOptionsSection').style.display = 'none';
-      document.getElementById('forgotPasswordSection').style.display = 'block';
-    });
-    
-    // Back to Options Buttons
-    document.getElementById('backToOptionsBtn').addEventListener('click', function() {
-      document.getElementById('resetPasswordFormSection').style.display = 'none';
-      document.getElementById('resetOptionsSection').style.display = 'block';
-    });
-    
-    document.getElementById('backToOptionsBtn2').addEventListener('click', function() {
-      document.getElementById('resetMobileFormSection').style.display = 'none';
-      document.getElementById('resetOptionsSection').style.display = 'block';
-    });
-    
-    // Forgot Password Form
-    document.getElementById('forgotPasswordForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      
-      const firstName = document.getElementById('forgotFirstName').value.trim();
-      const lastName = document.getElementById('forgotLastName').value.trim();
-      
-      if (!firstName || !lastName) {
-        showLoginAlert('Tafadhali jaza jina la kwanza na la mwisho');
-        return;
-      }
-      
-      document.getElementById('resetBtnText').style.display = 'none';
-      document.getElementById('resetSpinner').style.display = 'inline-block';
-      
-      try {
-        const response = await fetch(`${API_BASE_URL}/forgot-password`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ first_name: firstName, last_name: lastName })
-        });
-        
-        const data = await response.json();
-        
-        if (response.ok) {
-          document.getElementById('forgotPasswordSection').style.display = 'none';
-          document.getElementById('resetOptionsSection').style.display = 'block';
-          hideLoginAlert();
-        } else {
-          showLoginAlert(data.message || 'Msimamizi huyu hakupatikana');
-        }
-      } catch (error) {
-        console.error('Forgot Password Error:', error);
-        showLoginAlert('Hitilafu ya mtandao. Tafadhali jaribu tena.');
-      } finally {
-        document.getElementById('resetBtnText').style.display = 'inline-block';
-        document.getElementById('resetSpinner').style.display = 'none';
-      }
-    });
-    
-    // Reset Password Option
-    document.getElementById('resetPasswordOptionBtn').addEventListener('click', function() {
-      document.getElementById('resetOptionsSection').style.display = 'none';
-      document.getElementById('resetPasswordFormSection').style.display = 'block';
-    });
-    
-    // Reset Mobile Option
-    document.getElementById('resetMobileOptionBtn').addEventListener('click', function() {
-      document.getElementById('resetOptionsSection').style.display = 'none';
-      document.getElementById('resetMobileFormSection').style.display = 'block';
-    });
-    
-    // New Password Form
-    document.getElementById('newPasswordForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      
-      const newPassword = document.getElementById('newPassword').value;
-      const confirmPassword = document.getElementById('confirmNewPassword').value;
-      const firstName = document.getElementById('forgotFirstName').value.trim();
-      const lastName = document.getElementById('forgotLastName').value.trim();
-      
-      if (!newPassword || !confirmPassword) {
-        showLoginAlert('Tafadhali jaza nenosiri jipya na urudie');
-        return;
-      }
-      
-      if (newPassword !== confirmPassword) {
-        showLoginAlert('Nenosiri halifanani');
-        return;
-      }
-      
-      document.getElementById('newPasswordBtnText').style.display = 'none';
-      document.getElementById('newPasswordSpinner').style.display = 'inline-block';
-      
-      try {
-        const forgotResponse = await fetch(`${API_BASE_URL}/forgot-password`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ first_name: firstName, last_name: lastName })
-        });
-        
-        const forgotData = await forgotResponse.json();
-        
-        if (forgotResponse.ok) {
-          const resetResponse = await fetch(`${API_BASE_URL}/reset-password`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              reset_token: forgotData.reset_token,
-              new_password: newPassword,
-              confirm_password: confirmPassword
-            })
-          });
-          
-          const resetData = await resetResponse.json();
-          
-          if (resetResponse.ok) {
-            showLoginAlert('Nenosiri limebadilishwa kikamilifu! Unaweza kuingia sasa.', 'success');
-            
-            setTimeout(() => {
-              document.getElementById('resetPasswordFormSection').style.display = 'none';
-              document.getElementById('adminLoginForm').style.display = 'block';
-              document.getElementById('adminLoginForm').reset();
-              document.getElementById('newPasswordForm').reset();
-              document.getElementById('forgotPasswordForm').reset();
-              hideLoginAlert();
-            }, 2000);
-          } else {
-            showLoginAlert(resetData.message || 'Hitilafu katika kubadilisha nenosiri');
-          }
-        } else {
-          showLoginAlert(forgotData.message || 'Hitilafu katika kuthibitisha utambulisho');
-        }
-      } catch (error) {
-        console.error('Reset Password Error:', error);
-        showLoginAlert('Hitilafu ya mtandao. Tafadhali jaribu tena.');
-      } finally {
-        document.getElementById('newPasswordBtnText').style.display = 'inline-block';
-        document.getElementById('newPasswordSpinner').style.display = 'none';
-      }
-    });
-    
-    // New Mobile Form
-    document.getElementById('newMobileForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      
-      const newMobile = document.getElementById('newMobile').value.trim();
-      const confirmMobile = document.getElementById('confirmNewMobile').value.trim();
-      const firstName = document.getElementById('forgotFirstName').value.trim();
-      const lastName = document.getElementById('forgotLastName').value.trim();
-      
-      if (!newMobile || !confirmMobile) {
-        showLoginAlert('Tafadhali jaza nambari ya simu na urudie');
-        return;
-      }
-      
-      if (newMobile !== confirmMobile) {
-        showLoginAlert('Nambari za simu hazifanani');
-        return;
-      }
-      
-      document.getElementById('newMobileBtnText').style.display = 'none';
-      document.getElementById('newMobileSpinner').style.display = 'inline-block';
-      
-      try {
-        const response = await fetch(`${API_BASE_URL}/change-mobile`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            first_name: firstName,
-            last_name: lastName,
-            new_mobile: newMobile,
-            confirm_mobile: confirmMobile
-          })
-        });
-        
-        const data = await response.json();
-        
-        if (response.ok) {
-          showLoginAlert('Nambari ya simu imebadilishwa kikamilifu! Unaweza kuingia sasa.', 'success');
-          
-          setTimeout(() => {
-            document.getElementById('resetMobileFormSection').style.display = 'none';
-            document.getElementById('adminLoginForm').style.display = 'block';
-            document.getElementById('adminLoginForm').reset();
-            document.getElementById('newMobileForm').reset();
-            document.getElementById('forgotPasswordForm').reset();
-            hideLoginAlert();
-          }, 2000);
-        } else {
-          showLoginAlert(data.message || 'Hitilafu katika kubadilisha nambari ya simu');
-        }
-      } catch (error) {
-        console.error('Change Mobile Error:', error);
-        showLoginAlert('Hitilafu ya mtandao. Tafadhali jaribu tena.');
-      } finally {
-        document.getElementById('newMobileBtnText').style.display = 'inline-block';
-        document.getElementById('newMobileSpinner').style.display = 'none';
-      }
-    });
-
     // ===============================
     // DASHBOARD DATA
     // ===============================
@@ -2925,7 +2594,7 @@
       }
     };
 
-    // Initialize size manager
+    // Initialize size manager when script loads
     if (document.getElementById('sizesContainer')) {
       sizeManager.init();
     }
@@ -3761,7 +3430,7 @@
     });
 
     // ===============================
-    // NOTIFICATIONS - FIXED
+    // NOTIFICATIONS - FIXED VERSION
     // ===============================
     let notifications = [];
 
@@ -3770,30 +3439,51 @@
         notifications = await apiCall('/notifications/customer');
         renderNotifications();
         
-        // Mark all notifications as read when viewing the section
-        await markAllNotificationsAsRead();
+        // Update notification counts after loading
+        await loadNotificationCounts();
         
       } catch (error) {
         console.error('Error loading notifications:', error);
-        updateNotificationCount(0);
+        renderNotifications();
         showAlert('Hitilafu katika kupakia arifa', 'danger');
       }
     }
 
-    async function markAllNotificationsAsRead() {
+    // FIXED FUNCTION: Mark single notification as read
+    async function markSingleNotificationRead(notificationId) {
       try {
-        const unreadNotifications = notifications.filter(n => !n.admin_viewed);
-        
-        for (const notification of unreadNotifications) {
-          await markNotificationRead(notification.id);
+        // Show loading state
+        const button = document.querySelector(`button[onclick*="markSingleNotificationRead('${notificationId}')"]`);
+        if (button) {
+          const originalText = button.innerHTML;
+          button.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Inaendesha...';
+          button.disabled = true;
         }
         
+        // Call API to mark notification as read
+        await markNotificationRead(notificationId);
+        
+        // Update local data
+        const notificationIndex = notifications.findIndex(n => n.id == notificationId);
+        if (notificationIndex !== -1) {
+          notifications[notificationIndex].admin_viewed = true;
+        }
+        
+        // Re-render notifications
+        renderNotifications();
+        
+        // Reload notification counts
         await loadNotificationCounts();
+        
+        showAlert('Ujumbe umewekwa kama uliosomwa', 'success');
+        
       } catch (error) {
-        console.error('Error marking all notifications as read:', error);
+        console.error('Error marking single notification as read:', error);
+        showAlert('Hitilafu katika kuweka ujumbe kama uliosomwa', 'danger');
       }
     }
 
+    // FIXED FUNCTION: Render notifications with proper onclick handlers
     function renderNotifications() {
       const list = document.getElementById('messagesList');
       list.innerHTML = '';
@@ -3807,15 +3497,16 @@
         const el = document.createElement('div');
         el.className = 'list-group-item d-flex justify-content-between align-items-start border-0 mb-2 rounded';
         el.style.borderLeft = notification.admin_viewed ? '4px solid #6c757d' : '4px solid var(--primary-light)';
+        
         el.innerHTML = `
           <div class="flex-grow-1">
             <div class="d-flex justify-content-between align-items-center mb-1">
-              <strong>${notification.first_name} ${notification.last_name}</strong>
+              <strong>${notification.first_name || ''} ${notification.last_name || ''}</strong>
               <small class="text-muted">${new Date(notification.created_at).toLocaleDateString('sw-TZ')}</small>
             </div>
-            <div class="text-muted mb-2">${notification.message}</div>
+            <div class="text-muted mb-2">${notification.message || ''}</div>
             <div class="d-flex gap-2">
-              <span class="badge bg-light text-dark"><i class="fa fa-phone me-1"></i>${notification.phone}</span>
+              <span class="badge bg-light text-dark"><i class="fa fa-phone me-1"></i>${notification.phone || ''}</span>
               ${notification.email ? `<span class="badge bg-light text-dark"><i class="fa fa-envelope me-1"></i>${notification.email}</span>` : ''}
               ${notification.admin_viewed ? '<span class="badge bg-success">Imesomwa</span>' : '<span class="badge bg-warning">Hajasomwa</span>'}
             </div>
@@ -3835,21 +3526,12 @@
       });
     }
 
-    async function markSingleNotificationRead(notificationId) {
-      try {
-        await markNotificationRead(notificationId);
-        showAlert('Ujumbe umewekwa kama uliosomwa', 'success');
-      } catch (error) {
-        console.error('Error marking single notification as read:', error);
-      }
-    }
-
     function replyToCustomer(notificationId) {
       const notification = notifications.find(n => n.id == notificationId);
       if (!notification) return;
       
       document.getElementById('selectCustomerMsg').value = notification.customer_id || '';
-      document.getElementById('msgBody').value = `Jibu kwa ${notification.first_name}:\n\n`;
+      document.getElementById('msgBody').value = `Jibu kwa ${notification.first_name || 'Mteja'}:\n\n`;
       
       const modal = new bootstrap.Modal(document.getElementById('modalSendMessage'));
       modal.show();
@@ -3869,28 +3551,9 @@
         renderOrdersMobileCards();
         renderRecentOrders();
         
-        const currentSection = document.querySelector('.section:not(.d-none)').id;
-        if (currentSection === 'orders') {
-          await markAllOrdersAsViewed();
-        }
       } catch (error) {
         console.error('Error loading orders:', error);
         showAlert('Hitilafu katika kupakia maagizo', 'danger');
-      }
-    }
-
-    // Function to mark all orders as viewed
-    async function markAllOrdersAsViewed() {
-      try {
-        const unviewedOrders = orders.filter(order => !order.admin_viewed || order.admin_viewed === 0);
-        
-        for (const order of unviewedOrders) {
-          await markOrderViewed(order.order_id);
-        }
-        
-        await loadNotificationCounts();
-      } catch (error) {
-        console.error('Error marking all orders as viewed:', error);
       }
     }
 
@@ -3917,10 +3580,11 @@
           <td>
             <div class="btn-group" role="group">
               <button class="btn btn-sm btn-outline-secondary" onclick="updateOrderStatus('${order.order_id || order.id}','Imewekwa')">Imewekwa</button>
+              <button class="btn btn-sm btn-outline-secondary" onclick="markOrderAsPreparing('${order.order_id || order.id}')">Inaandaliwa</button>
               <button class="btn btn-sm btn-outline-warning" onclick="updateOrderStatus('${order.order_id || order.id}','Inasafirishwa')">Safirishwa</button>
-              <button class="btn btn-sm btn-outline-danger" onclick="updateOrderStatus('${order.order_id || order.id}','Ghairishwa')">Ghairi</button>
-              <button class="btn btn-sm btn-info" onclick="updateOrderStatus('${order.order_id || order.id}','Kurudishwa')">Rudisha</button>
               <button class="btn btn-sm btn-success" onclick="markAsReceived('${order.order_id || order.id}')">Pokea</button>
+              <button class="btn btn-sm btn-outline-danger" onclick="updateOrderStatus('${order.order_id || order.id}','Ghairishwa')">Ghairi</button>
+              <button class="btn btn-sm btn-outline-danger" onclick="updateOrderStatus('${order.order_id || order.id}','Kurudishwa')">Rudisha</button>
             </div>
           </td>
         `;
@@ -3972,7 +3636,8 @@
                 <button class="btn btn-sm btn-outline-warning" onclick="updateOrderStatus('${order.order_id || order.id}','Inasafirishwa')">Safirishwa</button>
                 <button class="btn btn-sm btn-outline-danger" onclick="updateOrderStatus('${order.order_id || order.id}','Ghairishwa')">Ghairi</button>
                 <button class="btn btn-sm btn-info" onclick="updateOrderStatus('${order.order_id || order.id}','Kurudishwa')">Rudisha</button>
-                <button class="btn btn-sm btn-success" onclick="markAsReceived('${order.order_id || order.id}')">Pokea</button>
+                <button class="btn btn-sm btn-success" onclick="markOrderAsPreparing('${order.order_id || order.id}')">Inaandaliwa</button>
+                <button class="btn btn-sm btn-primary" onclick="markAsReceived('${order.order_id || order.id}')">Pokea</button>
               </div>
             </div>
           </div>
@@ -4010,13 +3675,16 @@
       });
     }
 
-    // Update normal statuses - FIXED FOR BACKEND
+    // Unified order status update function
     async function updateOrderStatus(orderId, status) {
       try {
         let requestBody = { status };
         
-        // If status is 'Imepokelewa', we need customer password (handled separately)
+        // Special handling for 'Imepokelewa'
         if (status === 'Imepokelewa') {
+          if (!confirm('Una uhakika unataka kuweka agizo hili kama limepokelewa na mteja?')) {
+            return;
+          }
           markAsReceived(orderId);
           return;
         }
@@ -4027,13 +3695,10 @@
         });
 
         showAlert(`Hali ya agizo imesasishwa kuwa: ${status}`);
-
-        const statusElement = document.getElementById(`status_${orderId}`);
-        if (statusElement) {
-          statusElement.innerHTML = `<span class="status-badge status-${status}">${status}</span>`;
-        }
-
+        
+        // ALWAYS reload orders from API
         await loadOrders();
+        
         return response;
       } catch (error) {
         console.error('Error updating order status:', error);
@@ -4042,8 +3707,19 @@
       }
     }
 
+    // Update markOrderAsPreparing to use the unified function
+    async function markOrderAsPreparing(orderId) {
+      if (!confirm('Una uhakika unataka kuweka agizo hili kama linaandaliwa?')) {
+        return;
+      }
+      return updateOrderStatus(orderId, 'Inaandaliwa');
+    }
+
     // Mark as received (opens password modal)
     async function markAsReceived(orderId) {
+      if (!confirm('Una uhakika unataka kuweka agizo hili kama limepokelewa na mteja?')) {
+        return;
+      }
       try {
         // First update status to 'Inasafirishwa' (backend allows this without password)
         await apiCall(`/orders/${orderId}/status`, {
@@ -4107,6 +3783,8 @@
         document.getElementById('passwordSpinner').style.display = 'none';
       }
     });
+
+    
 
     // ===============================
     // SEARCH FUNCTIONALITY
@@ -4277,10 +3955,6 @@
       document.getElementById('loginPage').style.display = 'flex';
       document.getElementById('adminLoginForm').reset();
       document.getElementById('adminLoginForm').style.display = 'block';
-      document.getElementById('forgotPasswordSection').style.display = 'none';
-      document.getElementById('resetOptionsSection').style.display = 'none';
-      document.getElementById('resetPasswordFormSection').style.display = 'none';
-      document.getElementById('resetMobileFormSection').style.display = 'none';
       hideLoginAlert();
     }
 
