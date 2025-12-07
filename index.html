@@ -991,6 +991,7 @@
             text-decoration: none;
             color: var(--text-color);
             font-size: 0.8rem;
+            position: relative;
         }
 
         .mobile-nav-item.active {
@@ -1073,55 +1074,107 @@
                 height: 80px;
             }
             
-            /* Improved Cart Styling for Mobile */
+            /* IMPROVED Cart Styling for Mobile - Fixed quantity selector */
             .cart-item .row {
                 align-items: center;
+                flex-wrap: nowrap;
             }
             
-            .cart-item .col-2, 
-            .cart-item .col-3,
-            .cart-item .col-5 {
+            .cart-item .col-2 {
+                flex: 0 0 50px;
+                max-width: 50px;
                 padding: 5px;
+            }
+            
+            .cart-item .col-5 {
+                flex: 1;
+                max-width: none;
+                padding: 5px;
+            }
+            
+            .cart-item .col-2:nth-child(3) {
+                flex: 0 0 100px;
+                max-width: 100px;
+                padding: 5px;
+            }
+            
+            .cart-item .col-2:nth-child(4) {
+                flex: 0 0 80px;
+                max-width: 80px;
+                text-align: right;
+                padding: 5px 10px 5px 5px;
+            }
+            
+            .cart-item .col-1 {
+                flex: 0 0 40px;
+                max-width: 40px;
+                padding: 5px 0 5px 5px;
             }
             
             .cart-item img {
                 height: 50px !important;
+                width: 50px;
+                object-fit: cover;
             }
             
             .cart-item h6 {
-                font-size: 0.9rem;
-                margin-bottom: 2px;
+                font-size: 0.85rem;
+                margin-bottom: 3px;
+                line-height: 1.2;
             }
             
             .cart-item p {
-                font-size: 0.8rem;
+                font-size: 0.75rem;
                 margin-bottom: 2px;
+                line-height: 1.2;
             }
             
             .cart-item .quantity-selector {
                 gap: 5px;
+                justify-content: center;
             }
             
             .cart-item .quantity-btn {
-                width: 25px;
-                height: 25px;
-                font-size: 0.8rem;
+                width: 28px;
+                height: 28px;
+                font-size: 0.9rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
             
             .cart-item .quantity-selector span {
                 font-size: 0.9rem;
-                min-width: 25px;
+                min-width: 30px;
                 text-align: center;
+                font-weight: bold;
             }
             
             .cart-item .text-primary {
-                font-size: 0.9rem;
+                font-size: 0.85rem;
                 white-space: nowrap;
+                font-weight: bold;
             }
             
             .cart-item .remove-item {
-                padding: 4px 6px;
-                font-size: 0.7rem;
+                padding: 5px 8px;
+                font-size: 0.75rem;
+                width: 30px;
+                height: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            /* Fixed spacing for mobile cart items */
+            .cart-item {
+                padding: 12px 0;
+                margin: 0;
+            }
+            
+            .cart-item .row > div {
+                display: flex;
+                align-items: center;
             }
             
             /* Improved Product Detail for Mobile */
@@ -1143,11 +1196,70 @@
             .share-options .card-body {
                 padding: 15px;
             }
+            
+            /* Theme controller for mobile in account menu */
+            .account-menu li.theme-control-item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .account-menu li.theme-control-item span {
+                font-size: 0.9rem;
+            }
+            
+            .account-menu li.theme-control-item .theme-switch {
+                position: relative;
+                display: inline-block;
+                width: 50px;
+                height: 24px;
+            }
+            
+            .account-menu li.theme-control-item .theme-switch input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+            
+            .account-menu li.theme-control-item .theme-slider {
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: #ccc;
+                transition: .4s;
+                border-radius: 34px;
+            }
+            
+            .account-menu li.theme-control-item .theme-slider:before {
+                position: absolute;
+                content: "";
+                height: 16px;
+                width: 16px;
+                left: 4px;
+                bottom: 4px;
+                background-color: white;
+                transition: .4s;
+                border-radius: 50%;
+            }
+            
+            .account-menu li.theme-control-item input:checked + .theme-slider {
+                background-color: var(--primary-color);
+            }
+            
+            .account-menu li.theme-control-item input:checked + .theme-slider:before {
+                transform: translateX(26px);
+            }
         }
 
         @media (min-width: 769px) {
             .mobile-nav {
                 display: none;
+            }
+            .mobile-theme-toggle {
+                display: none !important;
             }
         }
 
@@ -2112,41 +2224,54 @@
                 font-size: 0.9rem;
             }
             
-            /* Mobile cart quantity selector improvements */
+            /* Mobile cart quantity selector improvements - FIXED */
             .cart-item .row {
                 flex-wrap: nowrap;
+                margin: 0;
             }
             
             .cart-item .col-2 {
-                flex: 0 0 30px;
-                max-width: 30px;
+                flex: 0 0 50px;
+                max-width: 50px;
+                padding: 3px;
             }
             
             .cart-item .col-5 {
                 flex: 1;
                 max-width: none;
+                padding: 3px;
+                min-width: 0;
+                overflow: hidden;
             }
             
             .cart-item .col-2:nth-child(3) {
-                flex: 0 0 80px;
-                max-width: 80px;
+                flex: 0 0 100px;
+                max-width: 100px;
+                padding: 3px;
             }
             
             .cart-item .col-2:nth-child(4) {
-                flex: 0 0 70px;
-                max-width: 70px;
+                flex: 0 0 80px;
+                max-width: 80px;
                 text-align: right;
-                padding-right: 10px;
+                padding: 3px 5px 3px 3px;
             }
             
             .cart-item .col-1 {
-                flex: 0 0 30px;
-                max-width: 30px;
-                padding-left: 0;
+                flex: 0 0 40px;
+                max-width: 40px;
+                padding: 3px 0 3px 3px;
             }
             
             .cart-item .text-primary {
                 font-size: 0.85rem;
+                white-space: nowrap;
+            }
+            
+            /* Better spacing for cart items on very small screens */
+            .cart-item {
+                padding: 10px 0;
+                margin: 0;
             }
         }
 
@@ -2185,7 +2310,7 @@
             }
         }
 
-        /* Improved cart item layout for mobile */
+        /* Improved cart item layout for mobile - FIXED */
         .cart-item .row > div {
             display: flex;
             align-items: center;
@@ -2193,6 +2318,7 @@
 
         .cart-item .quantity-selector {
             justify-content: center;
+            flex-wrap: nowrap;
         }
 
         .cart-item .text-end {
@@ -2694,6 +2820,14 @@
                             <li data-account-tab="contact">Mawasiliano</li>
                             <li data-account-tab="addresses">Anwani Zilizohifadhiwa</li>
                             <li data-account-tab="profile">Hariri Profaili</li>
+                            <!-- Theme Control Item for Mobile -->
+                            <li class="theme-control-item" id="mobile-theme-control">
+                                <span>Mwonekano</span>
+                                <label class="theme-switch">
+                                    <input type="checkbox" id="mobile-theme-switch">
+                                    <span class="theme-slider"></span>
+                                </label>
+                            </li>
                             <li id="logout-btn">Toka</li>
                         </ul>
                     </div>
@@ -3634,6 +3768,8 @@
     const messageModal = new bootstrap.Modal(document.getElementById('messageModal'));
     const productShareModal = new bootstrap.Modal(document.getElementById('productShareModal'));
     const themeToggle = document.getElementById('theme-toggle');
+    const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
+    const mobileThemeSwitch = document.getElementById('mobile-theme-switch');
     const searchInput = document.getElementById('search-input');
     const searchResults = document.getElementById('search-results');
     const confirmOrderBtn = document.getElementById('confirm-order');
@@ -3656,33 +3792,42 @@
             window.history.replaceState({}, document.title, window.location.pathname);
         }
         
+        // Check for share redirect FIRST - before loading app
+        handleShareRedirect();
+        
         // Start loading data
         initializeApp();
-        
-        // Check for share redirect
-        handleShareRedirect();
     });
 
-    // Handle share redirect
+    // Handle share redirect - FIXED to show product directly
     function handleShareRedirect() {
         const urlParams = new URLSearchParams(window.location.search);
         const productId = urlParams.get('product');
         const isShare = urlParams.get('share');
         
         if (productId && isShare === 'true') {
-            // Clear the parameters from URL
+            console.log('Share redirect detected for product:', productId);
+            
+            // Clear the parameters from URL immediately
             window.history.replaceState({}, document.title, window.location.pathname);
             
-            // Show the product details after app loads
+            // Store the product ID to show after app loads
+            window.sharedProductId = parseInt(productId);
+            
+            // Show a notification after app loads
             setTimeout(() => {
-                const product = products.find(p => p.id == productId);
-                if (product) {
-                    showProductDetail(productId);
-                    
-                    // Show a notification
-                    setTimeout(() => {
-                        alert('Bidhaa hii ilishirikiwa na mteja mwingine. Angalia maelezo yake hapa chini.');
-                    }, 1000);
+                if (window.sharedProductId) {
+                    const product = products.find(p => p.id == window.sharedProductId);
+                    if (product) {
+                        showProductDetail(window.sharedProductId);
+                        
+                        // Show notification after a short delay
+                        setTimeout(() => {
+                            alert('Bidhaa hii ilishirikiwa na mteja mwingine. Angalia maelezo yake hapa chini.');
+                        }, 500);
+                    }
+                    // Clear the stored product ID
+                    window.sharedProductId = null;
                 }
             }, 2000);
         }
@@ -3735,6 +3880,11 @@
                 applyTheme(currentTheme);
             }
             
+            // Update mobile theme switch state
+            if (mobileThemeSwitch) {
+                mobileThemeSwitch.checked = currentTheme === 'dark';
+            }
+            
             // Update progress
             updateLoadingProgress(10);
             
@@ -3761,6 +3911,20 @@
                         registerModal.show();
                         window.fromTermsPage = false;
                     }, 1000);
+                }
+                
+                // Show shared product if exists
+                if (window.sharedProductId) {
+                    const product = products.find(p => p.id == window.sharedProductId);
+                    if (product) {
+                        showProductDetail(window.sharedProductId);
+                        
+                        // Show notification after a short delay
+                        setTimeout(() => {
+                            alert('Bidhaa hii ilishirikiwa na mteja mwingine. Angalia maelezo yake hapa chini.');
+                        }, 500);
+                    }
+                    window.sharedProductId = null;
                 }
             }, 1000);
             
@@ -4170,14 +4334,34 @@
     // Apply theme
     function applyTheme(theme) {
         document.documentElement.setAttribute('data-theme', theme);
-        const icon = themeToggle.querySelector('i');
+        const icon = themeToggle?.querySelector('i');
+        const mobileIcon = mobileThemeToggle?.querySelector('i');
+        
         if (theme === 'dark') {
-            icon.classList.remove('fa-moon');
-            icon.classList.add('fa-sun');
+            if (icon) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+            if (mobileIcon) {
+                mobileIcon.classList.remove('fa-moon');
+                mobileIcon.classList.add('fa-sun');
+            }
         } else {
-            icon.classList.remove('fa-sun');
-            icon.classList.add('fa-moon');
+            if (icon) {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+            if (mobileIcon) {
+                mobileIcon.classList.remove('fa-sun');
+                mobileIcon.classList.add('fa-moon');
+            }
         }
+        
+        // Update mobile theme switch
+        if (mobileThemeSwitch) {
+            mobileThemeSwitch.checked = theme === 'dark';
+        }
+        
         localStorage.setItem('theme', theme);
     }
 
@@ -4272,7 +4456,7 @@
             
             // Get the first image
             const productImage = product.images && product.images.length > 0 ? 
-                product.images[0] : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDMwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzMDAiIGZpbGw9IiNFNUU1RTUiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmaWxsPSIjOTk5Ij5CaWRoYWE8L3RleHQ+PC9zdmc+';
+                product.images[0] : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDMwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzMDAiIGZpbGw9IiNFNUU1RTUiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBZhb250LXNpemU9IjE0IiBmaWxsPSIjOTk5Ij5CaWRoYWE8L3RleHQ+PC9zdmc+';
             
             productCard.innerHTML = `
                 <div class="card product-card h-100" data-product-id="${product.id}">
@@ -4456,10 +4640,24 @@
         }
     }
 
-    // Enhanced setupEventListeners function with loading states and sharing
+    // Enhanced setupEventListeners function with theme control for mobile
     function setupEventListeners() {
-        // Theme toggle
-        themeToggle.addEventListener('click', toggleTheme);
+        // Theme toggle for desktop
+        if (themeToggle) {
+            themeToggle.addEventListener('click', toggleTheme);
+        }
+        
+        // Theme toggle for mobile button
+        if (mobileThemeToggle) {
+            mobileThemeToggle.addEventListener('click', toggleTheme);
+        }
+        
+        // Theme switch for mobile in account menu
+        if (mobileThemeSwitch) {
+            mobileThemeSwitch.addEventListener('change', function() {
+                toggleTheme();
+            });
+        }
         
         // Navigation
         document.querySelectorAll('[data-section]').forEach(link => {
@@ -4588,10 +4786,19 @@
                     return;
                 }
                 
+                // Handle theme control separately
+                if (this.id === 'mobile-theme-control') {
+                    return;
+                }
+                
                 const tabName = this.getAttribute('data-account-tab');
                 if (!tabName) return;
                 
-                document.querySelectorAll('.account-menu li').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.account-menu li').forEach(t => {
+                    if (t.id !== 'mobile-theme-control') {
+                        t.classList.remove('active');
+                    }
+                });
                 this.classList.add('active');
                 
                 document.getElementById('account-orders').classList.add('hidden');
@@ -6350,7 +6557,7 @@
         alert(`${product.name} (Saizi: ${cleanSize}) imeongezwa kwenye karatasi!`);
     }
 
-    // Enhanced Update cart display with responsive improvements
+    // Enhanced Update cart display with FIXED responsive improvements
     function updateCartDisplay() {
         const cartItems = document.getElementById('cart-items');
         cartItems.innerHTML = '';
@@ -6384,26 +6591,26 @@
                     <div class="col-2 col-md-2">
                         <img src="${item.product.images && item.product.images.length > 0 ? item.product.images[0] : 'https://via.placeholder.com/100x100?text=Bidhaa'}" 
                              class="img-fluid rounded" alt="${item.product.name}" 
-                             style="height: 50px; object-fit: cover;"
+                             style="height: 50px; width: 50px; object-fit: cover;"
                              onerror="this.src='https://via.placeholder.com/100x100?text=Bidhaa'">
                     </div>
                     <div class="col-5 col-md-4">
-                        <h6 class="mb-1" style="font-size: 0.9rem;">${item.product.name}</h6>
-                        <p class="mb-0 small">Saizi: <span class="cart-size-badge">${item.size}</span></p>
-                        <p class="mb-0 small text-primary" style="font-size: 0.8rem;">TZS ${formatPrice(itemPrice)}</p>
+                        <h6 class="mb-1" style="font-size: 0.85rem; line-height: 1.2;">${item.product.name}</h6>
+                        <p class="mb-0 small" style="font-size: 0.75rem; line-height: 1.2;">Saizi: <span class="cart-size-badge">${item.size}</span></p>
+                        <p class="mb-0 small text-primary" style="font-size: 0.8rem; line-height: 1.2;">TZS ${formatPrice(itemPrice)}</p>
                     </div>
                     <div class="col-2">
                         <div class="quantity-selector d-flex align-items-center justify-content-center">
-                            <div class="quantity-btn" data-index="${index}" data-action="decrease" style="width: 25px; height: 25px; font-size: 0.8rem;">-</div>
-                            <span class="mx-2" style="min-width: 25px; text-align: center; font-size: 0.9rem;">${item.quantity}</span>
-                            <div class="quantity-btn" data-index="${index}" data-action="increase" style="width: 25px; height: 25px; font-size: 0.8rem;">+</div>
+                            <div class="quantity-btn" data-index="${index}" data-action="decrease" style="width: 28px; height: 28px; font-size: 0.9rem;">-</div>
+                            <span class="mx-2" style="min-width: 30px; text-align: center; font-size: 0.9rem; font-weight: bold;">${item.quantity}</span>
+                            <div class="quantity-btn" data-index="${index}" data-action="increase" style="width: 28px; height: 28px; font-size: 0.9rem;">+</div>
                         </div>
                     </div>
                     <div class="col-2 text-end">
-                        <strong class="text-primary" style="font-size: 0.9rem; white-space: nowrap;">TZS ${formatPrice(itemTotal)}</strong>
+                        <strong class="text-primary" style="font-size: 0.85rem; white-space: nowrap; font-weight: bold;">TZS ${formatPrice(itemTotal)}</strong>
                     </div>
                     <div class="col-1">
-                        <button class="btn btn-sm btn-outline-danger remove-item" data-index="${index}" style="padding: 4px 6px; font-size: 0.7rem;">
+                        <button class="btn btn-sm btn-outline-danger remove-item" data-index="${index}" style="padding: 5px 8px; font-size: 0.75rem; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;">
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>
