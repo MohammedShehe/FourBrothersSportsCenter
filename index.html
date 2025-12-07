@@ -76,7 +76,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, var(--primary-color), var(--body-bg));
+            background: linear-gradient(135deg, var(--body-bg), var(--primary-color), var(--success-color));
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -89,7 +89,7 @@
             text-align: center;
             padding: 40px;
             border-radius: 20px;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
             max-width: 500px;
             width: 90%;
@@ -112,7 +112,7 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            background: linear-gradient(45deg, #28a745, #000000, #1a73e8);
             position: relative;
             overflow: hidden;
             animation: rotate 3s linear infinite;
@@ -126,7 +126,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.4), transparent);
             transform: rotate(45deg);
             animation: shine 2s linear infinite;
         }
@@ -140,6 +140,7 @@
             color: white;
             font-weight: bold;
             z-index: 2;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
         
         @keyframes rotate {
@@ -177,7 +178,7 @@
         
         .progress-bar {
             height: 100%;
-            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            background: linear-gradient(90deg, #28a745, #000000, #1a73e8);
             width: 0%;
             border-radius: 3px;
             transition: width 0.3s ease;
@@ -201,18 +202,21 @@
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            background: var(--primary-color);
             animation: dotPulse 1.5s ease-in-out infinite;
         }
         
+        .dot:nth-child(1) {
+            background: #28a745;
+        }
+        
         .dot:nth-child(2) {
+            background: #000000;
             animation-delay: 0.2s;
-            background: var(--accent-color);
         }
         
         .dot:nth-child(3) {
+            background: #1a73e8;
             animation-delay: 0.4s;
-            background: var(--success-color);
         }
         
         @keyframes dotPulse {
@@ -448,6 +452,72 @@
         .quantity-btn:hover {
             background-color: var(--primary-color);
             color: white;
+        }
+
+        /* Enhanced Share Links Styling */
+        .share-links {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .share-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+        }
+
+        .share-links a:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+
+        .share-whatsapp {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+        }
+
+        .share-facebook {
+            background: linear-gradient(135deg, #1877F2, #0D5AB6);
+        }
+
+        .share-twitter {
+            background: linear-gradient(135deg, #1DA1F2, #0C85D0);
+        }
+
+        .share-telegram {
+            background: linear-gradient(135deg, #0088cc, #006699);
+        }
+
+        .share-instagram {
+            background: linear-gradient(45deg, #E4405F, #C13584, #833AB4);
+        }
+
+        .share-copy {
+            background: linear-gradient(135deg, var(--primary-color), #0d6efd);
+        }
+
+        .qr-code-container {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .qr-code {
+            max-width: 200px;
+            height: auto;
+            margin: 0 auto;
+            border: 10px solid white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         
         /* Enhanced Size Options Styling */
@@ -968,6 +1038,7 @@
             margin-top: 10px;
         }
 
+        /* Enhanced Mobile Responsiveness */
         @media (max-width: 768px) {
             .desktop-nav {
                 display: none;
@@ -1000,6 +1071,77 @@
             .logo-animation {
                 width: 80px;
                 height: 80px;
+            }
+            
+            /* Improved Cart Styling for Mobile */
+            .cart-item .row {
+                align-items: center;
+            }
+            
+            .cart-item .col-2, 
+            .cart-item .col-3,
+            .cart-item .col-5 {
+                padding: 5px;
+            }
+            
+            .cart-item img {
+                height: 50px !important;
+            }
+            
+            .cart-item h6 {
+                font-size: 0.9rem;
+                margin-bottom: 2px;
+            }
+            
+            .cart-item p {
+                font-size: 0.8rem;
+                margin-bottom: 2px;
+            }
+            
+            .cart-item .quantity-selector {
+                gap: 5px;
+            }
+            
+            .cart-item .quantity-btn {
+                width: 25px;
+                height: 25px;
+                font-size: 0.8rem;
+            }
+            
+            .cart-item .quantity-selector span {
+                font-size: 0.9rem;
+                min-width: 25px;
+                text-align: center;
+            }
+            
+            .cart-item .text-primary {
+                font-size: 0.9rem;
+                white-space: nowrap;
+            }
+            
+            .cart-item .remove-item {
+                padding: 4px 6px;
+                font-size: 0.7rem;
+            }
+            
+            /* Improved Product Detail for Mobile */
+            .product-detail-img {
+                height: 250px;
+            }
+            
+            /* Share links responsive */
+            .share-links {
+                gap: 8px;
+            }
+            
+            .share-links a {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            
+            .share-options .card-body {
+                padding: 15px;
             }
         }
 
@@ -1969,6 +2111,149 @@
                 height: 45px;
                 font-size: 0.9rem;
             }
+            
+            /* Mobile cart quantity selector improvements */
+            .cart-item .row {
+                flex-wrap: nowrap;
+            }
+            
+            .cart-item .col-2 {
+                flex: 0 0 30px;
+                max-width: 30px;
+            }
+            
+            .cart-item .col-5 {
+                flex: 1;
+                max-width: none;
+            }
+            
+            .cart-item .col-2:nth-child(3) {
+                flex: 0 0 80px;
+                max-width: 80px;
+            }
+            
+            .cart-item .col-2:nth-child(4) {
+                flex: 0 0 70px;
+                max-width: 70px;
+                text-align: right;
+                padding-right: 10px;
+            }
+            
+            .cart-item .col-1 {
+                flex: 0 0 30px;
+                max-width: 30px;
+                padding-left: 0;
+            }
+            
+            .cart-item .text-primary {
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Share button in product detail */
+        .share-product-btn {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), #0d6efd);
+            color: white;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+
+        .share-product-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+
+        @media (max-width: 768px) {
+            .share-product-btn {
+                bottom: 70px;
+                right: 15px;
+                width: 45px;
+                height: 45px;
+                font-size: 1rem;
+            }
+        }
+
+        /* Improved cart item layout for mobile */
+        .cart-item .row > div {
+            display: flex;
+            align-items: center;
+        }
+
+        .cart-item .quantity-selector {
+            justify-content: center;
+        }
+
+        .cart-item .text-end {
+            justify-content: flex-end;
+        }
+
+        /* Share modal improvements */
+        .share-modal-body {
+            padding: 20px;
+        }
+
+        .share-platforms {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .share-platform {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+            border-radius: 10px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--text-color);
+        }
+
+        .share-platform:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-color: var(--primary-color);
+        }
+
+        .share-platform i {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .share-platform-name {
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        @media (max-width: 576px) {
+            .share-platforms {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            
+            .share-platform {
+                padding: 10px;
+            }
+            
+            .share-platform i {
+                font-size: 1.2rem;
+            }
         }
     </style>
 </head>
@@ -2118,7 +2403,7 @@
                 <div class="announcements" id="announcements-container" style="display: none;">
                     <i class="fas fa-bullhorn me-2"></i>
                     <strong>Tangazo:</strong> 
-                    <marquee behavior="scroll" direction="left" id="announcement-text">Inapakuliwa...</marquee>
+                    <marquee behavior="scroll" direction="left" id="announcement-text">Inapakua...</marquee>
                 </div>
 
                 <!-- Products Grid -->
@@ -2234,6 +2519,11 @@
                         </div>
                     </div>
                 </div>
+                
+                <!-- Share Product Button (Fixed Position) -->
+                <button class="share-product-btn" id="share-product-detail-btn" title="Shiriki bidhaa hii">
+                    <i class="fas fa-share-alt"></i>
+                </button>
             </section>
 
             <!-- Cart Section -->
@@ -3140,13 +3430,19 @@
                 </div>
             </div>
 
-            <!-- Order Details Modal -->
+            <!-- Order Details Modal - Update with Share Button -->
             <div class="modal fade" id="orderDetailsModal" tabindex="-1">
                 <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">Maelezo ya Agizo #<span id="order-details-id"></span></h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            <div class="d-flex align-items-center gap-2">
+                                <!-- Share Button -->
+                                <button class="btn btn-sm btn-outline-primary" id="share-order-btn" title="Shiriki agizo">
+                                    <i class="fas fa-share-alt me-1"></i> Shiriki
+                                </button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
                         </div>
                         <div class="modal-body">
                             <div class="order-items mb-4">
@@ -3167,6 +3463,55 @@
                                     <p id="order-details-customer"></p>
                                     <p id="order-details-address"></p>
                                 </div>
+                            </div>
+                            
+                            <!-- Share Options (Initially Hidden) -->
+                            <div id="share-options" class="mt-4 hidden">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h6 class="mb-0">Shiriki Bidhaa</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="share-links" id="share-links">
+                                            <!-- Share links will be generated here -->
+                                        </div>
+                                        <div class="input-group mt-3">
+                                            <input type="text" class="form-control" id="share-link-input" readonly value="">
+                                            <button class="btn btn-outline-primary" type="button" id="copy-link-btn">
+                                                <i class="fas fa-copy me-1"></i> Nakili Kiungo
+                                            </button>
+                                        </div>
+                                        <div id="copy-success" class="text-success small mt-2 hidden">
+                                            <i class="fas fa-check me-1"></i> Kiungo kimenakiliwa!
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Share Modal -->
+            <div class="modal fade" id="productShareModal" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered modal-md">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Shiriki Bidhaa</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body share-modal-body">
+                            <div class="share-platforms" id="product-share-platforms">
+                                <!-- Share platforms will be loaded here -->
+                            </div>
+                            <div class="input-group mt-3">
+                                <input type="text" class="form-control" id="product-share-link-input" readonly value="">
+                                <button class="btn btn-outline-primary" type="button" id="copy-product-link-btn">
+                                    <i class="fas fa-copy me-1"></i> Nakili Kiungo
+                                </button>
+                            </div>
+                            <div id="product-copy-success" class="text-success small mt-2 hidden">
+                                <i class="fas fa-check me-1"></i> Kiungo kimenakiliwa!
                             </div>
                         </div>
                     </div>
@@ -3287,10 +3632,12 @@
     const cancelOrderModal = new bootstrap.Modal(document.getElementById('cancelOrderModal'));
     const orderDetailsModal = new bootstrap.Modal(document.getElementById('orderDetailsModal'));
     const messageModal = new bootstrap.Modal(document.getElementById('messageModal'));
+    const productShareModal = new bootstrap.Modal(document.getElementById('productShareModal'));
     const themeToggle = document.getElementById('theme-toggle');
     const searchInput = document.getElementById('search-input');
     const searchResults = document.getElementById('search-results');
     const confirmOrderBtn = document.getElementById('confirm-order');
+    const shareProductDetailBtn = document.getElementById('share-product-detail-btn');
     
     // Initialize the application with loading screen
     document.addEventListener('DOMContentLoaded', function() {
@@ -3311,7 +3658,35 @@
         
         // Start loading data
         initializeApp();
+        
+        // Check for share redirect
+        handleShareRedirect();
     });
+
+    // Handle share redirect
+    function handleShareRedirect() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('product');
+        const isShare = urlParams.get('share');
+        
+        if (productId && isShare === 'true') {
+            // Clear the parameters from URL
+            window.history.replaceState({}, document.title, window.location.pathname);
+            
+            // Show the product details after app loads
+            setTimeout(() => {
+                const product = products.find(p => p.id == productId);
+                if (product) {
+                    showProductDetail(productId);
+                    
+                    // Show a notification
+                    setTimeout(() => {
+                        alert('Bidhaa hii ilishirikiwa na mteja mwingine. Angalia maelezo yake hapa chini.');
+                    }, 1000);
+                }
+            }, 2000);
+        }
+    }
 
     // Start loading animation
     function startLoadingAnimation() {
@@ -4081,7 +4456,7 @@
         }
     }
 
-    // Enhanced setupEventListeners function with loading states
+    // Enhanced setupEventListeners function with loading states and sharing
     function setupEventListeners() {
         // Theme toggle
         themeToggle.addEventListener('click', toggleTheme);
@@ -5397,6 +5772,50 @@
             saveRegistrationFormData();
             window.open('regulations.html', '_blank');
         });
+
+        // Share product button in product detail
+        if (shareProductDetailBtn) {
+            shareProductDetailBtn.addEventListener('click', function() {
+                const productId = parseInt(productDetailSection.getAttribute('data-product-id'));
+                const product = products.find(p => p.id === productId);
+                
+                if (product) {
+                    showProductShareModal(product);
+                }
+            });
+        }
+
+        // Copy link button for product share modal
+        document.getElementById('copy-product-link-btn')?.addEventListener('click', function() {
+            const shareLinkInput = document.getElementById('product-share-link-input');
+            const copySuccess = document.getElementById('product-copy-success');
+            
+            shareLinkInput.select();
+            shareLinkInput.setSelectionRange(0, 99999);
+            
+            navigator.clipboard.writeText(shareLinkInput.value).then(() => {
+                copySuccess.classList.remove('hidden');
+                setTimeout(() => {
+                    copySuccess.classList.add('hidden');
+                }, 3000);
+            });
+        });
+
+        // Copy link button for order share modal
+        document.getElementById('copy-link-btn')?.addEventListener('click', function() {
+            const shareLinkInput = document.getElementById('share-link-input');
+            const copySuccess = document.getElementById('copy-success');
+            
+            shareLinkInput.select();
+            shareLinkInput.setSelectionRange(0, 99999);
+            
+            navigator.clipboard.writeText(shareLinkInput.value).then(() => {
+                copySuccess.classList.remove('hidden');
+                setTimeout(() => {
+                    copySuccess.classList.add('hidden');
+                }, 3000);
+            });
+        });
     }
 
     // Get rating value from stars
@@ -5931,7 +6350,7 @@
         alert(`${product.name} (Saizi: ${cleanSize}) imeongezwa kwenye karatasi!`);
     }
 
-    // Update cart display
+    // Enhanced Update cart display with responsive improvements
     function updateCartDisplay() {
         const cartItems = document.getElementById('cart-items');
         cartItems.innerHTML = '';
@@ -5961,30 +6380,30 @@
             const cartItem = document.createElement('div');
             cartItem.className = 'cart-item';
             cartItem.innerHTML = `
-                <div class="row align-items-center">
-                    <div class="col-3 col-md-2">
+                <div class="row align-items-center g-2">
+                    <div class="col-2 col-md-2">
                         <img src="${item.product.images && item.product.images.length > 0 ? item.product.images[0] : 'https://via.placeholder.com/100x100?text=Bidhaa'}" 
                              class="img-fluid rounded" alt="${item.product.name}" 
-                             style="height: 60px; object-fit: cover;"
+                             style="height: 50px; object-fit: cover;"
                              onerror="this.src='https://via.placeholder.com/100x100?text=Bidhaa'">
                     </div>
                     <div class="col-5 col-md-4">
-                        <h6 class="mb-1">${item.product.name}</h6>
+                        <h6 class="mb-1" style="font-size: 0.9rem;">${item.product.name}</h6>
                         <p class="mb-0 small">Saizi: <span class="cart-size-badge">${item.size}</span></p>
-                        <p class="mb-0 small text-primary">TZS ${formatPrice(itemPrice)}</p>
+                        <p class="mb-0 small text-primary" style="font-size: 0.8rem;">TZS ${formatPrice(itemPrice)}</p>
                     </div>
                     <div class="col-2">
-                        <div class="quantity-selector">
-                            <div class="quantity-btn" data-index="${index}" data-action="decrease">-</div>
-                            <span class="mx-2">${item.quantity}</span>
-                            <div class="quantity-btn" data-index="${index}" data-action="increase">+</div>
+                        <div class="quantity-selector d-flex align-items-center justify-content-center">
+                            <div class="quantity-btn" data-index="${index}" data-action="decrease" style="width: 25px; height: 25px; font-size: 0.8rem;">-</div>
+                            <span class="mx-2" style="min-width: 25px; text-align: center; font-size: 0.9rem;">${item.quantity}</span>
+                            <div class="quantity-btn" data-index="${index}" data-action="increase" style="width: 25px; height: 25px; font-size: 0.8rem;">+</div>
                         </div>
                     </div>
                     <div class="col-2 text-end">
-                        <strong class="text-primary">TZS ${formatPrice(itemTotal)}</strong>
+                        <strong class="text-primary" style="font-size: 0.9rem; white-space: nowrap;">TZS ${formatPrice(itemTotal)}</strong>
                     </div>
                     <div class="col-1">
-                        <button class="btn btn-sm btn-outline-danger remove-item" data-index="${index}">
+                        <button class="btn btn-sm btn-outline-danger remove-item" data-index="${index}" style="padding: 4px 6px; font-size: 0.7rem;">
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>
@@ -6300,6 +6719,391 @@
         
         orderDetailsModal.show();
     }
+
+    // Enhanced Show order details with share functionality
+    function showOrderDetails(orderId) {
+        const order = orders.find(o => o.id == orderId);
+        if (!order) return;
+        
+        document.getElementById('order-details-id').textContent = orderId;
+        document.getElementById('order-details-total').textContent = formatPrice(order.total_price);
+        document.getElementById('order-details-status').textContent = order.status;
+        document.getElementById('order-details-date').textContent = new Date(order.created_at).toLocaleDateString('sw-TZ');
+        
+        if (currentUser) {
+            document.getElementById('order-details-customer').textContent = `${currentUser.first_name} ${currentUser.last_name}`;
+            document.getElementById('order-details-address').textContent = currentUser.address || 'Hakuna anwani';
+        }
+        
+        // Update order items list
+        const orderItemsList = document.getElementById('order-items-list');
+        orderItemsList.innerHTML = '';
+        
+        order.items.forEach(item => {
+            const itemElement = document.createElement('div');
+            itemElement.className = 'order-item-row';
+            itemElement.innerHTML = `
+                <div class="row align-items-center">
+                    <div class="col-2">
+                        <img src="${item.product.images && item.product.images.length > 0 ? item.product.images[0] : 'https://via.placeholder.com/100x100?text=Bidhaa'}" 
+                            class="img-fluid rounded" alt="${item.product.name}" 
+                            style="height: 50px; object-fit: cover;"
+                            onerror="this.src='https://via.placeholder.com/100x100?text=Bidhaa'">
+                    </div>
+                    <div class="col-5">
+                        <h6 class="mb-1">${item.product.name}</h6>
+                        <p class="mb-0 small">Saizi: <span class="product-size-badge">${item.size}</span></p>
+                    </div>
+                    <div class="col-2 text-center">
+                        <span class="badge bg-secondary">${item.quantity}</span>
+                    </div>
+                    <div class="col-3 text-end">
+                        <strong class="text-primary">TZS ${formatPrice((item.product.final_price || item.product.price) * item.quantity)}</strong>
+                    </div>
+                </div>
+            `;
+            orderItemsList.appendChild(itemElement);
+        });
+        
+        // Hide share options initially
+        document.getElementById('share-options').classList.add('hidden');
+        
+        // Show modal
+        orderDetailsModal.show();
+        
+        // Add event listener for share button
+        const shareBtn = document.getElementById('share-order-btn');
+        if (shareBtn) {
+            // Remove existing event listeners
+            const newShareBtn = shareBtn.cloneNode(true);
+            shareBtn.parentNode.replaceChild(newShareBtn, shareBtn);
+            
+            // Add new event listener
+            newShareBtn.addEventListener('click', function() {
+                showOrderShareOptions(order);
+                
+                // Scroll to share options
+                setTimeout(() => {
+                    document.getElementById('share-options').scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'start' 
+                    });
+                }, 100);
+            });
+        }
+    }
+
+    // Function to generate share links for order products
+    function generateOrderShareLinks(order) {
+        if (!order || !order.items || order.items.length === 0) {
+            return [];
+        }
+        
+        // Get base URL for sharing
+        const baseUrl = window.location.origin + window.location.pathname;
+        
+        // Generate share links for each product
+        const shareLinks = order.items.map((item, index) => {
+            const product = item.product;
+            const productName = encodeURIComponent(product.name);
+            const productId = product.id;
+            const productSize = item.size;
+            const productPrice = formatPrice(product.final_price || product.price);
+            
+            // Generate product URL with query parameters
+            const productUrl = `${baseUrl}?product=${productId}&share=true`;
+            
+            // Generate share text
+            const shareText = `Nimepata bidhaa nzuri kutoka Four Brothers Sports Center!\n\n` +
+                            `Bidhaa: ${product.name}\n` +
+                            `Saizi: ${productSize}\n` +
+                            `Bei: TZS ${productPrice}\n` +
+                            `Kiungo: ${productUrl}`;
+            
+            const shareTextEncoded = encodeURIComponent(shareText);
+            const shareUrlEncoded = encodeURIComponent(productUrl);
+            
+            return {
+                productId: productId,
+                productName: product.name,
+                productUrl: productUrl,
+                shareText: shareText,
+                whatsapp: `https://wa.me/?text=${shareTextEncoded}`,
+                facebook: `https://www.facebook.com/sharer/sharer.php?u=${shareUrlEncoded}&quote=${shareTextEncoded}`,
+                twitter: `https://twitter.com/intent/tweet?text=${shareTextEncoded}&url=${shareUrlEncoded}`,
+                telegram: `https://t.me/share/url?url=${shareUrlEncoded}&text=${shareTextEncoded}`,
+                instagram: `https://www.instagram.com/?url=${shareUrlEncoded}`,
+                copy: productUrl
+            };
+        });
+        
+        return shareLinks;
+    }
+
+    // Function to show share options for order
+    function showOrderShareOptions(order) {
+        const shareOptions = document.getElementById('share-options');
+        const shareLinksContainer = document.getElementById('share-links');
+        const shareLinkInput = document.getElementById('share-link-input');
+        
+        if (!order || !order.items || order.items.length === 0) {
+            shareOptions.classList.add('hidden');
+            return;
+        }
+        
+        // Generate share links
+        const productShareLinks = generateOrderShareLinks(order);
+        
+        // If there are multiple products, show product selector
+        if (productShareLinks.length > 1) {
+            // Create product selector
+            shareLinksContainer.innerHTML = `
+                <div class="mb-3">
+                    <label for="share-product-select" class="form-label">Chagua Bidhaa ya Kushiriki:</label>
+                    <select class="form-select" id="share-product-select">
+                        ${productShareLinks.map((link, index) => `
+                            <option value="${index}">${link.productName} (Saizi: ${order.items[index].size})</option>
+                        `).join('')}
+                    </select>
+                </div>
+                <div id="share-icons-container"></div>
+            `;
+            
+            // Function to update share icons based on selected product
+            const updateShareIcons = (selectedIndex) => {
+                const selectedLinks = productShareLinks[selectedIndex];
+                const shareIconsContainer = document.getElementById('share-icons-container');
+                
+                shareIconsContainer.innerHTML = `
+                    <div class="share-links">
+                        <a href="${selectedLinks.whatsapp}" 
+                        class="share-whatsapp" 
+                        target="_blank" 
+                        title="Shiriki kwenye WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="${selectedLinks.facebook}" 
+                        class="share-facebook" 
+                        target="_blank" 
+                        title="Shiriki kwenye Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="${selectedLinks.twitter}" 
+                        class="share-twitter" 
+                        target="_blank" 
+                        title="Shiriki kwenye Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="${selectedLinks.telegram}" 
+                        class="share-telegram" 
+                        target="_blank" 
+                        title="Shiriki kwenye Telegram">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                        <a href="${selectedLinks.instagram}" 
+                        class="share-instagram" 
+                        target="_blank" 
+                        title="Shiriki kwenye Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" 
+                        class="share-copy" 
+                        title="Nakili kiungo" 
+                        id="share-copy-btn">
+                            <i class="fas fa-copy"></i>
+                        </a>
+                    </div>
+                `;
+                
+                // Update share link input
+                shareLinkInput.value = selectedLinks.productUrl;
+                
+                // Add copy button event listener
+                document.getElementById('share-copy-btn').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    shareLinkInput.select();
+                    shareLinkInput.setSelectionRange(0, 99999);
+                    
+                    navigator.clipboard.writeText(shareLinkInput.value).then(() => {
+                        const copySuccess = document.getElementById('copy-success');
+                        copySuccess.classList.remove('hidden');
+                        setTimeout(() => {
+                            copySuccess.classList.add('hidden');
+                        }, 3000);
+                    });
+                });
+            };
+            
+            // Initial update
+            updateShareIcons(0);
+            
+            // Add event listener for product selection change
+            document.getElementById('share-product-select').addEventListener('change', function() {
+                updateShareIcons(parseInt(this.value));
+            });
+            
+        } else if (productShareLinks.length === 1) {
+            // Only one product, show share icons directly
+            const links = productShareLinks[0];
+            
+            shareLinksContainer.innerHTML = `
+                <div class="mb-3">
+                    <h6>${links.productName} (Saizi: ${order.items[0].size})</h6>
+                </div>
+                <div class="share-links">
+                    <a href="${links.whatsapp}" 
+                    class="share-whatsapp" 
+                    target="_blank" 
+                    title="Shiriki kwenye WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="${links.facebook}" 
+                    class="share-facebook" 
+                    target="_blank" 
+                    title="Shiriki kwenye Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="${links.twitter}" 
+                    class="share-twitter" 
+                    target="_blank" 
+                    title="Shiriki kwenye Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="${links.telegram}" 
+                    class="share-telegram" 
+                    target="_blank" 
+                    title="Shiriki kwenye Telegram">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                    <a href="${links.instagram}" 
+                    class="share-instagram" 
+                    target="_blank" 
+                    title="Shiriki kwenye Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" 
+                    class="share-copy" 
+                    title="Nakili kiungo" 
+                    id="share-copy-btn">
+                        <i class="fas fa-copy"></i>
+                    </a>
+                </div>
+            `;
+            
+            shareLinkInput.value = links.productUrl;
+            
+            // Add copy button event listener
+            document.getElementById('share-copy-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                shareLinkInput.select();
+                shareLinkInput.setSelectionRange(0, 99999);
+                
+                navigator.clipboard.writeText(shareLinkInput.value).then(() => {
+                    const copySuccess = document.getElementById('copy-success');
+                    copySuccess.classList.remove('hidden');
+                    setTimeout(() => {
+                        copySuccess.classList.add('hidden');
+                    }, 3000);
+                });
+            });
+        }
+        
+        // Show share options
+        shareOptions.classList.remove('hidden');
+    }
+
+    // Function to show product share modal
+    function showProductShareModal(product) {
+        const sharePlatformsContainer = document.getElementById('product-share-platforms');
+        const shareLinkInput = document.getElementById('product-share-link-input');
+        
+        // Generate product URL
+        const baseUrl = window.location.origin + window.location.pathname;
+        const productUrl = `${baseUrl}?product=${product.id}&share=true`;
+        
+        // Generate share text
+        const shareText = `Nimepata bidhaa nzuri ya ${product.name} kutoka Four Brothers Sports Center!\n\n` +
+                        `Bei: TZS ${formatPrice(product.final_price || product.price)}\n` +
+                        `Kiungo: ${productUrl}`;
+        
+        const shareTextEncoded = encodeURIComponent(shareText);
+        const shareUrlEncoded = encodeURIComponent(productUrl);
+        
+        // Create share platforms
+        const sharePlatforms = [
+            {
+                name: 'WhatsApp',
+                icon: 'fab fa-whatsapp',
+                color: '#25D366',
+                url: `https://wa.me/?text=${shareTextEncoded}`
+            },
+            {
+                name: 'Facebook',
+                icon: 'fab fa-facebook-f',
+                color: '#1877F2',
+                url: `https://www.facebook.com/sharer/sharer.php?u=${shareUrlEncoded}&quote=${shareTextEncoded}`
+            },
+            {
+                name: 'Twitter',
+                icon: 'fab fa-twitter',
+                color: '#1DA1F2',
+                url: `https://twitter.com/intent/tweet?text=${shareTextEncoded}&url=${shareUrlEncoded}`
+            },
+            {
+                name: 'Telegram',
+                icon: 'fab fa-telegram',
+                color: '#0088cc',
+                url: `https://t.me/share/url?url=${shareUrlEncoded}&text=${shareTextEncoded}`
+            },
+            {
+                name: 'Instagram',
+                icon: 'fab fa-instagram',
+                color: '#E4405F',
+                url: `https://www.instagram.com/?url=${shareUrlEncoded}`
+            },
+            {
+                name: 'Nakili Kiungo',
+                icon: 'fas fa-copy',
+                color: '#1a73e8',
+                url: '#',
+                action: 'copy'
+            }
+        ];
+        
+        // Create platform elements
+        sharePlatformsContainer.innerHTML = sharePlatforms.map(platform => `
+            <a href="${platform.url}" 
+               class="share-platform ${platform.action === 'copy' ? 'copy-link' : ''}" 
+               ${platform.action === 'copy' ? 'onclick="copyProductLink(event)"' : 'target="_blank"'}
+               style="background: ${platform.color};">
+                <i class="${platform.icon}"></i>
+                <span class="share-platform-name">${platform.name}</span>
+            </a>
+        `).join('');
+        
+        // Set share link input value
+        shareLinkInput.value = productUrl;
+        
+        // Show modal
+        productShareModal.show();
+    }
+
+    // Function to copy product link
+    window.copyProductLink = function(e) {
+        e.preventDefault();
+        const shareLinkInput = document.getElementById('product-share-link-input');
+        const copySuccess = document.getElementById('product-copy-success');
+        
+        shareLinkInput.select();
+        shareLinkInput.setSelectionRange(0, 99999);
+        
+        navigator.clipboard.writeText(shareLinkInput.value).then(() => {
+            copySuccess.classList.remove('hidden');
+            setTimeout(() => {
+                copySuccess.classList.add('hidden');
+            }, 3000);
+        });
+    };
 
     // Load profile data
     function loadProfileData() {
