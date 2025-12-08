@@ -6,192 +6,212 @@
 
     <!-- Main Pages -->
     <url>
-        <loc>https://api.fourbrothers.online/</loc>
-        <lastmod>2025-12-07</lastmod>
+        <loc>https://fourbrothers.online/</loc>
+        <lastmod>2025-12-08</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
     
     <url>
-        <loc>https://api.fourbrothers.online/admin.html</loc>
-        <lastmod>2025-12-07</lastmod>
+        <loc>https://fourbrothers.online/admin</loc>
+        <lastmod>2025-12-08</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://fourbrothers.online/regulations</loc>
+        <lastmod>2025-12-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <url>
+        <loc>https://fourbrothers.online/terms</loc>
+        <lastmod>2025-12-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <url>
+        <loc>https://fourbrothers.online/privacy</loc>
+        <lastmod>2025-12-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <!-- Product Categories (Server-side rendered pages) -->
+    <url>
+        <loc>https://fourbrothers.online/products</loc>
+        <lastmod>2025-12-08</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.9</priority>
     </url>
     
     <url>
-        <loc>https://api.fourbrothers.online/regulations.html</loc>
-        <lastmod>2025-12-07</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-
-    <!-- Product Categories -->
-    <url>
-        <loc>https://api.fourbrothers.online/#products</loc>
-        <lastmod>2025-12-07</lastmod>
+        <loc>https://fourbrothers.online/category/sports-shoes</loc>
+        <lastmod>2025-12-08</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.8</priority>
     </url>
     
     <url>
-        <loc>https://api.fourbrothers.online/#type=Njumu</loc>
-        <lastmod>2025-12-07</lastmod>
+        <loc>https://fourbrothers.online/category/soccer-shoes</loc>
+        <lastmod>2025-12-08</lastmod>
         <changefreq>daily</changefreq>
-        <priority>0.6</priority>
+        <priority>0.8</priority>
     </url>
     
     <url>
-        <loc>https://api.fourbrothers.online/#type=Trainer</loc>
-        <lastmod>2025-12-07</lastmod>
+        <loc>https://fourbrothers.online/category/running-shoes</loc>
+        <lastmod>2025-12-08</lastmod>
         <changefreq>daily</changefreq>
-        <priority>0.6</priority>
+        <priority>0.8</priority>
     </url>
     
     <url>
-        <loc>https://api.fourbrothers.online/#type=Njumu%20na%20Trainer</loc>
-        <lastmod>2025-12-07</lastmod>
+        <loc>https://fourbrothers.online/category/basketball-shoes</loc>
+        <lastmod>2025-12-08</lastmod>
         <changefreq>daily</changefreq>
-        <priority>0.6</priority>
+        <priority>0.8</priority>
     </url>
 
     <!-- Brand Pages -->
     <url>
-        <loc>https://api.fourbrothers.online/#brand=Nike</loc>
-        <lastmod>2025-12-07</lastmod>
-        <changefreq>daily</changefreq>
-        <priority>0.5</priority>
-    </url>
-    
-    <url>
-        <loc>https://api.fourbrothers.online/#brand=Adidas</loc>
-        <lastmod>2025-12-07</lastmod>
-        <changefreq>daily</changefreq>
-        <priority>0.5</priority>
-    </url>
-    
-    <url>
-        <loc>https://api.fourbrothers.online/#brand=AirZoom</loc>
-        <lastmod>2025-12-07</lastmod>
-        <changefreq>daily</changefreq>
-        <priority>0.5</priority>
-    </url>
-    
-    <url>
-        <loc>https://api.fourbrothers.online/#brand=Mercurial</loc>
-        <lastmod>2025-12-07</lastmod>
-        <changefreq>daily</changefreq>
-        <priority>0.5</priority>
-    </url>
-
-    <!-- User Account Pages -->
-    <url>
-        <loc>https://api.fourbrothers.online/#account</loc>
-        <lastmod>2025-12-07</lastmod>
+        <loc>https://fourbrothers.online/brand/nike</loc>
+        <lastmod>2025-12-08</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.7</priority>
     </url>
     
     <url>
-        <loc>https://api.fourbrothers.online/#account/orders</loc>
-        <lastmod>2025-12-07</lastmod>
+        <loc>https://fourbrothers.online/brand/adidas</loc>
+        <lastmod>2025-12-08</lastmod>
         <changefreq>daily</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <url>
+        <loc>https://fourbrothers.online/brand/puma</loc>
+        <lastmod>2025-12-08</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <url>
+        <loc>https://fourbrothers.online/brand/jordan</loc>
+        <lastmod>2025-12-08</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <url>
+        <loc>https://fourbrothers.online/brand/under-armour</loc>
+        <lastmod>2025-12-08</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <!-- Static Pages -->
+    <url>
+        <loc>https://fourbrothers.online/about</loc>
+        <lastmod>2025-12-08</lastmod>
+        <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     
     <url>
-        <loc>https://api.fourbrothers.online/#account/contact</loc>
-        <lastmod>2025-12-07</lastmod>
+        <loc>https://fourbrothers.online/contact</loc>
+        <lastmod>2025-12-08</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.5</priority>
-    </url>
-    
-    <url>
-        <loc>https://api.fourbrothers.online/#account/addresses</loc>
-        <lastmod>2025-12-07</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.5</priority>
-    </url>
-    
-    <url>
-        <loc>https://api.fourbrothers.online/#account/profile</loc>
-        <lastmod>2025-12-07</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.5</priority>
-    </url>
-
-    <!-- Cart & Checkout -->
-    <url>
-        <loc>https://api.fourbrothers.online/#cart</loc>
-        <lastmod>2025-12-07</lastmod>
-        <changefreq>daily</changefreq>
         <priority>0.8</priority>
     </url>
     
     <url>
-        <loc>https://api.fourbrothers.online/#checkout</loc>
-        <lastmod>2025-12-07</lastmod>
+        <loc>https://fourbrothers.online/faq</loc>
+        <lastmod>2025-12-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    
+    <url>
+        <loc>https://fourbrothers.online/shipping</loc>
+        <lastmod>2025-12-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    
+    <url>
+        <loc>https://fourbrothers.online/returns</loc>
+        <lastmod>2025-12-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    
+    <url>
+        <loc>https://fourbrothers.online/size-guide</loc>
+        <lastmod>2025-12-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+    <!-- User Account Pages (with authentication) -->
+    <url>
+        <loc>https://fourbrothers.online/login</loc>
+        <lastmod>2025-12-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    
+    <url>
+        <loc>https://fourbrothers.online/register</loc>
+        <lastmod>2025-12-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    
+    <url>
+        <loc>https://fourbrothers.online/forgot-password</loc>
+        <lastmod>2025-12-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.4</priority>
+    </url>
+
+    <!-- Cart & Checkout -->
+    <url>
+        <loc>https://fourbrothers.online/cart</loc>
+        <lastmod>2025-12-08</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.7</priority>
     </url>
-
-    <!-- API Endpoints (for search engines) -->
+    
     <url>
-        <loc>https://api.fourbrothers.online/api/customers</loc>
-        <lastmod>2025-12-07</lastmod>
+        <loc>https://fourbrothers.online/checkout</loc>
+        <lastmod>2025-12-08</lastmod>
         <changefreq>daily</changefreq>
-        <priority>0.3</priority>
-    </url>
-    
-    <url>
-        <loc>https://api.fourbrothers.online/api/admin</loc>
-        <lastmod>2025-12-07</lastmod>
-        <changefreq>daily</changefreq>
-        <priority>0.3</priority>
-    </url>
-    
-    <url>
-        <loc>https://api.fourbrothers.online/api/products</loc>
-        <lastmod>2025-12-07</lastmod>
-        <changefreq>hourly</changefreq>
-        <priority>0.4</priority>
-    </url>
-    
-    <url>
-        <loc>https://api.fourbrothers.online/api/ads</loc>
-        <lastmod>2025-12-07</lastmod>
-        <changefreq>daily</changefreq>
-        <priority>0.3</priority>
-    </url>
-    
-    <url>
-        <loc>https://api.fourbrothers.online/api/orders</loc>
-        <lastmod>2025-12-07</lastmod>
-        <changefreq>hourly</changefreq>
-        <priority>0.4</priority>
-    </url>
-
-    <!-- Static Resources -->
-    <url>
-        <loc>https://api.fourbrothers.online/images/FBSC.png</loc>
-        <lastmod>2025-12-07</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.2</priority>
-    </url>
-    
-    <url>
-        <loc>https://api.fourbrothers.online/images/FBSC-32.png</loc>
-        <lastmod>2025-12-07</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <!-- Contact Information -->
-    <url>
-        <loc>https://api.fourbrothers.online/#contact</loc>
-        <lastmod>2025-12-07</lastmod>
-        <changefreq>monthly</changefreq>
         <priority>0.6</priority>
+    </url>
+
+    <!-- Blog/Content Pages (if applicable) -->
+    <url>
+        <loc>https://fourbrothers.online/blog</loc>
+        <lastmod>2025-12-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    
+    <url>
+        <loc>https://fourbrothers.online/blog/how-to-choose-sports-shoes</loc>
+        <lastmod>2025-12-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    
+    <url>
+        <loc>https://fourbrothers.online/blog/shoe-care-tips</loc>
+        <lastmod>2025-12-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
     </url>
 
 </urlset>
